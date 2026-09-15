@@ -1,0 +1,50 @@
+{
+    "pid": "9MTW",
+    "services": {
+        "switch": {
+            "domain": "switch",
+            "action": "turn_on_off",
+            "value_attr": "state"
+        },
+        "cooker": {
+            "domain": "select",
+            "action": "set_option",
+            "value_attr": "state",
+            "default_mode": "1",
+            "value_mapping": {
+                "type": "enum_to_text_multi",
+                "mapping": {
+                    "1": ["快煮饭"],
+                    "2": ["10A饭"],
+                    "3": ["杂粮饭"],
+                    "4": ["低糖饭"],
+                    "5": ["五谷粥"],
+                    "6": ["美味汤"],
+                    "7": ["热饭"],
+                    "8": ["蒸煮"]
+                }
+            }
+        },
+        "status": {
+            "domain": "sensor",
+            "action": "read_only",
+            "value_attr": "state",
+            "value_mapping": {
+                "type": "text_to_enum",
+                "mapping": {
+                    "待机": 0,
+                    "工作中": 1,
+                    "暂停中": 2,
+                    "预约中": 3,
+                    "预约暂停": 4,
+                    "完成": 5
+                }
+            }
+        },
+        "leftTime": {
+            "domain": "sensor",
+            "action": "read_only",
+            "value_attr": "state"
+        }
+    }
+}

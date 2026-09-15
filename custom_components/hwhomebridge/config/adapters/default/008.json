@@ -1,0 +1,45 @@
+{
+    "pid": "008",
+    "services": {
+        "switch": {
+            "domain": "switch",
+            "action": "turn_on_off",
+            "value_attr": "state",
+            "exclude_keywords": ["child_lock", "儿童锁", "lock", "定时", "timer", "countdown"],
+            "include_keywords": ["开关", "主控", "power", "switch", "main", "relay", "插座", "socket"]
+        },
+        "electric": {
+            "domain": "sensor",
+            "action": "read_only",
+            "value_attr": "state",
+            "device_class": "energy",
+            "include_keywords": ["电量", "能量", "energy", "consum"],
+            "name_keywords": ["电量", "能量", "energy", "consum"]
+        },
+        "voltage": {
+            "domain": "sensor",
+            "action": "read_only",
+            "value_attr": "state",
+            "device_class": "voltage",
+            "include_keywords": ["电压", "voltage"],
+            "name_keywords": ["电压", "voltage"]
+        },
+        "power": {
+            "domain": "sensor",
+            "action": "read_only",
+            "value_attr": "state",
+            "device_class": "power",
+            "include_keywords": ["功率", "power"],
+            "exclude_keywords": ["consumption", "consum", "energy", "电量", "能量"],
+            "name_keywords": ["功率", "power"]
+        },
+        "current": {
+            "domain": "sensor",
+            "action": "read_only",
+            "value_attr": "state",
+            "device_class": "current",
+            "include_keywords": ["电流", "current"],
+            "name_keywords": ["电流", "current"]
+        }
+    }
+}

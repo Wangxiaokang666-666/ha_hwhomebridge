@@ -1,0 +1,51 @@
+{
+    "pid": "005",
+    "match_rules": [
+        {"type": "model_exact", "model": "xiaomi.kettle.ym3pro"},
+        {"type": "name_keyword", "keywords": ["电水壶", "热水壶", "kettle"]}
+    ],
+    "services": {
+        "mode": {
+            "name_keywords": ["加热温度"],
+            "value_mapping": {
+                "type": "enum_to_number",
+                "mapping": {
+                    "0": 40,
+                    "1": 99,
+                    "2": 50,
+                    "3": 45,
+                    "4": 90,
+                    "5": 85,
+                    "6": 95,
+                    "7": 80,
+                    "8": 70,
+                    "9": 55,
+                    "10": 99,
+                    "11": 75
+                }
+            }
+        },
+        "heatingTarget": {
+            "name_keywords": ["加热温度"]
+        },
+        "status": {
+            "name_keywords": ["工作状态"],
+            "value_mapping": {
+                "type": "text_to_enum",
+                "mapping": {
+                    "待机中": 0,
+                    "加热中": 2,
+                    "沸腾中": 2,
+                    "降温中": 4,
+                    "定温中": 4
+                }
+            }
+        },
+        "switch": {
+            "name_keywords": ["开关"]
+        },
+        "temperature": {
+            "name_keywords": ["当前水温"]
+        }
+    }
+}

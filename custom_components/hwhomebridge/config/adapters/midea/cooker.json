@@ -1,0 +1,67 @@
+{
+    "pid": "007",
+    "match_rules": [
+        {"type": "model_keyword", "keywords": ["MB-FB"]},
+        {"type": "name_keyword", "keywords": ["midea", "美的"]}
+    ],
+    "services": {
+        "switch": {
+            "domain": "select",
+            "action": "turn_on_off",
+            "name_keywords": ["工作状态"],
+            "stop_option": "停止",
+            "on_command": {
+                "type": "trigger_service",
+                "service": "cooker",
+                "use_default_mode": true
+            },
+            "value_mapping": {
+                "type": "text_to_enum",
+                "mapping": {
+                    "停止": 0,
+                    "烹饪": 1,
+                    "保温": 1,
+                    "醒米": 1,
+                    "预约": 1
+                }
+            }
+        },
+        "cooker": {
+            "domain": "select",
+            "action": "set_option",
+            "default_mode": "2",
+            "name_keywords": ["工作模式", "运行模式"],
+            "value_mapping": {
+                "type": "enum_to_text_multi",
+                "mapping": {
+                    "1": ["精华饭"],
+                    "2": ["精华饭"],
+                    "5": ["稀饭", "煮粥"],
+                    "6": ["煲汤"],
+                    "7": ["热饭"],
+                    "8": ["蒸煮"]
+                }
+            }
+        },
+        "status": {
+            "domain": "select",
+            "action": "read_only",
+            "name_keywords": ["工作状态"],
+            "value_mapping": {
+                "type": "text_to_enum",
+                "mapping": {
+                    "停止": 0,
+                    "烹饪": 1,
+                    "保温": 2,
+                    "醒米": 1,
+                    "预约": 3
+                }
+            }
+        },
+        "leftTime": {
+            "domain": "sensor",
+            "action": "read_only",
+            "name_keywords": ["剩余", "剩余时间"]
+        }
+    }
+}

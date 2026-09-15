@@ -1,0 +1,60 @@
+{
+    "pid": "9MTR",
+    "services": {
+        "mode": {
+            "domain": "number",
+            "action": "set_value",
+            "value_attr": "state",
+            "value_mapping": {
+                "type": "enum_to_number",
+                "mapping": {
+                    "0": 40,
+                    "1": 99,
+                    "2": 50,
+                    "3": 45,
+                    "4": 90,
+                    "5": 85,
+                    "6": 95,
+                    "7": 80,
+                    "8": 70,
+                    "9": 55,
+                    "10": 99,
+                    "11": 75
+                }
+            }
+        },
+        "heatingTarget": {
+            "domain": "number",
+            "action": "set_value",
+            "value_attr": "state"
+        },
+        "status": {
+            "domain": "sensor",
+            "action": "read_only",
+            "value_attr": "state",
+            "value_mapping": {
+                "type": "text_to_enum",
+                "mapping": {
+                    "待机": 0,
+                    "预约": 1,
+                    "升温中": 2,
+                    "制作中": 3,
+                    "保温中": 4,
+                    "暂停": 5,
+                    "完成": 6
+                }
+            }
+        },
+        "switch": {
+            "domain": "switch",
+            "action": "turn_on_off",
+            "value_attr": "state"
+        },
+        "temperature": {
+            "domain": "sensor",
+            "action": "read_only",
+            "value_attr": "state",
+            "device_class": "temperature"
+        }
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "pid": "003",
+    "match_rules": [
+        {"type": "model_exact", "model": "shuse.light.lgt02"}
+    ],
+    "services": {
+        "status": {
+            "name_keywords": ["有无人状态"]
+        },
+        "cct": {
+            "colorTemperature_min": 2700
+        }
+    }
+}

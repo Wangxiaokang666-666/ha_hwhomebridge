@@ -1,0 +1,55 @@
+{
+    "pid": "007",
+    "match_rules": [
+        {"type": "model_exact", "model": "chunmi.cooker.c301"},
+        {"type": "name_keyword", "keywords": ["电饭煲", "电饭锅", "饭煲", "rice cooker"]}
+    ],
+    "services": {
+        "switch": {
+            "domain": "button",
+            "action": "press",
+            "name_keywords": ["取消", "cancel", "cancel_cooking", "取消烹饪"],
+            "on_command": {
+                "type": "trigger_service",
+                "service": "cooker",
+                "use_default_mode": true
+            }
+        },
+        "cooker": {
+            "value_mapping": {
+                "type": "enum_to_text_multi",
+                "mapping": {
+                    "1": ["Quick Cook", "快煮饭", "quick"],
+                    "2": ["Fine Cook", "精煮饭", "煮饭"],
+                    "3": ["杂粮饭", "杂粮"],
+                    "4": ["低糖"],
+                    "5": ["Cook Congee", "五谷粥", "煮粥", "粥"],
+                    "6": ["Cook Congee", "煲汤", "美味汤", "汤"],
+                    "7": ["Keep Warm", "保温", "热饭"],
+                    "8": ["Custom", "蒸煮", "自定义"]
+                }
+            }
+        },
+        "status": {
+            "name_keywords": ["状态", "status", "cooker"],
+            "value_mapping": {
+                "type": "number_to_enum_multi",
+                "mapping": {
+                    "0": [0, "idle", "Idle", "空闲", "待机"],
+                    "1": [1, "cooking", "Cooking", "running", "Running", "烹饪中", "工作中", "运行中"],
+                    "2": [2, "keep_warm", "Keep Warm", "保温", "暂停中"],
+                    "3": [3, "Scheduled", "scheduled", "aptrunning", "预约", "预约中"],
+                    "4": [4, "预约暂停", "Paused"],
+                    "5": [5, "完成", "Completed", "Finished"]
+                }
+            }
+        },
+        "leftTime": {
+            "name_keywords": ["剩余", "left_time", "Left Time"],
+            "value_mapping": {
+                "type": "seconds_to_minutes",
+                "divide_by": 60
+            }
+        }
+    }
+}

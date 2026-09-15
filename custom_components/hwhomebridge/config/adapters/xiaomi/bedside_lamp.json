@@ -1,0 +1,12 @@
+{
+    "pid": "001",
+    "match_rules": [
+        {"type": "model_exact", "model": "bslamp"},
+        {"type": "name_keyword", "keywords": ["床头灯", "bslamp", "bedside lamp"]}
+    ],
+    "services": {
+        "cct": {
+            "colorTemperature_min": 1700
+        }
+    }
+}

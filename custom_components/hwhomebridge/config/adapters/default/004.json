@@ -1,0 +1,17 @@
+{
+    "pid": "004",
+    "services": {
+        "alarmBell": {
+            "domain": "binary_sensor",
+            "action": "read_only",
+            "value_attr": "state",
+            "value_mapping": {
+                "type": "text_to_enum",
+                "mapping": {
+                    "off": 1,
+                    "on": 2
+                }
+            }
+        }
+    }
+}

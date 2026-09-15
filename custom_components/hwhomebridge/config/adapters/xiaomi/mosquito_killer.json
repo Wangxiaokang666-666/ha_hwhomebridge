@@ -1,0 +1,25 @@
+{
+    "pid": "006",
+    "match_rules": [
+        {"type": "model_exact", "model": "dayang.mosq.dyt16s"},
+        {"type": "name_keyword", "keywords": ["灭蚊", "驱蚊", "电蚊"]}
+    ],
+    "services": {
+        "delay": {
+            "domain": "select",
+            "name_keywords": ["定时"],
+            "action": "set_option",
+            "value_attr": "state",
+            "value_mapping": {
+                "type": "delay_to_select",
+                "mapping": {
+                    "0": "关闭",
+                    "3": "3小时",
+                    "8": "8小时",
+                    "12": "12小时"
+                },
+                "close_action": 2
+            }
+        }
+    }
+}

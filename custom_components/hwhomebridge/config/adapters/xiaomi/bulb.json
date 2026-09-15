@@ -1,0 +1,12 @@
+{
+    "pid": "002",
+    "match_rules": [
+        {"type": "model_exact", "model": "yeelink.light.mbulb3"},
+        {"type": "name_keyword", "keywords": ["灯泡", "bulb"]}
+    ],
+    "services": {
+        "cct": {
+            "colorTemperature_min": 2700
+        }
+    }
+}

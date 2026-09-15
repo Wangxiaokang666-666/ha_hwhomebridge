@@ -1,0 +1,33 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "HuaweiHome Bridge",
+        "description": "欢迎使用HuaweiHome Bridge！\n\n此集成帮您将Home Assistant设备接入到华为智慧生活，让您可以通过华为智慧生活APP或语音助手控制设备。\n\n**功能说明：**\n- 将HA设备接入到华为智慧生活\n- 支持远程控制、语音控制\n- 支持多种设备类型\n\n**使用步骤：**\n\n1.完成此配置后，网关将自动启动\n\n2.点击\"配置\"按钮获取PIN码\n\n3.在华为智慧生活APP中输入PIN码完成绑定\n\n---\n\n点击下方\"提交\"按钮完成集成配置",
+        "data": {}
+      }
+    },
+    "abort": {
+      "single_instance_allowed": "此集成仅支持配置一个实例"
+    }
+  },
+  "options": {
+    "step": {
+      "show_pin": {
+        "title": "网关绑定配置"
+      }
+    },
+    "progress": {
+      "wait_for_binding": "请在华为智慧生活APP中输入以下PIN码完成绑定\n\n### 🔐 PIN码：**{pin_code}**\n\n⏰ 有效期：**{time_out}分钟**\n\n---\n\n**绑定步骤：**\n\n1.打开华为智慧生活APP\n\n2.点击右上角 \"+\" → 添加设备\n\n3.选择\"HA网关\" → 输入PIN码\n\n4.输入上方显示的PIN码\n\n5.等待绑定成功提示\n\n---\n\n**重要提示：**\n\n-请在 **{time_out}分钟内** 完成绑定\n\n-超时后PIN码自动失效，需重新配置"
+    },
+    "abort": {
+      "pin_expired": "PIN码已过期，请重新配置",
+      "internal_error": "内部错误，请重试"
+    }
+  },
+  "notify": {
+    "restart_title": "请重启 Home Assistant",
+    "restart_message": "HuaweiHome Bridge 已删除，如需重新添加本集成，请先重启 Home Assistant。否则本集成将无法重新正常工作。"
+  },
+  "title": "HuaweiHome Bridge"
+}

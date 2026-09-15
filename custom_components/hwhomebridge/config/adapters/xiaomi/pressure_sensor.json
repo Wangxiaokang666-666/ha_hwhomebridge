@@ -1,0 +1,12 @@
+{
+    "pid": "004",
+    "match_rules": [
+        {"type": "model_exact", "model": "linp.senpres.ps1bb"},
+        {"type": "name_keyword", "keywords": ["压力传感器", "压力", "pressure"]}
+    ],
+    "services": {
+        "alarmBell": {
+            "name_keywords": ["present_state", "压力有无"]
+        }
+    }
+}

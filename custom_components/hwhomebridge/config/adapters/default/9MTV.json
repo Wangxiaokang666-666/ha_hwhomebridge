@@ -1,0 +1,10 @@
+{
+    "pid": "9MTV",
+    "services": {
+        "switch": {
+            "domain": "switch",
+            "action": "turn_on_off",
+            "value_attr": "state"
+        }
+    }
+}

@@ -1,0 +1,7 @@
+{
+  "name": "HuaweiHome Bridge",
+  "content_in_root": false,
+  "render_readme": true,
+  "domains": ["hwhomebridge"],
+  "iot_class": "cloud_polling"
+}

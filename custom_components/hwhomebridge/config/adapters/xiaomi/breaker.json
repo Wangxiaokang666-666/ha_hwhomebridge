@@ -1,0 +1,15 @@
+{
+    "pid": "008",
+    "match_rules": [
+        {"type": "model_exact", "model": "ykcn.valve.cbcs"},
+        {"type": "name_keyword", "keywords": ["通断器", "空开", "空气开关", "breaker"]}
+    ],
+    "services": {
+        "electric": {
+            "name_keywords": ["电量", "耗电量"]
+        },
+        "current": {
+            "value_scale": 0.001
+        }
+    }
+}

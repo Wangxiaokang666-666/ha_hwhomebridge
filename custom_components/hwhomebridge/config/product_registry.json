@@ -1,0 +1,91 @@
+{
+    "products": [
+        {
+            "pid": "001",
+            "name": "床头灯",
+            "services": {
+                "switch": {"service_type": "switch", "char_name": "on"},
+                "brightness": {"service_type": "brightness", "char_name": "brightness"},
+                "cct": {"service_type": "cct", "char_name": "colorTemperature"}
+            }
+        },
+        {
+            "pid": "002",
+            "name": "灯泡",
+            "auto_match": {
+                "required_domains": ["light"],
+                "name_keywords": ["灯泡", "bulb", "light", "灯"]
+            },
+            "services": {
+                "switch": {"service_type": "switch", "char_name": "on"},
+                "brightness": {"service_type": "brightness", "char_name": "brightness"},
+                "cct": {"service_type": "cct", "char_name": "colorTemperature"}
+            }
+        },
+        {
+            "pid": "003",
+            "name": "小夜灯",
+            "services": {
+                "switch": {"service_type": "switch", "char_name": "on"},
+                "brightness": {"service_type": "brightness", "char_name": "brightness"},
+                "status": {"service_type": "status", "char_name": "status", "description": "有人/无人状态"},
+                "cct": {"service_type": "cct", "char_name": "colorTemperature"}
+            }
+        },
+        {
+            "pid": "004",
+            "name": "压力传感器",
+            "auto_match": {
+                "required_domains": ["binary_sensor"],
+                "name_keywords": ["压力", "pressure", "present"]
+            },
+            "services": {
+                "alarmBell": {"service_type": "mode", "char_name": "mode", "description": "有无压力"}
+            }
+        },
+        {
+            "pid": "005",
+            "name": "电水壶",
+            "services": {
+                "mode": {"service_type": "mode", "char_name": "mode"},
+                "heatingTarget": {"service_type": "heatingTarget", "char_name": "heatingTarget", "description": "目标温度"},
+                "status": {"service_type": "status", "char_name": "status", "description": "工作状态"},
+                "switch": {"service_type": "switch", "char_name": "on"},
+                "temperature": {"service_type": "temperature", "char_name": "current", "description": "当前温度"}
+            }
+        },
+        {
+            "pid": "006",
+            "name": "灭蚊器",
+            "services": {
+                "switch": {"service_type": "switch", "char_name": "on"},
+                "delay": {"service_type": "timer", "char_name": "delay", "description": "工作定时"}
+            }
+        },
+        {
+            "pid": "007",
+            "name": "电饭煲",
+            "services": {
+                "switch": {"service_type": "switch", "char_name": "on"},
+                "cooker": {"service_type": "cooker", "char_name": "mode", "description": "烹饪模式"},
+                "status": {"service_type": "status", "char_name": "status", "description": "工作状态"},
+                "leftTime": {"service_type": "timer", "char_name": "time", "description": "剩余工作时间"}
+            }
+        },
+        {
+            "pid": "008",
+            "name": "断路器",
+            "auto_match": {
+                "required_domains": ["switch", "sensor"],
+                "name_keywords": ["断路器", "空开", "空气开关", "breaker"]
+            },
+            "services": {
+                "switch": {"service_type": "switch", "char_name": "on"},
+                "electric": {"service_type": "electric", "char_name": "totalConsum", "value_type": "float", "description": "累计用电量"},
+                "voltage": {"service_type": "electric", "char_name": "currentVoltage1", "c_service_id": "electric", "value_type": "float", "description": "当前电压"},
+                "power": {"service_type": "electric", "char_name": "currentPower1", "c_service_id": "electric", "value_type": "float", "description": "当前功率"},
+                "current": {"service_type": "electric", "char_name": "currentElectric1", "c_service_id": "electric", "value_type": "float", "description": "当前电流"}
+            }
+        }
+    ]
+}

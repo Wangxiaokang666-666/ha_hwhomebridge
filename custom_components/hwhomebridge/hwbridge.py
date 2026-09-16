@@ -89,15 +89,17 @@ async def start_hw_hilink_bridge(hass: HomeAssistant):
         _LOGGER.error("Failed to load product registry, device matching will not work")
 
     # 加载 C 库
-    _LOGGER.info(f"Loading hilink bridge library from {hilink_bridge_path}")
     hilink_config_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'hilink_bridge', 'config')
     os.environ['HILINK_CONFIG_DIR'] = hilink_config_dir + '/'
     dll = cdll.LoadLibrary
     lib = dll(f"{hilink_bridge_path}/libhilink_bridge.so")
     _LOGGER.info(f"open hilink bridge so success.")
 
+
     # 设置A_C（48字节随机字符串）
-    ac = os.urandom(48)
+    # 优先从 device_ac 文件读取已保存的 ac，避免每次启动重新生成
+    device_ac_file = os.path.join(hilink_config_dir, 'device_ac')
+    ac = _load_or_create_ac(device_ac_file)
     ac_value = (c_ubyte * 48)(*ac)
     lib.HILINK_SetAutoAc(ac_value, 48)
 
@@ -847,6 +849,51 @@ def _write_device_id_to_file(device_id: str):
             f.write(device_id + '\n')
     except Exception as e:
         _LOGGER.error(f"Failed to save device_id {device_id}: {e}")
+
+
+def _load_or_create_ac(device_ac_file: str) -> bytes:
+    """加载或创建 A_C（48字节随机字符串）
+
+    优先从 device_ac 文件读取已保存的 ac，避免每次启动重新生成。
+    如果文件不存在，则生成新的 ac 并保存到文件供下次使用。
+
+    Args:
+        device_ac_file: device_ac 文件路径
+
+    Returns:
+        48 字节的 ac 数据
+    """
+    if os.path.exists(device_ac_file):
+        try:
+            with open(device_ac_file, 'rb') as f:
+                ac = f.read()
+            if len(ac) != 48:
+                _LOGGER.warning(f"device_ac file has invalid ac length {len(ac)}, regenerating")
+                ac = os.urandom(48)
+                _save_ac_to_file(device_ac_file, ac)
+            else:
+                _LOGGER.info("Loaded AC from device_ac file")
+            return ac
+        except Exception as e:
+            _LOGGER.error(f"Failed to load AC from device_ac file: {e}, regenerating")
+            ac = os.urandom(48)
+            _save_ac_to_file(device_ac_file, ac)
+            return ac
+    else:
+        ac = os.urandom(48)
+        _save_ac_to_file(device_ac_file, ac)
+        _LOGGER.info("Generated new AC and saved to device_ac file")
+        return ac
+
+
+def _save_ac_to_file(device_ac_file: str, ac: bytes):
+    """保存 ac 到 device_ac 文件"""
+    try:
+        os.makedirs(os.path.dirname(device_ac_file), exist_ok=True)
+        with open(device_ac_file, 'wb') as f:
+            f.write(ac)
+    except Exception as e:
+        _LOGGER.error(f"Failed to save AC to device_ac file: {e}")
 
 
 def get_network_info() -> dict[str, str]:

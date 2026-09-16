@@ -90,7 +90,8 @@ async def start_hw_hilink_bridge(hass: HomeAssistant):
 
     # 加载 C 库
     _LOGGER.info(f"Loading hilink bridge library from {hilink_bridge_path}")
-    os.environ['HILINK_CONFIG_DIR'] = './custom_components/hwhomebridge/hilink_bridge/config/'
+    hilink_config_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'hilink_bridge', 'config')
+    os.environ['HILINK_CONFIG_DIR'] = hilink_config_dir + '/'
     dll = cdll.LoadLibrary
     lib = dll(f"{hilink_bridge_path}/libhilink_bridge.so")
     _LOGGER.info(f"open hilink bridge so success.")

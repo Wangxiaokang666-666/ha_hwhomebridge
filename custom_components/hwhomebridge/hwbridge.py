@@ -13,6 +13,7 @@ hwbridge.py - 核心桥接逻辑
 """
 
 import os
+import shutil
 import asyncio
 import psutil
 import socket
@@ -45,6 +46,9 @@ lib = None
 service_router = None  # ServiceRouter 实例（替代原来的 light_plt/fan_plt 等）
 
 hilink_bridge_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "hilink_bridge")
+# 运行时用户态目录，指向 HA 持久存储区 .storage/hwhomebridge/
+# C SDK (HILINK_CONFIG_DIR)、device_ac、new_device.txt 均落此目录
+hilink_config_dir = None
 hilink_cfg_files = ("bridge.cfg",
                      "bridge_bak.cfg",
                      "hilink_cert.cfg",
@@ -57,7 +61,8 @@ hilink_cfg_files = ("bridge.cfg",
                      "timer_bak.cfg")
 
 # 设备持久化（保存 device_id 而非 entity_id）
-saved_device_file = "new_device.txt"
+# 运行时在 start_hw_hilink_bridge 中拼接到 hilink_config_dir 下，避免污染 config 根目录
+saved_device_file = None
 registered_device_ids = set()  # 已注册到 HiLink 的 device_id 集合
 saved_device_ids = set()        # 从持久化文件恢复的 device_id 集合
 
@@ -89,9 +94,26 @@ async def start_hw_hilink_bridge(hass: HomeAssistant):
     else:
         _LOGGER.error("Failed to load product registry, device matching will not work")
 
-    # 加载 C 库
-    hilink_config_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'hilink_bridge', 'config')
+    global hilink_config_dir, saved_device_file
+
+    hilink_config_dir = hass.config.path('.storage', 'hwhomebridge', 'config')
+
+    os.makedirs(hilink_config_dir, exist_ok=True)
+
+    # 将随插件发布的固定配置文件复制到运行时目录，C SDK 启动时需要这些文件
+    # 始终覆盖：升级后固定配置可能有更新
+    fixed_cfg_src_dir = os.path.join(hilink_bridge_path, 'config')
+    for fname in ('hilink.cfg', 'hilink_bak.cfg'):
+        src = os.path.join(fixed_cfg_src_dir, fname)
+        dst = os.path.join(hilink_config_dir, fname)
+        if os.path.exists(src):
+            shutil.copy2(src, dst)
+
     os.environ['HILINK_CONFIG_DIR'] = hilink_config_dir + '/'
+    saved_device_file = os.path.join(hilink_config_dir, 'new_device.txt')
+    _LOGGER.info(f"hwhomebridge runtime dir: {hilink_config_dir}")
+
+    # 加载 C 库
     dll = cdll.LoadLibrary
     lib = dll(f"{hilink_bridge_path}/libhilink_bridge.so")
     _LOGGER.info(f"open hilink bridge so success.")
@@ -220,10 +242,10 @@ def stop_hw_hilink_bridge(hass: HomeAssistant):
     saved_device_ids.clear()
 
     # 删除持久化文件（与 OnBridgeStatusCB devStatus==9 路径一致）
-    if os.path.exists(saved_device_file):
+    if saved_device_file and os.path.exists(saved_device_file):
         os.remove(saved_device_file)
     for filename in hilink_cfg_files:
-        onefile = f"{hilink_bridge_path}/config/{filename}"
+        onefile = os.path.join(hilink_config_dir, filename)
         if os.path.exists(onefile):
             os.remove(onefile)
 
@@ -425,10 +447,10 @@ def OnBridgeStatusCB(status):
         if start_work:
             registered_device_ids.clear()
             saved_device_ids.clear()
-            if os.path.exists(saved_device_file):
+            if saved_device_file and os.path.exists(saved_device_file):
                 os.remove(saved_device_file)
             for filename in hilink_cfg_files:
-                onefile = f"{hilink_bridge_path}/config/{filename}"
+                onefile = os.path.join(hilink_config_dir, filename)
                 if os.path.exists(onefile):
                     os.remove(onefile)
             _LOGGER.info("Bridge went offline (devStatus=9) after startup, cleaned persisted files")

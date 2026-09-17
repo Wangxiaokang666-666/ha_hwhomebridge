@@ -11,18 +11,21 @@ _LOGGER = logging.getLogger(__name__)
 
 
 async def async_setup(hass: HomeAssistant, config: dict):
-    """Set up the hwhomebridge component.
+    """Set up the integration package.
 
-    Called by HA for both YAML and config_flow setups.
-    Starts the HiLink bridge.
+    The bridge belongs to the config entry lifecycle and is started from
+    ``async_setup_entry``. Starting it here makes Home Assistant's config
+    entry state independent from the actual bridge initialization.
     """
-    _LOGGER.info("async_setup called, starting hwhomebridge integration")
-    await start_hw_hilink_bridge(hass)
     return True
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     """Set up hwhomebridge from a config entry."""
+    if not hass.data.get("hwhomebridge_bridge_started"):
+        _LOGGER.info("Starting hwhomebridge for config entry %s", entry.entry_id)
+        await start_hw_hilink_bridge(hass)
+        hass.data["hwhomebridge_bridge_started"] = True
     _LOGGER.info("hwhomebridge config entry setup complete")
     return True
 

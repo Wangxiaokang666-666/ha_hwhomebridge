@@ -44,8 +44,8 @@
 - 华为智慧生活 APP（最新版本）
 - 运行平台：Linux (aarch64)
 
-> 插件当前仅支持 `aarch64(arm64)` 架构，适配树莓派 64 位、arm64 版 Home Assistant 官方容器。
-> 若使用 Alpine（musl libc）轻量 Docker 镜像，需要额外安装 glibc 兼容层 `gcompat`；推荐使用 Debian/Ubuntu 基础镜像（原生 glibc），避免 so 库加载异常。
+> 插件当前仅支持 `aarch64(arm64)` 架构，适配树莓派 64 位、arm64 版 Home Assistant 官方容器和 HAOS。
+> 集成已自带 Alpine/musl 所需的最小 `gcompat` 运行库，无需修改 HAOS 的 Home Assistant Core 容器。
 
 ## 集成安装
 
@@ -420,4 +420,3 @@ Apache 2.0 License
 欢迎提交 Issue 和 Pull Request！
 
 新增厂家适配器时，请按 `config/adapters/<vendor>/<category>.json` 的目录结构组织，并运行 `python validate_config.py` 验证配置正确性。
-

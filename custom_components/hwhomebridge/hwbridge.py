@@ -30,6 +30,7 @@ from homeassistant.const import (
 
 from .service_router import ServiceRouter
 from .pin_manager import PINManager
+from .const import SKIP_PLATFORMS
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -589,6 +590,11 @@ def _register_single_device(device_id: str, reuse_sn: str = None, is_update: boo
     
     entity_list = []
     for entry in device_entities:
+        # 跳过来自反向桥接集成（如 huawei_smarthome）的实体，避免循环接入
+        if getattr(entry, "platform", None) in SKIP_PLATFORMS:
+            _LOGGER.debug(f"Skipping entity {entry.entity_id} from platform '{entry.platform}' to avoid bridge loop")
+            continue
+
         state = ghass.states.get(entry.entity_id)
         entity_name = state.name if state and hasattr(state, 'name') else ""
         
@@ -603,6 +609,11 @@ def _register_single_device(device_id: str, reuse_sn: str = None, is_update: boo
             "device_class": device_class,
             "name": entity_name,
         })
+
+    # 过滤后若无可用实体，跳过该设备
+    if not entity_list:
+        _LOGGER.debug(f"Device {device_id} has no eligible entities after platform filter, skipping")
+        return False
 
     # 构建设备信息
     model = device_entry.model or ""

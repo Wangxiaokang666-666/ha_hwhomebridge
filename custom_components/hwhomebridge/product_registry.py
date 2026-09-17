@@ -16,15 +16,32 @@ Product Registry - 产品定义注册表（框架层 + 默认适配器 + 厂家�
 合并规则：厂家适配器字段覆盖默认适配器（非 None 字段覆盖）
 """
 
-import json
-import os
+import asyncio
 import copy
+import json
 import logging
+import os
+
 import aiofiles
 from dataclasses import dataclass, field
 from typing import Optional
 
 _LOGGER = logging.getLogger(__name__)
+
+
+def _find_adapter_files(adapters_dir: str) -> Optional[list[str]]:
+    """Return adapter JSON paths without blocking the event loop."""
+    if not os.path.isdir(adapters_dir):
+        return None
+
+    filepaths = []
+    for root, _dirs, files in os.walk(adapters_dir):
+        filepaths.extend(
+            os.path.join(root, filename)
+            for filename in sorted(files)
+            if filename.endswith(".json")
+        )
+    return filepaths
 
 
 # ---------------------------------------------------------------------------
@@ -443,7 +460,8 @@ class ProductRegistry:
         - adapters/default/*.json → 默认适配器（无 match_rules，提供标准 ha_mapping）
         - adapters/<vendor>/*.json → 厂家适配器（有 match_rules + 可选覆盖）
         """
-        if not os.path.exists(adapters_dir):
+        filepaths = await asyncio.to_thread(_find_adapter_files, adapters_dir)
+        if filepaths is None:
             _LOGGER.info(f"Adapters directory not found: {adapters_dir}, skipping")
             return True
 
@@ -451,27 +469,23 @@ class ProductRegistry:
         vendor_count = 0
         default_count = 0
 
-        for root, dirs, files in os.walk(adapters_dir):
-            for filename in sorted(files):
-                if not filename.endswith('.json'):
-                    continue
-                filepath = os.path.join(root, filename)
-                try:
-                    async with aiofiles.open(filepath, 'r', encoding='utf-8') as f:
-                        content = await f.read()
-                        data = json.loads(content)
+        for filepath in filepaths:
+            try:
+                async with aiofiles.open(filepath, 'r', encoding='utf-8') as f:
+                    content = await f.read()
+                    data = json.loads(content)
 
-                    adapter = self._parse_adapter(data, filepath)
-                    if adapter is not None:
-                        # 判断是 default 还是 vendor
-                        if os.path.dirname(filepath) == default_dir:
-                            self._defaults[adapter.pid] = adapter
-                            default_count += 1
-                        else:
-                            self._adapters.append(adapter)
-                            vendor_count += 1
-                except (json.JSONDecodeError, IOError) as e:
-                    _LOGGER.error(f"Failed to load adapter {filepath}: {e}")
+                adapter = self._parse_adapter(data, filepath)
+                if adapter is not None:
+                    # 判断是 default 还是 vendor
+                    if os.path.dirname(filepath) == default_dir:
+                        self._defaults[adapter.pid] = adapter
+                        default_count += 1
+                    else:
+                        self._adapters.append(adapter)
+                        vendor_count += 1
+            except (json.JSONDecodeError, IOError) as e:
+                _LOGGER.error(f"Failed to load adapter {filepath}: {e}")
 
         _LOGGER.info(f"Loaded {default_count} default adapters, "
                       f"{vendor_count} vendor adapters from {adapters_dir}")

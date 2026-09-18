@@ -42,9 +42,12 @@
 
 - Home Assistant Core ≥ 2023.1
 - 华为智慧生活 APP（最新版本）
-- 运行平台：Linux (aarch64)
+- 运行平台：Linux (aarch64 / amd64)
 
-> 插件当前仅支持 `aarch64(arm64)` 架构，适配树莓派 64 位、arm64 版 Home Assistant 官方容器。
+> 插件支持 `aarch64(arm64)` 和 `amd64(x86_64)` 两种架构，对应 SO 库分别位于 `hilink_bridge/lib/aarch64/` 和 `hilink_bridge/lib/amd64/` 目录下，集成启动时按需加载。
+>
+> aarch64 适配树莓派 64 位、arm64 版 Home Assistant 官方容器；amd64 适配 x86_64 服务器及虚拟化环境。
+>
 > 若使用 Alpine（musl libc）轻量 Docker 镜像，需要额外安装 glibc 兼容层 `gcompat`；推荐使用 Debian/Ubuntu 基础镜像（原生 glibc），避免 so 库加载异常。
 
 ## 集成安装

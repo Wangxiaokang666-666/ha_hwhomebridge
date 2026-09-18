@@ -15,6 +15,7 @@ hwbridge.py - 核心桥接逻辑
 import os
 import shutil
 import asyncio
+import platform
 import psutil
 import socket
 import json
@@ -113,11 +114,31 @@ async def start_hw_hilink_bridge(hass: HomeAssistant):
     saved_device_file = os.path.join(hilink_config_dir, 'new_device.txt')
     _LOGGER.info(f"hwhomebridge runtime dir: {hilink_config_dir}")
 
-    # 加载 C 库
-    dll = cdll.LoadLibrary
-    lib = dll(f"{hilink_bridge_path}/libhilink_bridge.so")
-    _LOGGER.info(f"open hilink bridge so success.")
+    # 加载 C 库（按 CPU 架构选择对应的 so）
+    machine = platform.machine() or ""
+    arch = ""
+    if machine.lower() in ("x86_64", "amd64"):
+        arch = "amd64"
+    elif machine.lower() in ("aarch64", "arm64"):
+        arch = "aarch64"
 
+    if not arch:
+        _LOGGER.error(f"Unsupported CPU architecture: {machine}, bridge will not start")
+        return
+
+    so_path = os.path.join(hilink_bridge_path, "lib", arch, "libhilink_bridge.so")
+    if not os.path.exists(so_path):
+        _LOGGER.error(f"SO file not found: {so_path}, bridge will not start")
+        return
+
+    _LOGGER.info(f"Loading hilink bridge so: {so_path}")
+    try:
+        dll = cdll.LoadLibrary
+        lib = dll(so_path)
+    except Exception as e:
+        _LOGGER.error(f"Failed to load so {so_path}: {e}, bridge will not start")
+        return
+    _LOGGER.info(f"open hilink bridge so success.")
 
     # 设置A_C（48字节随机字符串）
     # 优先从 device_ac 文件读取已保存的 ac，避免每次启动重新生成
@@ -513,13 +534,16 @@ def notify_new_device(hass: HomeAssistant):
     一个 HA device 对应一个 VirtualDevice（一个 SN）。
     """
     # 加载持久化的设备列表
-    if os.path.exists(saved_device_file):
+    if saved_device_file and os.path.exists(saved_device_file):
         with open(saved_device_file, 'r') as f:
             for line in f:
                 device_id = line.strip()
                 if device_id:
                     saved_device_ids.add(device_id)
         _LOGGER.info(f"Loaded {len(saved_device_ids)} saved device IDs")
+    else:
+        _LOGGER.warning(f"saved_device_file is not set (value={saved_device_file}), "
+                        "persisted device list will not be loaded")
 
     # 通过 HA 的 device_registry 和 entity_registry 发现设备
     _discover_and_register_devices(hass)
@@ -870,7 +894,7 @@ def _save_device_id(device_id: str):
         saved_device_ids.add(device_id)
         if ghass is not None:
             ghass.loop.run_in_executor(None, _write_device_id_to_file, device_id)
-        else:
+        elif saved_device_file:
             with open(saved_device_file, "a") as f:
                 f.write(device_id + '\n')
 
@@ -878,6 +902,9 @@ def _save_device_id(device_id: str):
 def _write_device_id_to_file(device_id: str):
     """在后台线程中执行文件写入"""
     try:
+        if not saved_device_file:
+            _LOGGER.warning("saved_device_file is not set, cannot persist device_id")
+            return
         with open(saved_device_file, "a") as f:
             f.write(device_id + '\n')
     except Exception as e:

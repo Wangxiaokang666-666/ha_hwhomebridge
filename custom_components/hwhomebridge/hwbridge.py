@@ -19,6 +19,7 @@ import platform
 import psutil
 import socket
 import json
+import threading
 import logging
 from ctypes import *
 
@@ -161,6 +162,15 @@ async def start_hw_hilink_bridge(hass: HomeAssistant):
         _LOGGER.warning("C library does not support RegPINQueryCallback, PIN feature may not work")
     except Exception as e:
         _LOGGER.error(f"Failed to register PIN query callback: {e}")
+
+    # 注册房间信息回调（用于SDK获取设备名）
+    try:
+        lib.RegGetRoomInfoCallback(pRoomInfoCB)
+        _LOGGER.info("Room info callback registered successfully")
+    except AttributeError:
+        _LOGGER.warning("C library does not support RegGetRoomInfoCallback, device names may not be set")
+    except Exception as e:
+        _LOGGER.error(f"Failed to register room info callback: {e}")
 
     # 设置 ServiceRouter 的依赖
     service_router.set_hass(hass)
@@ -521,6 +531,69 @@ def OnPINQueryCB():
 PIN_QUERY_FUNC = CFUNCTYPE(c_int)
 pPINQueryCB = PIN_QUERY_FUNC(OnPINQueryCB)
 
+
+# ---------------------------------------------------------------------------
+# 房间信息回调函数（供C侧SDK调用，用于获取设备名和房间名）
+# ---------------------------------------------------------------------------
+
+_room_info_lock = threading.Lock()
+
+
+def OnGetRoomInfoCB(sn_ptr, roomName_ptr, devName_ptr):
+    """C回调：根据 SN 获取设备的房间名和设备名
+
+    C 侧 SDK 在注册设备上云时需要调用此回调获取设备名称。
+
+    Args:
+        sn_ptr: 设备 SN 的指针（c_void_p，实际指向 C 字符串）
+        roomName_ptr: 房间名输出缓冲区（C 侧分配，40 bytes）
+        devName_ptr: 设备名输出缓冲区（C 侧分配，64 bytes）
+    """
+    if sn_ptr is None or devName_ptr is None:
+        return
+
+    # c_void_p 参数需要手动读取字符串
+    try:
+        sn_addr = cast(sn_ptr, POINTER(c_char))
+        sn = string_at(sn_addr).decode('utf-8')
+    except Exception:
+        return
+
+    if not sn or service_router is None:
+        return
+
+    with _room_info_lock:
+        # 1. 从 SN 查找 VirtualDevice
+        vd = service_router.sn_manager.get_by_sn(sn)
+        if vd is None:
+            return
+
+        # 2. 从 HA device_registry 获取设备名称
+        dev_name = ""
+        if ghass is not None:
+            try:
+                dev_reg = dr.async_get(ghass)
+                dev_entry = dev_reg.devices.get(vd.ha_device_id)
+                if dev_entry:
+                    dev_name = dev_entry.name_by_user or dev_entry.name or ""
+            except Exception:
+                pass
+
+        # 3. 将设备名写入 devName 缓冲区
+        if dev_name:
+            dev_name_bytes = dev_name.encode('utf-8')
+            # 截断到 63 字节（留 1 字节给 \0），SUB_DEV_NAME_MAX_LEN=64
+            if len(dev_name_bytes) >= 64:
+                dev_name_bytes = dev_name_bytes[:63]
+            # 将 c_void_p 转换为可写的字节数组，然后写入设备名
+            devName_arr = cast(devName_ptr, POINTER(c_ubyte * 64)).contents
+            for i, b in enumerate(dev_name_bytes):
+                devName_arr[i] = b
+            devName_arr[len(dev_name_bytes)] = 0  # null terminate
+
+# C 回调签名：void FuncGetRoomInfoCB(char* sn, char* roomName, char* devName)
+ROOM_INFO_FUNC = CFUNCTYPE(None, c_void_p, c_void_p, c_void_p)
+pRoomInfoCB = ROOM_INFO_FUNC(OnGetRoomInfoCB)
 
 # ---------------------------------------------------------------------------
 # 设备发现与注册

@@ -3,7 +3,7 @@
     "step": {
       "user": {
         "title": "HuaweiHome Bridge",
-        "description": "欢迎使用HuaweiHome Bridge！\n\n此集成帮您将Home Assistant设备接入到华为智慧生活，让您可以通过华为智慧生活APP或语音助手控制设备。\n\n**功能说明：**\n- 将HA设备接入到华为智慧生活\n- 支持远程控制、语音控制\n- 支持多种设备类型\n\n**使用步骤：**\n\n1.完成此配置后，网关将自动启动\n\n2.点击\"配置\"按钮获取PIN码\n\n3.在华为智慧生活APP中输入PIN码完成绑定\n\n---\n\n点击下方\"提交\"按钮完成集成配置",
+        "description": "欢迎使用HuaweiHome Bridge！\n\n此集成帮您将Home Assistant设备接入到华为智慧生活，让您可以通过华为智慧生活APP或语音助手控制设备。\n\n**功能说明：**\n- 将HA设备接入到华为智慧生活\n- 支持远程控制、语音控制\n- 支持多种设备类型\n- 在集成页面显示已接入的设备\n- 支持禁用/启用单个设备的桥接\n\n**使用步骤：**\n\n1.完成此配置后，网关将自动启动\n\n2.点击\"配置\"按钮获取PIN码\n\n3.在华为智慧生活APP中输入PIN码完成绑定\n\n4.绑定成功后，已匹配的设备将自动接入华为智慧生活\n\n5.在集成页面可查看已接入的设备，点击设备齿轮图标可禁用/启用\n\n---\n\n点击下方\"提交\"按钮完成集成配置",
         "data": {}
       }
     },
@@ -13,8 +13,22 @@
   },
   "options": {
     "step": {
+      "init": {
+        "title": "功能选择",
+        "description": "请选择需要的功能",
+        "data": {
+          "action": "功能"
+        }
+      },
       "show_pin": {
         "title": "网关绑定配置"
+      },
+      "select_device": {
+        "title": "设备管理",
+        "description": "已接入 {device_count} 个设备，勾选设备表示允许接入，取消勾选表示移除接入。",
+        "data": {
+          "devices": "已接入设备"
+        }
       }
     },
     "progress": {
@@ -22,7 +36,8 @@
     },
     "abort": {
       "pin_expired": "PIN码已过期，请重新配置",
-      "internal_error": "内部错误，请重试"
+      "internal_error": "内部错误，请重试",
+      "integration_not_init": "集成正在启动中，请稍后再试"
     }
   },
   "notify": {

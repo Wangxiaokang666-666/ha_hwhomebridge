@@ -4,7 +4,9 @@ import logging
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers import device_registry as dr
 
+from .const import DOMAIN
 from .hwbridge import start_hw_hilink_bridge
 
 _LOGGER = logging.getLogger(__name__)
@@ -17,12 +19,36 @@ async def async_setup(hass: HomeAssistant, config: dict):
     Starts the HiLink bridge.
     """
     _LOGGER.info("async_setup called, starting hwhomebridge integration")
+    hass.data.setdefault(DOMAIN, {})
     await start_hw_hilink_bridge(hass)
     return True
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
-    """Set up hwhomebridge from a config entry."""
+    """Set up hwhomebridge from a config entry.
+
+    Bridged sub-devices are created dynamically by hwbridge.py as they
+    are registered to HiLink. If devices were already discovered and
+    registered during async_setup (before this function runs), their
+    device registry entries are created here retrospectively.
+    """
+    from .hwbridge import service_router, _create_bridge_device_entry_async
+
+    dev_reg = dr.async_get(hass)
+
+    # 为在 async_setup_entry 之前已注册的设备补建 HA 设备注册表条目
+    if service_router is not None:
+        for vd in service_router.sn_manager.get_all_devices():
+            device_entry = dev_reg.devices.get(vd.ha_device_id)
+            name = ""
+            model = ""
+            manufacturer = ""
+            if device_entry:
+                name = device_entry.name_by_user or device_entry.name or ""
+                model = device_entry.model or ""
+                manufacturer = device_entry.manufacturer or ""
+            _create_bridge_device_entry_async(vd, name, model, manufacturer)
+
     _LOGGER.info("hwhomebridge config entry setup complete")
     return True
 

@@ -3,7 +3,7 @@
     "step": {
       "user": {
         "title": "HuaweiHome Bridge",
-        "description": "Welcome to HuaweiHome Bridge!\n\nThis integration bridges your Home Assistant devices to Huawei Smart Life ecosystem, enabling control via Huawei Smart Life app or voice assistant.\n\n**Features:**\n\n- Map HA devices to Huawei HiLink ecosystem\n\n- Support remote control and voice control\n\n- Support various device types\n\n**Usage Steps:**\n\n1.After completing this configuration, the gateway will start automatically\n\n2.Click \"Configure\" button to get PIN code\n\n3.Enter the PIN code in Huawei Smart Life app to complete binding\n\n---\n\nClick \"Submit\" button below to complete integration setup",
+        "description": "Welcome to HuaweiHome Bridge!\n\nThis integration bridges your Home Assistant devices to Huawei Smart Life ecosystem, enabling control via Huawei Smart Life app or voice assistant.\n\n**Features:**\n\n- Map HA devices to Huawei HiLink ecosystem\n\n- Support remote control and voice control\n\n- Support various device types\n\n- Display bridged devices in the integration page\n\n- Enable/disable bridge per device\n\n**Usage Steps:**\n\n1.After completing this configuration, the gateway will start automatically\n\n2.Click \"Configure\" button to get PIN code\n\n3.Enter the PIN code in Huawei Smart Life app to complete binding\n\n4.After binding, matched devices will be automatically bridged to Huawei Smart Life\n\n5.View bridged devices in the integration page, click device gear icon to enable/disable\n\n---\n\nClick \"Submit\" button below to complete integration setup",
         "data": {}
       }
     },
@@ -13,8 +13,22 @@
   },
   "options": {
     "step": {
+      "init": {
+        "title": "Select Function",
+        "description": "Please select a function",
+        "data": {
+          "action": "Function"
+        }
+      },
       "show_pin": {
         "title": "Gateway Binding Setup"
+      },
+      "select_device": {
+        "title": "Device Management",
+        "description": "{device_count} device(s) connected. Check to bridge a device, uncheck to remove it.",
+        "data": {
+          "devices": "Bridged Devices"
+        }
       }
     },
     "progress": {
@@ -22,7 +36,8 @@
     },
     "abort": {
       "pin_expired": "PIN code has expired, please reconfigure",
-      "internal_error": "Internal error, please try again"
+      "internal_error": "Internal error, please try again",
+      "integration_not_init": "Integration is starting up, please try again later"
     }
   },
   "notify": {

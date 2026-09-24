@@ -33,7 +33,7 @@ from homeassistant.const import (
 
 from .service_router import ServiceRouter
 from .pin_manager import PINManager
-from .const import SKIP_PLATFORMS
+from .const import SKIP_PLATFORMS, DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -71,6 +71,17 @@ saved_device_ids = set()        # 从持久化文件恢复的 device_id 集合
 # 状态缓冲区池：保持 bytes 对象引用，防止被垃圾回收导致 C 侧访问悬空指针
 # C 侧会在回调返回时拷贝内容，Python 侧保持引用直到下次调用或进程结束
 _char_state_bytes = {}  # {(sn, svc_id): bytes_object}
+
+# 设备注册表监听器：device_id -> cancel callback
+# 用于监听 HA device registry 的 disabled_by 变化（用户在 UI 上禁用/启用设备）
+_cancel_device_registry_listeners = {}  # {device_id: cancel_callback}
+
+# 禁用设备集合：存储被用户在 HA UI 上禁用的设备 SN
+_disabled_device_sns = set()
+
+# 设备发现锁：防止 OnBridgeStatusCB 多次触发并发发现
+_discovery_lock = threading.Lock()
+_discovery_in_progress = False
 
 
 # ---------------------------------------------------------------------------
@@ -272,6 +283,9 @@ def stop_hw_hilink_bridge(hass: HomeAssistant):
     registered_device_ids.clear()
     saved_device_ids.clear()
 
+    # 清理 HA 设备注册表条目（调度到事件循环执行，因为可能在后台线程调用）
+    ghass.loop.call_soon_threadsafe(_cleanup_all_device_entries_async)
+
     # 删除持久化文件（与 OnBridgeStatusCB devStatus==9 路径一致）
     if saved_device_file and os.path.exists(saved_device_file):
         os.remove(saved_device_file)
@@ -295,6 +309,11 @@ def OnPyActionCB(sn_data, payload_data):
     sn = bytes.decode(sn_data)
     payload = bytes.decode(payload_data)
     _LOGGER.info(f"=== OnPyActionCB called, sn={sn}, payload={payload}")
+
+    # 禁用设备不处理控制命令
+    if _is_device_disabled(sn):
+        _LOGGER.info(f"OnPyActionCB: device {sn} is disabled, ignoring control command")
+        return
 
     if service_router is not None:
         result = service_router.route_action(sn, payload)
@@ -403,6 +422,9 @@ def _delayed_resync_all_devices():
         return
     _LOGGER.info("Starting delayed state re-sync for all devices")
     for vd in service_router.sn_manager.get_all_devices():
+        if _is_device_disabled(vd.sn):
+            _LOGGER.debug(f"Skipping disabled device during resync: sn={vd.sn}")
+            continue
         service_router.sync_device_state(vd)
         _LOGGER.info(f"Re-synced state for sn={vd.sn} after gateway online (delayed)")
 
@@ -460,8 +482,19 @@ def OnBridgeStatusCB(status):
             return
         
         if ghass is not None:
-            _LOGGER.info("Gateway back online, re-discovering devices")
-            notify_new_device(ghass)
+            # 防止 C 侧多次触发 devStatus=1 导致并发发现
+            global _discovery_in_progress
+            with _discovery_lock:
+                if _discovery_in_progress:
+                    _LOGGER.info("Gateway online, but discovery already in progress, skip")
+                    return
+                _discovery_in_progress = True
+            try:
+                _LOGGER.info("Gateway back online, re-discovering devices")
+                notify_new_device(ghass)
+            finally:
+                with _discovery_lock:
+                    _discovery_in_progress = False
             # 网关上线后，对所有已注册的 VirtualDevice 重新同步状态
             # notify_new_device 会跳过已注册设备，但它们的初始状态
             # 可能因网关未上线而未成功上报
@@ -569,13 +602,28 @@ def OnGetRoomInfoCB(sn_ptr, roomName_ptr, devName_ptr):
             return
 
         # 2. 从 HA device_registry 获取设备名称
+        # 优先从桥接设备条目读取 name_by_user（用户通过"编辑设备"修改的名称），
+        # 其次从原始 HA 设备读取名称
         dev_name = ""
         if ghass is not None:
             try:
                 dev_reg = dr.async_get(ghass)
-                dev_entry = dev_reg.devices.get(vd.ha_device_id)
-                if dev_entry:
-                    dev_name = dev_entry.name_by_user or dev_entry.name or ""
+                entries = ghass.config_entries.async_entries(DOMAIN)
+                entry_id = entries[0].entry_id if entries else None
+
+                # 优先：桥接设备条目的 name_by_user
+                if entry_id:
+                    bridge_entry = dev_reg.async_get_device(
+                        identifiers={(DOMAIN, entry_id, vd.sn)}
+                    )
+                    if bridge_entry and bridge_entry.name_by_user:
+                        dev_name = bridge_entry.name_by_user
+
+                # 其次：原始 HA 设备的 name_by_user 或 name
+                if not dev_name:
+                    dev_entry = dev_reg.devices.get(vd.ha_device_id)
+                    if dev_entry:
+                        dev_name = dev_entry.name_by_user or dev_entry.name or ""
             except Exception:
                 pass
 
@@ -770,8 +818,17 @@ def _register_single_device(device_id: str, reuse_sn: str = None, is_update: boo
 
         registered_device_ids.add(device_id)
 
-        # 标记设备为在线，启用状态变化上报（handle_state_event 依赖此标志）
-        vd.online = True
+        # 检查设备是否被禁用（用户之前在 HA UI 上禁用了此设备）
+        if _is_device_disabled(vd.sn):
+            vd.online = False
+            service_router.register_device_to_hilink(vd.sn, 0)
+            _LOGGER.info(f"Device {device_id} (sn={vd.sn}) is disabled, reported offline")
+        else:
+            # 标记设备为在线，启用状态变化上报（handle_state_event 依赖此标志）
+            vd.online = True
+
+        # 在 HA 设备注册表中创建条目（使设备显示在集成页面）
+        _create_bridge_device_entry(vd, name, model, manufacturer)
 
         # 延迟同步初始状态
         # 在 C 侧已上线状态下，HilinkSyncBrgDevStatus(3) 会触发 batch bind，
@@ -808,6 +865,10 @@ def handle_state_event(event):
     if vd is None:
         return
 
+    # 禁用设备不转发状态变化
+    if _is_device_disabled(vd.sn):
+        return
+
     old_state = event.data['old_state']
     new_state = event.data['new_state']
 
@@ -837,6 +898,10 @@ def handle_device_registry_updated(event):
     - create: 新设备接入，自动注册到 HiLink
     - update: 设备信息更新，重新匹配并注册
     - remove: 设备删除，从 HiLink 注销
+
+    注意：本集成自己创建的桥接设备条目（identifiers 中含 DOMAIN + sn）
+    的 disabled_by 变化由 _on_device_registry_updated 专门处理，
+    此处跳过这些事件避免冲突。
     """
     if not bridge_work:
         return
@@ -849,6 +914,37 @@ def handle_device_registry_updated(event):
 
     if not event_type or not device_id:
         return
+
+    # 跳过本集成自己创建的桥接设备条目
+    if ghass is not None:
+        dev_reg = dr.async_get(ghass)
+        dev_entry = dev_reg.devices.get(device_id)
+        if dev_entry is not None:
+            # 检查是否是本集成创建的设备（非网关 SERVICE 类型）
+            entries = ghass.config_entries.async_entries(DOMAIN)
+            entry_id = entries[0].entry_id if entries else None
+            if entry_id and entry_id in dev_entry.config_entries:
+                # 这是本集成的设备，检查是否是桥接子设备（不是原始 HA 设备）
+                for ident in dev_entry.identifiers:
+                    if len(ident) == 3 and ident[0] == DOMAIN and ident[1] == entry_id:
+                        sn = ident[2]
+                        changes = event.data.get('changes', {})
+                        # disabled_by 变化由 _on_device_registry_updated 处理
+                        if event_type == 'update' and 'disabled_by' in changes:
+                            _LOGGER.debug(f"Skipping bridge device entry update (disabled_by): device_id={device_id}")
+                            return
+                        # name_by_user 变化：重新注册设备以同步名称到华为云端
+                        if event_type == 'update' and 'name_by_user' in changes:
+                            _LOGGER.info(f"Bridge device name changed, re-registering: sn={sn}")
+                            vd = service_router.sn_manager.get_by_sn(sn)
+                            if vd is not None and vd.online:
+                                service_router.register_device_to_hilink(sn, 1)
+                                service_router.sync_device_state(vd)
+                            return
+                        # 其他变更跳过
+                        if event_type == 'update':
+                            _LOGGER.debug(f"Skipping bridge device entry update: device_id={device_id}")
+                            return
 
     _LOGGER.debug(f"Device registry event: action={event_type}, device_id={device_id}")
 
@@ -920,9 +1016,250 @@ def _handle_device_remove_event(device_id: str):
     vd = service_router.unregister_device(device_id)
     if vd is not None:
         registered_device_ids.discard(device_id)
+        # 移除 HA device registry 条目
+        _remove_bridge_device_entry(vd.sn)
         _LOGGER.info(f"Device {device_id} (sn={vd.sn}) reported offline and cleaned up")
     else:
         _LOGGER.debug(f"Device {device_id} was not registered in HiLink, skip offline report")
+
+
+# ---------------------------------------------------------------------------
+# HA 设备注册表管理与禁用/启用
+# ---------------------------------------------------------------------------
+
+def _create_bridge_device_entry(vd, name: str, model: str, manufacturer: str):
+    """在 HA 设备注册表中为桥接设备创建条目
+
+    使设备显示在集成页面，用户可通过 HA UI 的设备设置齿轮菜单
+    禁用/启用设备（利用 HA 原生 disabled_by 机制）。
+
+    此函数可能从后台线程（C 回调）调用，因此通过 call_soon_threadsafe
+    将实际工作调度到事件循环中执行，确保 dev_reg.async_get_or_create
+    和 async_track_device_registry_updated_event 在正确的线程中运行。
+
+    Args:
+        vd: VirtualDevice
+        name: 设备名称
+        model: 设备型号
+        manufacturer: 设备制造商
+    """
+    if ghass is None:
+        return
+
+    # 名称兜底：使用产品名作为默认名称
+    if not name:
+        name = vd.product.name or vd.product.pid or "Bridge Device"
+
+    # 从后台线程调度到事件循环执行
+    ghass.loop.call_soon_threadsafe(
+        _create_bridge_device_entry_async, vd, name, model, manufacturer
+    )
+
+
+def _create_bridge_device_entry_async(vd, name: str, model: str, manufacturer: str):
+    """在事件循环中创建 HA 设备注册表条目（由 _create_bridge_device_entry 调度）
+
+    注意：此函数在事件循环线程中执行。
+    """
+    if ghass is None:
+        return
+
+    try:
+        dev_reg = dr.async_get(ghass)
+
+        # 查找当前 config entry
+        entries = ghass.config_entries.async_entries(DOMAIN)
+        entry_id = entries[0].entry_id if entries else None
+        if entry_id is None:
+            _LOGGER.warning("_create_bridge_device_entry_async: no config entry found")
+            return
+
+        identifier = (DOMAIN, entry_id, vd.sn)
+        device_entry = dev_reg.async_get_or_create(
+            config_entry_id=entry_id,
+            identifiers={identifier},
+            name=name,
+            model=model or vd.product.pid,
+            manufacturer=manufacturer,
+        )
+
+        # 如果设备条目残留了之前的 disabled_by 状态，清除它
+        if device_entry.disabled_by is not None:
+            dev_reg.async_update_device(
+                device_entry.id, disabled_by=None
+            )
+            _LOGGER.info(f"Cleared residual disabled_by for sn={vd.sn}")
+            device_entry = dev_reg.devices.get(device_entry.id)
+
+        # 监听此设备的 disabled_by 变化
+        if device_entry.id not in _cancel_device_registry_listeners:
+            from homeassistant.helpers.event import async_track_device_registry_updated_event
+            cancel = async_track_device_registry_updated_event(
+                ghass,
+                device_entry.id,
+                _on_device_registry_updated,
+            )
+            _cancel_device_registry_listeners[device_entry.id] = cancel
+            _LOGGER.info(f"Created device registry entry for sn={vd.sn}, name={name}, device_id={device_entry.id}")
+
+    except Exception as e:
+        _LOGGER.error(f"_create_bridge_device_entry_async failed for sn={vd.sn}: {e}")
+
+
+def _remove_bridge_device_entry(sn: str):
+    """从 HA 设备注册表中移除桥接设备条目
+
+    此函数可能从后台线程调用，通过 call_soon_threadsafe 调度到事件循环。
+
+    Args:
+        sn: 设备 SN
+    """
+    if ghass is None:
+        return
+
+    ghass.loop.call_soon_threadsafe(_remove_bridge_device_entry_async, sn)
+
+
+def _remove_bridge_device_entry_async(sn: str):
+    """在事件循环中移除桥接设备条目"""
+    if ghass is None:
+        return
+
+    try:
+        dev_reg = dr.async_get(ghass)
+
+        # 通过 identifiers 查找设备
+        entries = ghass.config_entries.async_entries(DOMAIN)
+        entry_id = entries[0].entry_id if entries else None
+        if entry_id is None:
+            return
+
+        identifier = (DOMAIN, entry_id, sn)
+        device_entry = dev_reg.async_get_device(identifiers={identifier})
+        if device_entry is not None:
+            # 取消监听器
+            cancel = _cancel_device_registry_listeners.pop(device_entry.id, None)
+            if cancel is not None and callable(cancel):
+                cancel()
+            # 移除设备条目
+            dev_reg.async_remove_device(device_entry.id)
+            _LOGGER.info(f"Removed device registry entry for sn={sn}")
+
+        _disabled_device_sns.discard(sn)
+    except Exception as e:
+        _LOGGER.error(f"_remove_bridge_device_entry_async failed for sn={sn}: {e}")
+
+
+def _on_device_registry_updated(event):
+    """处理 HA 设备注册表更新事件
+
+    当用户在 HA UI 上禁用/启用设备时，HA 会触发此事件。
+    我们检查 disabled_by 字段的变化，相应地暂停/恢复设备的桥接。
+
+    注意：不使用 changes['disabled_by'] 的值来判断禁用/启用，
+    因为该值可能是旧值。直接从 device_entry.disabled_by 读取当前值。
+    """
+    if not bridge_work:
+        return
+
+    if service_router is None:
+        return
+
+    data = event.data
+    action = data.get('action') if isinstance(data, dict) else getattr(data, 'action', None)
+    device_id = data.get('device_id') if isinstance(data, dict) else getattr(data, 'device_id', None)
+
+    if action != 'update' or not device_id:
+        return
+
+    changes = data.get('changes', {}) if isinstance(data, dict) else getattr(data, 'changes', {})
+    if 'disabled_by' not in changes:
+        return
+
+    if ghass is None:
+        return
+
+    dev_reg = dr.async_get(ghass)
+    device_entry = dev_reg.devices.get(device_id)
+    if device_entry is None:
+        return
+
+    # 从 identifiers 中提取 SN
+    entries = ghass.config_entries.async_entries(DOMAIN)
+    entry_id = entries[0].entry_id if entries else None
+    if entry_id is None:
+        return
+
+    sn = None
+    for ident in device_entry.identifiers:
+        if len(ident) == 3 and ident[0] == DOMAIN and ident[1] == entry_id:
+            sn = ident[2]
+            break
+
+    if sn is None:
+        return
+
+    vd = service_router.sn_manager.get_by_sn(sn)
+    if vd is None:
+        return
+
+    # 直接从 device_entry 读取当前 disabled_by 状态（新值）
+    if device_entry.disabled_by is not None:
+        # 设备被禁用
+        _disabled_device_sns.add(sn)
+        vd.online = False
+        service_router.register_device_to_hilink(sn, 0)
+        _LOGGER.info(f"Device disabled by user in HA UI: sn={sn}, disabled_by={device_entry.disabled_by}")
+    else:
+        # 设备被启用
+        _disabled_device_sns.discard(sn)
+        vd.online = True
+        service_router.register_device_to_hilink(sn, 1)
+        # 同步当前状态
+        service_router.sync_device_state(vd)
+        _LOGGER.info(f"Device enabled by user in HA UI: sn={sn}")
+
+
+def _is_device_disabled(sn: str) -> bool:
+    """检查设备是否被禁用（用户在 HA UI 上禁用）"""
+    return sn in _disabled_device_sns
+
+
+def _cleanup_all_device_entries():
+    """清理所有桥接设备的 HA 设备注册表条目（用于集成卸载/删除）
+
+    此函数可能从后台线程调用，通过 call_soon_threadsafe 调度到事件循环。
+    """
+    if ghass is None:
+        return
+
+    ghass.loop.call_soon_threadsafe(_cleanup_all_device_entries_async)
+
+
+def _cleanup_all_device_entries_async():
+    """在事件循环中清理所有桥接设备条目"""
+    if ghass is None:
+        return
+
+    dev_reg = dr.async_get(ghass)
+    entries = ghass.config_entries.async_entries(DOMAIN)
+    entry_id = entries[0].entry_id if entries else None
+    if entry_id is None:
+        return
+
+    # 取消所有监听器
+    for cancel in _cancel_device_registry_listeners.values():
+        if cancel is not None and callable(cancel):
+            cancel()
+    _cancel_device_registry_listeners.clear()
+
+    # 移除所有属于此 config entry 的设备
+    for device in list(dev_reg.devices.values()):
+        if entry_id in device.config_entries:
+            dev_reg.async_remove_device(device.id)
+
+    _disabled_device_sns.clear()
+    _LOGGER.info("All bridge device entries cleaned up")
 
 
 # ---------------------------------------------------------------------------

@@ -25,6 +25,7 @@ from ctypes import *
 
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import device_registry as dr, entity_registry as er
+from homeassistant.helpers import area_registry as ar
 from homeassistant.helpers.device_registry import EVENT_DEVICE_REGISTRY_UPDATED
 from homeassistant.const import (
     EVENT_HOMEASSISTANT_STARTED,
@@ -624,8 +625,33 @@ def OnGetRoomInfoCB(sn_ptr, roomName_ptr, devName_ptr):
                     dev_entry = dev_reg.devices.get(vd.ha_device_id)
                     if dev_entry:
                         dev_name = dev_entry.name_by_user or dev_entry.name or ""
+
+                # 从 HA area_registry 获取房间名（区域名称）
+                room_name = ""
+                if not room_name and dev_reg.devices.get(vd.ha_device_id):
+                    area_id = dev_reg.devices[vd.ha_device_id].area_id
+                    if area_id:
+                        try:
+                            area_reg = ar.async_get(ghass)
+                            area = area_reg.areas.get(area_id)
+                            if area:
+                                room_name = area.name or ""
+                        except Exception:
+                            pass
+
             except Exception:
                 pass
+
+        # 2.5. 将房间名写入 roomName 缓冲区
+        if room_name and roomName_ptr:
+            room_name_bytes = room_name.encode("utf-8")
+            # 截断到 39 字节（留 1 字节给 ），ROOM_NAME_MAX_LEN=40
+            if len(room_name_bytes) >= 40:
+                room_name_bytes = room_name_bytes[:39]
+            roomName_arr = cast(roomName_ptr, POINTER(c_ubyte * 40)).contents
+            for i, b in enumerate(room_name_bytes):
+                roomName_arr[i] = b
+            roomName_arr[len(room_name_bytes)] = 0  # null terminate
 
         # 3. 将设备名写入 devName 缓冲区
         if dev_name:

@@ -34,6 +34,7 @@ from homeassistant.const import (
 
 from .service_router import ServiceRouter
 from .pin_manager import PINManager
+from .virtual_device import SNManager
 from .const import SKIP_PLATFORMS, DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
@@ -66,6 +67,7 @@ hilink_cfg_files = ("bridge.cfg",
 # 设备持久化（保存 device_id 而非 entity_id）
 # 运行时在 start_hw_hilink_bridge 中拼接到 hilink_config_dir 下，避免污染 config 根目录
 saved_device_file = None
+excluded_devices_file = None
 registered_device_ids = set()  # 已注册到 HiLink 的 device_id 集合
 saved_device_ids = set()        # 从持久化文件恢复的 device_id 集合
 
@@ -79,6 +81,9 @@ _cancel_device_registry_listeners = {}  # {device_id: cancel_callback}
 
 # 禁用设备集合：存储被用户在 HA UI 上禁用的设备 SN
 _disabled_device_sns = set()
+
+# 排除设备集合：存储被设备管理页取消勾选的设备 SN（重启后不注册到 HiLink）
+_excluded_device_sns = set()
 
 # 设备发现锁：防止 OnBridgeStatusCB 多次触发并发发现
 _discovery_lock = threading.Lock()
@@ -108,7 +113,7 @@ async def start_hw_hilink_bridge(hass: HomeAssistant):
     else:
         _LOGGER.error("Failed to load product registry, device matching will not work")
 
-    global hilink_config_dir, saved_device_file
+    global hilink_config_dir, saved_device_file, excluded_devices_file
 
     hilink_config_dir = hass.config.path('.storage', 'hwhomebridge', 'config')
 
@@ -125,6 +130,7 @@ async def start_hw_hilink_bridge(hass: HomeAssistant):
 
     os.environ['HILINK_CONFIG_DIR'] = hilink_config_dir + '/'
     saved_device_file = os.path.join(hilink_config_dir, 'new_device.txt')
+    excluded_devices_file = os.path.join(hilink_config_dir, 'excluded_devices.txt')
     _LOGGER.info(f"hwhomebridge runtime dir: {hilink_config_dir}")
 
     # 加载 C 库（按 CPU 架构选择对应的 so）
@@ -283,6 +289,7 @@ def stop_hw_hilink_bridge(hass: HomeAssistant):
         service_router.sn_manager.clear()
     registered_device_ids.clear()
     saved_device_ids.clear()
+    _excluded_device_sns.clear()
 
     # 清理 HA 设备注册表条目（调度到事件循环执行，因为可能在后台线程调用）
     ghass.loop.call_soon_threadsafe(_cleanup_all_device_entries_async)
@@ -290,6 +297,8 @@ def stop_hw_hilink_bridge(hass: HomeAssistant):
     # 删除持久化文件（与 OnBridgeStatusCB devStatus==9 路径一致）
     if saved_device_file and os.path.exists(saved_device_file):
         os.remove(saved_device_file)
+    if excluded_devices_file and os.path.exists(excluded_devices_file):
+        os.remove(excluded_devices_file)
     for filename in hilink_cfg_files:
         onefile = os.path.join(hilink_config_dir, filename)
         if os.path.exists(onefile):
@@ -512,8 +521,11 @@ def OnBridgeStatusCB(status):
         if start_work:
             registered_device_ids.clear()
             saved_device_ids.clear()
+            _excluded_device_sns.clear()
             if saved_device_file and os.path.exists(saved_device_file):
                 os.remove(saved_device_file)
+            if excluded_devices_file and os.path.exists(excluded_devices_file):
+                os.remove(excluded_devices_file)
             for filename in hilink_cfg_files:
                 onefile = os.path.join(hilink_config_dir, filename)
                 if os.path.exists(onefile):
@@ -602,17 +614,20 @@ def OnGetRoomInfoCB(sn_ptr, roomName_ptr, devName_ptr):
         if vd is None:
             return
 
-        # 2. 从 HA device_registry 获取设备名称
-        # 优先从桥接设备条目读取 name_by_user（用户通过"编辑设备"修改的名称），
-        # 其次从原始 HA 设备读取名称
+        # 2. 从 HA device_registry 获取设备名称和区域名称
+        # 设备名优先级：桥接设备条目 name_by_user > 原始 HA 设备 name_by_user/name
+        # 房间名优先级：桥接设备条目 area_id > 原始 HA 设备 area_id
         dev_name = ""
+        room_name = ""
         if ghass is not None:
             try:
                 dev_reg = dr.async_get(ghass)
+                area_reg = ar.async_get(ghass)
                 entries = ghass.config_entries.async_entries(DOMAIN)
                 entry_id = entries[0].entry_id if entries else None
 
-                # 优先：桥接设备条目的 name_by_user
+                # 优先：桥接设备条目的 name_by_user 和 area_id
+                bridge_entry = None
                 if entry_id:
                     bridge_entry = dev_reg.async_get_device(
                         identifiers={(DOMAIN, entry_id, vd.sn)}
@@ -621,39 +636,29 @@ def OnGetRoomInfoCB(sn_ptr, roomName_ptr, devName_ptr):
                         dev_name = bridge_entry.name_by_user
 
                 # 其次：原始 HA 设备的 name_by_user 或 name
+                orig_entry = None
                 if not dev_name:
-                    dev_entry = dev_reg.devices.get(vd.ha_device_id)
-                    if dev_entry:
-                        dev_name = dev_entry.name_by_user or dev_entry.name or ""
+                    orig_entry = dev_reg.devices.get(vd.ha_device_id)
+                    if orig_entry:
+                        dev_name = orig_entry.name_by_user or orig_entry.name or ""
 
-                # 从 HA area_registry 获取房间名（区域名称）
-                room_name = ""
-                if not room_name and dev_reg.devices.get(vd.ha_device_id):
-                    area_id = dev_reg.devices[vd.ha_device_id].area_id
-                    if area_id:
-                        try:
-                            area_reg = ar.async_get(ghass)
-                            area = area_reg.areas.get(area_id)
-                            if area:
-                                room_name = area.name or ""
-                        except Exception:
-                            pass
+                # 房间名：优先从桥接设备条目获取 area_id，其次从原始设备
+                area_id = None
+                if bridge_entry and bridge_entry.area_id:
+                    area_id = bridge_entry.area_id
+                elif orig_entry is None:
+                    orig_entry = dev_reg.devices.get(vd.ha_device_id)
+                if not area_id and orig_entry and orig_entry.area_id:
+                    area_id = orig_entry.area_id
 
+                if area_id:
+                    area = area_reg.async_get_area(area_id)
+                    if area and area.name:
+                        room_name = area.name
             except Exception:
                 pass
 
-        # 2.5. 将房间名写入 roomName 缓冲区
-        if room_name and roomName_ptr:
-            room_name_bytes = room_name.encode("utf-8")
-            # 截断到 39 字节（留 1 字节给 ），ROOM_NAME_MAX_LEN=40
-            if len(room_name_bytes) >= 40:
-                room_name_bytes = room_name_bytes[:39]
-            roomName_arr = cast(roomName_ptr, POINTER(c_ubyte * 40)).contents
-            for i, b in enumerate(room_name_bytes):
-                roomName_arr[i] = b
-            roomName_arr[len(room_name_bytes)] = 0  # null terminate
-
-        # 3. 将设备名写入 devName 缓冲区
+        # 3. 将设备名写入 devName 缓冲区（64 bytes）
         if dev_name:
             dev_name_bytes = dev_name.encode('utf-8')
             # 截断到 63 字节（留 1 字节给 \0），SUB_DEV_NAME_MAX_LEN=64
@@ -664,6 +669,17 @@ def OnGetRoomInfoCB(sn_ptr, roomName_ptr, devName_ptr):
             for i, b in enumerate(dev_name_bytes):
                 devName_arr[i] = b
             devName_arr[len(dev_name_bytes)] = 0  # null terminate
+
+        # 4. 将房间名写入 roomName 缓冲区（40 bytes）
+        if room_name and roomName_ptr is not None:
+            room_name_bytes = room_name.encode('utf-8')
+            # 截断到 39 字节（留 1 字节给 \0），ROOM_NAME_MAX_LEN=40
+            if len(room_name_bytes) >= 40:
+                room_name_bytes = room_name_bytes[:39]
+            roomName_arr = cast(roomName_ptr, POINTER(c_ubyte * 40)).contents
+            for i, b in enumerate(room_name_bytes):
+                roomName_arr[i] = b
+            roomName_arr[len(room_name_bytes)] = 0  # null terminate
 
 # C 回调签名：void FuncGetRoomInfoCB(char* sn, char* roomName, char* devName)
 ROOM_INFO_FUNC = CFUNCTYPE(None, c_void_p, c_void_p, c_void_p)
@@ -691,6 +707,15 @@ def notify_new_device(hass: HomeAssistant):
     else:
         _LOGGER.warning(f"saved_device_file is not set (value={saved_device_file}), "
                         "persisted device list will not be loaded")
+
+    # 加载排除设备列表（设备管理页取消勾选的设备，重启后不注册到 HiLink）
+    if excluded_devices_file and os.path.exists(excluded_devices_file):
+        with open(excluded_devices_file, 'r') as f:
+            for line in f:
+                sn = line.strip()
+                if sn:
+                    _excluded_device_sns.add(sn)
+        _LOGGER.info(f"Loaded {len(_excluded_device_sns)} excluded device SNs")
 
     # 通过 HA 的 device_registry 和 entity_registry 发现设备
     _discover_and_register_devices(hass)
@@ -764,7 +789,12 @@ def _register_single_device(device_id: str, reuse_sn: str = None, is_update: boo
     if not is_update and device_id in registered_device_ids:
         _LOGGER.debug(f"Device {device_id} already registered, skip")
         return False
-    
+
+    # 预生成 SN 用于排除检查（排除列表存储的是 SN，不是 device_id）
+    expected_sn = SNManager.generate_sn(device_id) if not reuse_sn else reuse_sn
+    is_excluded = not is_update and expected_sn in _excluded_device_sns
+    if is_excluded:
+        _LOGGER.info(f"Device {device_id} (sn={expected_sn}) is excluded, will register to SNManager only")
     device_reg = dr.async_get(ghass)
     entity_reg = er.async_get(ghass)
     
@@ -829,6 +859,11 @@ def _register_single_device(device_id: str, reuse_sn: str = None, is_update: boo
     )
 
     if vd is not None:
+        if is_excluded:
+            vd.online = False
+            _LOGGER.info(f"Device registered to SNManager only (excluded): sn={vd.sn}, device_id={device_id}")
+            return True
+
         # 注册到 HiLink
         if is_update:
             # 更新场景：设备已在线，status=1
@@ -844,22 +879,15 @@ def _register_single_device(device_id: str, reuse_sn: str = None, is_update: boo
 
         registered_device_ids.add(device_id)
 
-        # 检查设备是否被禁用（用户之前在 HA UI 上禁用了此设备）
         if _is_device_disabled(vd.sn):
             vd.online = False
             service_router.register_device_to_hilink(vd.sn, 0)
             _LOGGER.info(f"Device {device_id} (sn={vd.sn}) is disabled, reported offline")
         else:
-            # 标记设备为在线，启用状态变化上报（handle_state_event 依赖此标志）
             vd.online = True
 
-        # 在 HA 设备注册表中创建条目（使设备显示在集成页面）
         _create_bridge_device_entry(vd, name, model, manufacturer)
 
-        # 延迟同步初始状态
-        # 在 C 侧已上线状态下，HilinkSyncBrgDevStatus(3) 会触发 batch bind，
-        # 此时立即调用 UpdateHAStatus 会导致 C 侧状态冲突崩溃。
-        # 延迟到 batch bind 完成后再上报状态。
         _LOGGER.info(f"Device registered, state sync deferred: sn={vd.sn}, device_id={device_id}, "
                      f"name={name}, model={model}")
         return True
@@ -946,20 +974,16 @@ def handle_device_registry_updated(event):
         dev_reg = dr.async_get(ghass)
         dev_entry = dev_reg.devices.get(device_id)
         if dev_entry is not None:
-            # 检查是否是本集成创建的设备（非网关 SERVICE 类型）
             entries = ghass.config_entries.async_entries(DOMAIN)
             entry_id = entries[0].entry_id if entries else None
             if entry_id and entry_id in dev_entry.config_entries:
-                # 这是本集成的设备，检查是否是桥接子设备（不是原始 HA 设备）
                 for ident in dev_entry.identifiers:
                     if len(ident) == 3 and ident[0] == DOMAIN and ident[1] == entry_id:
                         sn = ident[2]
                         changes = event.data.get('changes', {})
-                        # disabled_by 变化由 _on_device_registry_updated 处理
                         if event_type == 'update' and 'disabled_by' in changes:
                             _LOGGER.debug(f"Skipping bridge device entry update (disabled_by): device_id={device_id}")
                             return
-                        # name_by_user 变化：重新注册设备以同步名称到华为云端
                         if event_type == 'update' and 'name_by_user' in changes:
                             _LOGGER.info(f"Bridge device name changed, re-registering: sn={sn}")
                             vd = service_router.sn_manager.get_by_sn(sn)
@@ -967,7 +991,6 @@ def handle_device_registry_updated(event):
                                 service_router.register_device_to_hilink(sn, 1)
                                 service_router.sync_device_state(vd)
                             return
-                        # 其他变更跳过
                         if event_type == 'update':
                             _LOGGER.debug(f"Skipping bridge device entry update: device_id={device_id}")
                             return
@@ -1042,7 +1065,6 @@ def _handle_device_remove_event(device_id: str):
     vd = service_router.unregister_device(device_id)
     if vd is not None:
         registered_device_ids.discard(device_id)
-        # 移除 HA device registry 条目
         _remove_bridge_device_entry(vd.sn)
         _LOGGER.info(f"Device {device_id} (sn={vd.sn}) reported offline and cleaned up")
     else:
@@ -1072,20 +1094,23 @@ def _create_bridge_device_entry(vd, name: str, model: str, manufacturer: str):
     if ghass is None:
         return
 
-    # 名称兜底：使用产品名作为默认名称
     if not name:
         name = vd.product.name or vd.product.pid or "Bridge Device"
 
-    # 从后台线程调度到事件循环执行
     ghass.loop.call_soon_threadsafe(
         _create_bridge_device_entry_async, vd, name, model, manufacturer
     )
 
 
-def _create_bridge_device_entry_async(vd, name: str, model: str, manufacturer: str):
+def _create_bridge_device_entry_async(vd, name: str, model: str, manufacturer: str, clear_disabled: bool = False):
     """在事件循环中创建 HA 设备注册表条目（由 _create_bridge_device_entry 调度）
 
-    注意：此函数在事件循环线程中执行。
+    Args:
+        vd: VirtualDevice
+        name: 设备名称
+        model: 设备型号
+        manufacturer: 设备制造商
+        clear_disabled: 是否清除残留的 disabled_by 状态（仅在设备管理页重新勾选时使用）
     """
     if ghass is None:
         return
@@ -1109,15 +1134,19 @@ def _create_bridge_device_entry_async(vd, name: str, model: str, manufacturer: s
             manufacturer=manufacturer,
         )
 
-        # 如果设备条目残留了之前的 disabled_by 状态，清除它
-        if device_entry.disabled_by is not None:
+        if clear_disabled and device_entry.disabled_by is not None:
             dev_reg.async_update_device(
                 device_entry.id, disabled_by=None
             )
             _LOGGER.info(f"Cleared residual disabled_by for sn={vd.sn}")
             device_entry = dev_reg.devices.get(device_entry.id)
+        elif device_entry.disabled_by is not None:
+            _disabled_device_sns.add(vd.sn)
+            vd.online = False
+            if service_router is not None:
+                service_router.register_device_to_hilink(vd.sn, 0)
+            _LOGGER.info(f"Restored disabled state for sn={vd.sn}")
 
-        # 监听此设备的 disabled_by 变化
         if device_entry.id not in _cancel_device_registry_listeners:
             from homeassistant.helpers.event import async_track_device_registry_updated_event
             cancel = async_track_device_registry_updated_event(
@@ -1163,11 +1192,9 @@ def _remove_bridge_device_entry_async(sn: str):
         identifier = (DOMAIN, entry_id, sn)
         device_entry = dev_reg.async_get_device(identifiers={identifier})
         if device_entry is not None:
-            # 取消监听器
             cancel = _cancel_device_registry_listeners.pop(device_entry.id, None)
             if cancel is not None and callable(cancel):
                 cancel()
-            # 移除设备条目
             dev_reg.async_remove_device(device_entry.id)
             _LOGGER.info(f"Removed device registry entry for sn={sn}")
 
@@ -1229,15 +1256,12 @@ def _on_device_registry_updated(event):
     if vd is None:
         return
 
-    # 直接从 device_entry 读取当前 disabled_by 状态（新值）
     if device_entry.disabled_by is not None:
-        # 设备被禁用
         _disabled_device_sns.add(sn)
         vd.online = False
         service_router.register_device_to_hilink(sn, 0)
         _LOGGER.info(f"Device disabled by user in HA UI: sn={sn}, disabled_by={device_entry.disabled_by}")
     else:
-        # 设备被启用
         _disabled_device_sns.discard(sn)
         vd.online = True
         service_router.register_device_to_hilink(sn, 1)
@@ -1345,6 +1369,50 @@ def _write_device_id_to_file(device_id: str):
             f.write(device_id + '\n')
     except Exception as e:
         _LOGGER.error(f"Failed to save device_id {device_id}: {e}")
+
+
+def _add_excluded_device(sn: str):
+    """添加排除设备并持久化"""
+    if sn not in _excluded_device_sns:
+        _excluded_device_sns.add(sn)
+        if ghass is not None:
+            ghass.loop.run_in_executor(None, _write_excluded_device_to_file, sn)
+        elif excluded_devices_file:
+            with open(excluded_devices_file, "a") as f:
+                f.write(sn + '\n')
+
+
+def _write_excluded_device_to_file(sn: str):
+    """在后台线程中写入排除设备"""
+    try:
+        if not excluded_devices_file:
+            return
+        with open(excluded_devices_file, "a") as f:
+            f.write(sn + '\n')
+    except Exception as e:
+        _LOGGER.error(f"Failed to save excluded device {sn}: {e}")
+
+
+def _remove_excluded_device(sn: str):
+    """移除排除设备并持久化"""
+    if sn in _excluded_device_sns:
+        _excluded_device_sns.discard(sn)
+        if ghass is not None:
+            ghass.loop.run_in_executor(None, _rewrite_excluded_devices_file)
+        elif excluded_devices_file:
+            _rewrite_excluded_devices_file()
+
+
+def _rewrite_excluded_devices_file():
+    """重写排除设备文件（在后台线程中执行）"""
+    try:
+        if not excluded_devices_file:
+            return
+        with open(excluded_devices_file, "w") as f:
+            for sn in _excluded_device_sns:
+                f.write(sn + '\n')
+    except Exception as e:
+        _LOGGER.error(f"Failed to rewrite excluded devices file: {e}")
 
 
 def _load_or_create_ac(device_ac_file: str) -> bytes:

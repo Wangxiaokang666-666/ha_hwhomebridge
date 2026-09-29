@@ -72,7 +72,7 @@ class OptionsFlowHandler(config_entries.OptionsFlow):
     已配置后，点击"配置"按钮进入此流程。
     提供两个功能：
     - PIN绑定：显示PIN码用于在华为智慧生活APP上绑定
-    - 设备管理：查看和管理已接入的设备（启用/禁用）
+    - 设备管理：查看和管理已接入的设备
     """
     
     __DEFAULT_TIME_OUT = 300  # 5分钟
@@ -158,13 +158,7 @@ class OptionsFlowHandler(config_entries.OptionsFlow):
         return self.async_create_entry(title="", data={})
     
     async def async_step_select_device(self, user_input=None):
-        """设备管理：显示已接入设备列表，支持启用/禁用
-        
-        显示所有已匹配并注册到 HiLink 的设备，用户可以通过
-        勾选/取消勾选来添加/移除设备的桥接。
-        
-        勾选 = 设备接入（创建设备条目，上报在线）
-        取消勾选 = 设备移除（删除设备条目，上报离线）
+        """设备管理：显示已接入设备列表，支持添加/移除桥接
         """
         from .hwbridge import service_router
         
@@ -174,56 +168,49 @@ class OptionsFlowHandler(config_entries.OptionsFlow):
         all_vds = service_router.sn_manager.get_all_devices()
         
         if not all_vds:
-            # 没有已接入的设备
             return self.async_show_form(
                 step_id="select_device",
                 data_schema=vol.Schema({}),
                 description_placeholders={"device_count": "0"},
             )
         
-        # 构建设备列表 {sn: "设备名 (PID)"}
         dev_reg = dr.async_get(self.hass)
         options_dict = {}
         default_selected = []
         
-        # 获取 config entry_id 用于查找桥接设备条目
         entries = self.hass.config_entries.async_entries(DOMAIN)
         entry_id = entries[0].entry_id if entries else None
         
         for vd in all_vds:
-            # 优先从原始 HA 设备获取名称
             name = vd.product.name or vd.product.pid
             orig_device = dev_reg.devices.get(vd.ha_device_id)
             if orig_device:
                 name = orig_device.name_by_user or orig_device.name or name
             
-            # 查找桥接设备条目（用于名称回退和默认选中判断）
             bridge_dev = None
             if entry_id:
                 bridge_dev = dev_reg.async_get_device(
                     identifiers={(DOMAIN, entry_id, vd.sn)}
                 )
             
-            # 如果原始设备名称为空，尝试从桥接设备条目获取名称
             if not name and bridge_dev and bridge_dev.name:
                 name = bridge_dev.name
             
             label = f"{name} ({vd.product.pid})"
             options_dict[vd.sn] = label
             
-            # 默认选中：设备注册表中有对应条目的设备
             if bridge_dev is not None:
                 default_selected.append(vd.sn)
         
         if user_input is not None:
-            # 用户提交了选择
             selected_sns = set(user_input.get("devices", []))
             
-            # 取消勾选的设备：从 HiLink 注销（status=2 删除） + 移除 HA 设备注册表条目
-            # 勾选的设备：注册到 HiLink（status=3 新设备 + status=1 上线） + 创建 HA 设备注册表条目
             from .hwbridge import (
                 _create_bridge_device_entry_async,
                 _remove_bridge_device_entry_async,
+                _add_excluded_device,
+                _remove_excluded_device,
+                _excluded_device_sns,
             )
 
             for vd in all_vds:
@@ -237,18 +224,20 @@ class OptionsFlowHandler(config_entries.OptionsFlow):
                     manufacturer = orig_device.manufacturer or ""
 
                 if vd.sn not in selected_sns:
-                    # 取消勾选 → 注销设备（status=2）+ 移除设备注册表条目
                     service_router.register_device_to_hilink(vd.sn, 2)
                     vd.online = False
                     _remove_bridge_device_entry_async(vd.sn)
+                    _add_excluded_device(vd.sn)
                     _LOGGER.info(f"Device unregistered via options flow: sn={vd.sn}")
                 else:
-                    # 勾选 → 注册设备（status=3 + status=1）+ 创建设备注册表条目
-                    service_router.register_device_to_hilink(vd.sn, 3)
-                    service_router.register_device_to_hilink(vd.sn, 1)
-                    vd.online = True
-                    _create_bridge_device_entry_async(vd, name, model, manufacturer)
-                    _LOGGER.info(f"Device registered via options flow: sn={vd.sn}")
+                    was_excluded = vd.sn in _excluded_device_sns
+                    if was_excluded:
+                        service_router.register_device_to_hilink(vd.sn, 3)
+                        service_router.register_device_to_hilink(vd.sn, 1)
+                        vd.online = True
+                        _remove_excluded_device(vd.sn)
+                        _create_bridge_device_entry_async(vd, name, model, manufacturer, clear_disabled=True)
+                        _LOGGER.info(f"Device re-registered via options flow: sn={vd.sn}")
             
             return self.async_create_entry(title="", data={})
         

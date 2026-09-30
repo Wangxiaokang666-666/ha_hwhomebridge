@@ -164,25 +164,7 @@ async def start_hw_hilink_bridge(hass: HomeAssistant):
     lib.GetGatewaySN.restype = c_char_p
 
     # 注册 C 回调
-    lib.RegHomeAssistantPyCB(pActionCB, pTypeCheckCB, pDevStatusCB, pBridgeStatusCB, pGetCharStateCB)
-    
-    # 注册PIN查询回调
-    try:
-        lib.RegPINQueryCallback(pPINQueryCB)
-        _LOGGER.info("PIN query callback registered successfully")
-    except AttributeError:
-        _LOGGER.warning("C library does not support RegPINQueryCallback, PIN feature may not work")
-    except Exception as e:
-        _LOGGER.error(f"Failed to register PIN query callback: {e}")
-
-    # 注册房间信息回调（用于SDK获取设备名）
-    try:
-        lib.RegGetRoomInfoCallback(pRoomInfoCB)
-        _LOGGER.info("Room info callback registered successfully")
-    except AttributeError:
-        _LOGGER.warning("C library does not support RegGetRoomInfoCallback, device names may not be set")
-    except Exception as e:
-        _LOGGER.error(f"Failed to register room info callback: {e}")
+    register_hilink_callbacks()
 
     # 设置 ServiceRouter 的依赖
     service_router.set_hass(hass)
@@ -249,6 +231,64 @@ async def handle_started_event(event):
     if service_router is not None and service_router.sn_manager.get_device_count() > 0:
         _LOGGER.info("Scheduling delayed state sync for newly registered devices")
         ghass.loop.call_later(30, _delayed_resync_all_devices)
+
+
+
+def register_hilink_callbacks():
+    """向 C 侧注册所有 Python 回调。
+
+    在 async_setup（首次启动）和 async_setup_entry（重载集成）时都会调用。
+    重载时 async_unload_entry 会先 nullify 回调，这里重新注册恢复。
+    """
+    if lib is None:
+        _LOGGER.warning("Cannot register callbacks: lib is None")
+        return
+    try:
+        lib.RegHomeAssistantPyCB(pActionCB, pTypeCheckCB, pDevStatusCB, pBridgeStatusCB, pGetCharStateCB)
+    except Exception as e:
+        _LOGGER.error(f"Failed to register RegHomeAssistantPyCB: {e}")
+    try:
+        lib.RegPINQueryCallback(pPINQueryCB)
+        _LOGGER.info("PIN query callback registered successfully")
+    except AttributeError:
+        _LOGGER.warning("C library does not support RegPINQueryCallback, PIN feature may not work")
+    except Exception as e:
+        _LOGGER.error(f"Failed to register PIN query callback: {e}")
+    try:
+        lib.RegGetRoomInfoCallback(pRoomInfoCB)
+        _LOGGER.info("Room info callback registered successfully")
+    except AttributeError:
+        _LOGGER.warning("C library does not support RegGetRoomInfoCallback, device names may not be set")
+    except Exception as e:
+        _LOGGER.error(f"Failed to register room info callback: {e}")
+    _LOGGER.info("All HiLink callbacks registered")
+
+
+def nullify_hilink_callbacks():
+    """将所有 C 侧回调指针置 NULL，防止 SDK 线程在解释器销毁后调用 Python 回调。
+
+    C 侧所有回调调用点都有 NULL check，置空后 SDK 线程继续运行但不再进入 Python。
+    重载集成时 async_setup_entry 会调用 register_hilink_callbacks 重新注册。
+    """
+    if lib is None:
+        return
+    try:
+        lib.RegHomeAssistantPyCB(None, None, None, None, None)
+    except Exception as e:
+        _LOGGER.error(f"Failed to nullify RegHomeAssistantPyCB: {e}")
+    try:
+        lib.RegPINQueryCallback(None)
+    except AttributeError:
+        pass
+    except Exception as e:
+        _LOGGER.error(f"Failed to nullify RegPINQueryCallback: {e}")
+    try:
+        lib.RegGetRoomInfoCallback(None)
+    except AttributeError:
+        pass
+    except Exception as e:
+        _LOGGER.error(f"Failed to nullify RegGetRoomInfoCallback: {e}")
+    _LOGGER.info("All HiLink callbacks nullified")
 
 
 def stop_hw_hilink_bridge(hass: HomeAssistant):

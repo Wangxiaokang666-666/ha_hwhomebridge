@@ -7,7 +7,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers import device_registry as dr
 
 from .const import DOMAIN
-from .hwbridge import start_hw_hilink_bridge
+from .hwbridge import start_hw_hilink_bridge, nullify_hilink_callbacks
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -32,7 +32,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     registered during async_setup (before this function runs), their
     device registry entries are created here retrospectively.
     """
-    from .hwbridge import service_router, _create_bridge_device_entry_async
+    from .hwbridge import service_router, _create_bridge_device_entry_async, register_hilink_callbacks
+
+    # 重载集成时 async_unload_entry 已 nullify 回调，这里重新注册
+    register_hilink_callbacks()
 
     dev_reg = dr.async_get(hass)
 
@@ -54,7 +57,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
 
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
-    """Unload a config entry."""
+    """Unload a config entry - nullify C callbacks to prevent core dump on shutdown."""
+    nullify_hilink_callbacks()
     return True
 
 

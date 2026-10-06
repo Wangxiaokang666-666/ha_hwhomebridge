@@ -1,0 +1,6 @@
+{
+    "pid": "002",
+    "match_rules": [
+        {"type": "model_exact", "model": "lemesh.light.wy0a20"}
+    ]
+}

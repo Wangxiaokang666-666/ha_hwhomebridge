@@ -49,10 +49,8 @@ config/
 ├── adapters/
 │   ├── default/                        # Layer 2: Default adapters (华为标准 HA 映射)
 │   │   ├── 001.json  002.json  ...   #   从华为 profile 提取的标准映射
-│   ├── xiaomi/                         # Layer 3: Vendor adapters (厂家差异覆盖)
-│   │   ├── cooker.json  bulb.json  ...
-│   └── midea/
-│       └── cooker.json
+│   └── xiaomi/ linp/ zhimi/            # Layer 3: Vendor adapters (厂家差异覆盖)
+│       lemesh/ chuangmi/ midea/       #   match_rules + disable_services + 差异覆盖
 ```
 
 ### Layer 1: Framework (`product_registry.json`)
@@ -81,10 +79,64 @@ Used by `auto_match` when no vendor adapter matches. Can be updated independentl
 Vendor-specific overrides. Contains:
 - `match_rules`: device identification (model_exact, model_keyword, name_keyword)
 - `services`: only fields that differ from default (field-level override)
+- `disable_services`: framework `service_id` values this device does not have; they are
+  removed from the merged `ProductDef` (see below)
 
 **Simple categories** (lights, switches): often only need `match_rules`, inheriting everything from default.
 
 **Complex categories** (cookers, kettles): may override entire services (different domain, value_mapping, etc.).
+
+### The C Side Is a Closed Prebuilt Library
+
+`hilink_bridge/lib/<arch>/libhilink_bridge.so` is a **prebuilt binary**. The repository
+contains no `.c`/`.h` sources and no build script; the CMake instructions under
+"Build and Deploy" describe a source tree that is not published here.
+
+The library embeds a **fixed device-type table** in `.rodata`. Its complete service
+vocabulary is:
+
+```
+switch  brightness  cct  status  alarmBell  mode  heatingTarget  temperature
+timer   cooker      electric  delay
+```
+
+There is **no** `climate`, `cover`, or `fan` anywhere in the binary. The table holds
+**17 entries**. Python addresses it by array index via `hwbridge.py:_get_pid_index()`,
+which maps only the first 8 positions (`001`–`008`); the remaining 9 are empty
+placeholders. That array length is what tells the C side how many types to report, and
+the peer side expects a fixed count, so exposing more types is not a Python-only edit.
+
+**Consequence:** a device whose only controllable aspects are `climate`, `cover`, or
+`fan` **cannot** be bridged by editing this repository. Supporting one requires editing
+the C source, registering a new Huawei PID, and rebuilding the `.so`.
+
+Practical procedure when asked to "support all devices of integration X":
+
+```
+1. Enumerate the entity domains owned by each device.
+2. If a controllable domain is climate/cover/fan   → blocked on the C side.
+3. Otherwise map it onto one of the 8 existing product shapes, adding a vendor
+   adapter plus `disable_services` for whatever that shape has but the device lacks.
+```
+
+**Known blocked devices** (observed 2026-10-07): 3 air conditioners
+(2 × Midea AC LAN `climate`, 1 × `xiaomi.aircondition.mt8`), 4 curtains
+(`linp.curtain.ec1db`, `cover`), 2 fans (`dmaker.fan.p45`, `fan`).
+
+### Vendor Adaptors May Disable Framework Services
+
+A vendor adapter may declare `disable_services`, a list of framework `service_id`
+values the device does not have. Those services are dropped from the merged
+`ProductDef`, so neither the C side nor the entity binder ever sees them.
+
+This is required when a device matches a product shape only partially. Without it the
+framework service still finds *some* entity of the matching domain and binds to the
+wrong one silently — the concrete failure observed in the field was a light product's
+`brightness` / `cct` binding to a switch panel's indicator LED
+(`light.*_s_8_indicator_light`), so the panel's actual key was uncontrollable.
+
+`disable_services` applies only when a vendor adapter matched; `auto_match` devices keep
+the full framework service set, so ordinary lights still get `brightness` / `cct`.
 
 ### Three-Layer Merge
 
@@ -138,7 +190,7 @@ Device enters
 |------|------|
 | `config/product_registry.json` | Framework: PID, service_type, char_name, auto_match |
 | `config/adapters/default/*.json` | Default adapters: standard HA mappings from Huawei profile |
-| `config/adapters/<vendor>/*.json` | Vendor adapters: match_rules + difference overrides |
+| `config/adapters/<vendor>/*.json` | Vendor adapters: match_rules + difference overrides + disable_services |
 | `profile/*.json` | Huawei HiLink device profiles (C-side, **not open source**, gitignored) |
 
 ## Key Design Decisions
@@ -333,13 +385,13 @@ The code uses `psutil.net_if_addrs()` to find the local IP address, skipping `ha
 ## Build and Deploy
 
 ### C Library Build
-```bash
-cd hilink_bridge
-mkdir -p build && cd build
-cmake ..
-make
-# Output: libhilink_bridge.so in build/
-```
+
+**Not reproducible in this repository.** `libhilink_bridge.so` is shipped prebuilt per
+architecture (`hilink_bridge/lib/amd64/`, `hilink_bridge/lib/aarch64/`); no C sources,
+headers, `CMakeLists.txt`, or build script are published here. To rebuild it you need the
+C source tree plus the HiLink SDK (`libhilinkdevicesdk.so`, `libhilinkota.so`,
+`libmbedtls.so`), which are **not** present either. Treat the binary as an external
+dependency: consuming behaviour may be configured, but no new device type can be added.
 
 ### Deployment
 The entire `hwhomebridge/` directory is deployed to the HA custom components path:
@@ -375,4 +427,5 @@ Validates framework + default + vendor adapter JSON files for consistency (PID r
 - `product_matcher.py` — Three-level matching engine (vendor match_rules → auto_match → skip)
 - `service_action.py` — ServiceActionDispatcher (control command execution)
 - `validate_config.py` — Configuration validation tool
-- `hilink_bridge/adapter/profile_adapter/hilink_profile_bridge.c` — C-side bridge logic
+- `hilink_bridge/lib/<arch>/libhilink_bridge.so` — **prebuilt** HiLink bridge binary; the
+  C side is not in this repository (see "The C Side Is a Closed Prebuilt Library")

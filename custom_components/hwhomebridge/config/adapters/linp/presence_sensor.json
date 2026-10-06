@@ -1,0 +1,14 @@
+{
+    "pid": "003",
+    "match_rules": [
+        {"type": "model_exact", "model": "linp.sensor_occupy.es2"},
+        {"type": "model_exact", "model": "linp.sensor_occupy.es5b"}
+    ],
+    "disable_services": ["switch", "brightness", "cct"],
+    "services": {
+        "status": {
+            "domain": "sensor",
+            "name_keywords": ["有人无人"]
+        }
+    }
+}

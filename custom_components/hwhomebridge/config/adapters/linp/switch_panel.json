@@ -1,0 +1,15 @@
+{
+    "pid": "002",
+    "match_rules": [
+        {"type": "model_exact", "model": "linp.switch.t2dbw1"},
+        {"type": "model_exact", "model": "linp.switch.t2dbw2"},
+        {"type": "model_exact", "model": "linp.switch.t2dbw3"}
+    ],
+    "disable_services": ["brightness", "cct"],
+    "services": {
+        "switch": {
+            "domain": "switch",
+            "name_keywords": ["左键"]
+        }
+    }
+}

@@ -38,6 +38,29 @@
 5. 🍚 电饭煲(007)
 6. 🔌 断路器(008)
 
+### 能力边界（重要）
+
+品类数量由 C 侧预编译库 `libhilink_bridge.so` 决定。该库内嵌的设备类型表是**固定的**，
+服务词表只有 `switch / brightness / cct / status / alarmBell / mode / heatingTarget /
+temperature / timer / cooker / electric / delay` 十二种，**不含 `climate`、`cover`、`fan`**。
+本仓库不含 C 源码与构建脚本，因此**无法通过改配置新增品类**。
+
+按此边界，任意接入来源的设备分三类：
+
+| 情况 | 能否接入 | 做法 |
+|------|----------|------|
+| 具备 `light` / `switch` 等已有品类所需实体 | 可以 | 厂家适配器 `match_rules`；缺少的形状能力用 `disable_services` 去掉 |
+| 只有 `climate` / `cover` / `fan` 等无对应品类的实体（空调、窗帘、风扇） | **不能** | 需改 C 源码、注册新华为 PID 并重编 `.so` |
+| 纯只读传感器（温湿度、光照等） | 暂未接入 | 现有 8 个品类中无对应只读品类 |
+
+厂家适配器的 `disable_services` 用于「只能对上部分形状」的设备。缺少它时，框架层服务仍会
+在该 domain 的实体里挑一个来绑定，从而静默绑错——典型现象是灯品类的 `brightness` / `cct`
+绑到多键开关面板的指示灯（`light.*_s_8_indicator_light`），导致面板真实按键不可控。
+
+实测受限设备（2026-10-07）：3 台空调（2 台 Midea AC LAN `climate`、1 台
+`xiaomi.aircondition.mt8`）、4 台窗帘（`linp.curtain.ec1db`，`cover`）、2 台风扇
+（`dmaker.fan.p45`，`fan`）。
+
 ## 环境要求
 
 - Home Assistant Core ≥ 2023.1

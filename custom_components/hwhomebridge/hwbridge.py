@@ -36,6 +36,7 @@ from .service_router import ServiceRouter
 from .pin_manager import PINManager
 from .virtual_device import SNManager
 from .const import SKIP_PLATFORMS, DOMAIN
+from .native_async import drain_native, submit_callback
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -227,6 +228,10 @@ async def handle_started_event(event):
     # OnBridgeStatusCB 可能在 HA 启动前就触发并等待 start_work，
     # 但等待循环不可靠，导致 notify_new_device 未被调用。
     # 这里直接调用确保设备发现一定执行。
+    #
+    # 说明：notify_new_device 会访问 device_registry，必须留在事件循环线程上；
+    # 它内部的原生调用（HilinkSyncBrgDevStatus）现已由 native_async 卸载到
+    # 专用线程，因此这里不会再阻塞事件循环 —— 修复前正是这一行把 HA 卡死。
     _LOGGER.info("Starting device discovery from handle_started_event")
     notify_new_device(ghass)
 
@@ -315,6 +320,8 @@ def stop_hw_hilink_bridge(hass: HomeAssistant):
         for vd in all_vds:
             _LOGGER.info(f"Removing sub-device from HiLink cloud: sn={vd.sn}")
             service_router.register_device_to_hilink(vd.sn, 2)
+        # 等上面这些已入队的原生调用执行完，再动 SDK 与持久化文件
+        drain_native()
 
     # 2. 调用 C 侧 exit_brg() 重置网关并退出后台线程
     if lib is not None:
@@ -520,31 +527,63 @@ def OnGetCharStateCB(sn_data, svcId):
 
 
 def OnBridgeStatusCB(status):
-    """C 回调：桥接状态变化"""
+    """C 回调：桥接状态变化
+
+    本函数运行在 SDK 自己的线程上，且 SDK 可能在持锁状态下回调进来。因此这里
+    不做任何同步原生调用 —— 只把活儿丢给独立线程，回调立即返回。
+
+    已确证：`HilinkSyncBrgDevStatus` 会在调用者线程上阻塞等待 SDK 内部锁；若在
+    事件循环线程上直接调用，整个 HA 会失去响应。本回调也一律不与业务调用共用
+    线程：处理体里的 `HILINK_GetDevStatus()` 同样要拿那把锁。
+    """
+    submit_callback(_handle_bridge_status, status)
+
+
+def _handle_bridge_status(status):
+    """在专用线程中处理桥接状态（由 OnBridgeStatusCB 调度）
+
+    原生调用与耗时操作都在这里完成，避免在 SDK 回调线程上重入 SDK 锁。
+    """
+    global bridge_work, _discovery_in_progress
+
+    if lib is None:
+        return
+
     devStatus = lib.HILINK_GetDevStatus()
     _LOGGER.info(f"=== hwbridge status is {status}, dev status is {devStatus}.")
 
     if 1 == devStatus:
-        global bridge_work
         bridge_work = True
-        
+
         if not start_work:
             return
-        
+
         if ghass is not None:
             # 防止 C 侧多次触发 devStatus=1 导致并发发现
-            global _discovery_in_progress
             with _discovery_lock:
                 if _discovery_in_progress:
                     _LOGGER.info("Gateway online, but discovery already in progress, skip")
                     return
                 _discovery_in_progress = True
+
+            def _discover_job():
+                global _discovery_in_progress
+                try:
+                    _LOGGER.info("Gateway back online, re-discovering devices")
+                    notify_new_device(ghass)
+                finally:
+                    with _discovery_lock:
+                        _discovery_in_progress = False
+
             try:
-                _LOGGER.info("Gateway back online, re-discovering devices")
-                notify_new_device(ghass)
-            finally:
+                # 设备发现要访问 device_registry，必须回到 HA 事件循环线程执行；
+                # 其中的原生调用已由 native_async 卸载，不会阻塞事件循环。
+                ghass.loop.call_soon_threadsafe(_discover_job)
+            except Exception as e:
+                _LOGGER.error(f"Failed to schedule discovery: {e}")
                 with _discovery_lock:
                     _discovery_in_progress = False
+
             # 网关上线后，对所有已注册的 VirtualDevice 重新同步状态
             # notify_new_device 会跳过已注册设备，但它们的初始状态
             # 可能因网关未上线而未成功上报
@@ -555,7 +594,13 @@ def OnBridgeStatusCB(status):
             # 上报状态，否则状态上报会被全部丢弃。
             if service_router is not None:
                 _LOGGER.info("Scheduling delayed state re-sync (waiting for batch bind to complete)")
-                ghass.loop.call_later(30, _delayed_resync_all_devices)
+                try:
+                    ghass.loop.call_soon_threadsafe(
+                        ghass.loop.call_later, 30, _delayed_resync_all_devices
+                    )
+                except Exception as e:
+                    _LOGGER.error(f"Failed to schedule resync: {e}")
+
     elif 9 == devStatus:
         bridge_work = False
         if start_work:

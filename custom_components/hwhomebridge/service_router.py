@@ -17,6 +17,7 @@ from .product_registry import ProductRegistry, ProductDef, ServiceDef, HAMapping
 from .product_matcher import ProductMatcher, DeviceInfo
 from .virtual_device import VirtualDevice, ServiceEntry, SNManager
 from .service_action import ServiceActionDispatcher
+from .native_async import submit_native
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -786,16 +787,15 @@ class ServiceRouter:
             _LOGGER.error(f"Invalid payload type: {type(payload)}, expected dict or str")
             return
 
-        try:
-            self._lib.UpdateHAStatus(
-                self._c_char_p(sn),
-                self._c_char_p(svcid),
-                self._c_char_p(payload_str)
-            )
-            _LOGGER.debug(f"UpdateHAStatus called: sn={sn}, svcid={svcid}, payload={payload_str}")
-        except Exception as e:
-            _LOGGER.error(f"Failed to update HW bridge status: "
-                           f"sn={sn}, svcid={svcid}, payload={payload_str}, error={e}")
+        # 原生调用卸载到专用线程：UpdateHAStatus 同样会等待 SDK 内部互斥锁，
+        # 而本函数会被状态变化事件（事件循环线程）与 SDK 回调线程调用。
+        self._submit_native(
+            self._lib.UpdateHAStatus,
+            self._c_char_p(sn),
+            self._c_char_p(svcid),
+            self._c_char_p(payload_str),
+            log_args=(sn, svcid),
+        )
 
     def _c_char_p(self, s):
         """将 Python str 转换为 ctypes c_char_p"""
@@ -1043,23 +1043,41 @@ class ServiceRouter:
     def register_device_to_hilink(self, sn: str, status: int) -> bool:
         """将设备注册到 HiLink（调用 C library 的 HilinkSyncBrgDevStatus）
 
+        原生调用被卸载到专用线程执行：该函数会等待 SDK 内部互斥锁
+        （`M2mMutexLock`），而 SDK 的 `LoopDispatchEvent` 线程最长可持有它上百
+        秒。若在 HA 事件循环线程或 SDK 回调线程上同步调用，会导致整个实例
+        失去响应（实测 gdb 栈：__pthread_mutex_timedlock <- HilinkSyncBrgDevStatus
+        <- _ctypes <- _asyncio）。
+
         Args:
             sn: 设备 SN
-            status: 1=在线(已知设备), 3=新设备
+            status: 0=离线 1=在线(已知设备) 2=删除 3=新设备
 
         Returns:
-            True 表示调用成功
+            True 表示调用已提交（不代表 SDK 已完成处理）
         """
         if not self._lib:
             return False
 
+        self._submit_native(
+            self._lib.HilinkSyncBrgDevStatus, self._c_char_p(sn), status,
+            log_args=(sn, status),
+        )
+        return True
+
+    def _submit_native(self, func, *args, log_args=None):
+        """把阻塞式原生调用提交到专用线程，不阻塞当前线程。
+
+        SDK 回调线程同样走这里：`OnBridgeStatusCB` 等的执行栈就在 SDK 内部，
+        在里面同步回调会重入同一把非递归锁。入队后立刻返回，调用由专用线程
+        串行完成。
+        """
         try:
-            rlt = self._lib.HilinkSyncBrgDevStatus(self._c_char_p(sn), status)
-            _LOGGER.info(f"HilinkSyncBrgDevStatus({sn}, {status}) = {rlt}")
-            return True
+            submit_native(func, *args)
         except Exception as e:
-            _LOGGER.error(f"Failed to call HilinkSyncBrgDevStatus: {e}")
-            return False
+            _LOGGER.error(f"Failed to submit native call {log_args}: {e}")
+            return None
+        _LOGGER.debug(f"Native call submitted: {log_args}")
 
     def sync_device_state(self, vd: VirtualDevice) -> bool:
         """同步设备的完整状态到 HiLink

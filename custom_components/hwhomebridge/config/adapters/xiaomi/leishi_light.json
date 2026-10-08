@@ -1,0 +1,13 @@
+{
+    "pid": "002",
+    "match_rules": [
+        {"type": "model_exact", "model": "leishi.light.eps126"},
+        {"type": "model_exact", "model": "leishi.light.eps127"},
+        {"type": "model_exact", "model": "leishi.light.nvc001"}
+    ],
+    "services": {
+        "brightness": {
+            "brightness_range": 100
+        }
+    }
+}

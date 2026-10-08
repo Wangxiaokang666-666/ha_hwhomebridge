@@ -1,0 +1,12 @@
+{
+    "pid": "004",
+    "match_rules": [
+        {"type": "model_exact", "model": "linp.magnet.m1"}
+    ],
+    "services": {
+        "alarmBell": {
+            "domain": "sensor",
+            "name_keywords": ["工作状态"]
+        }
+    }
+}

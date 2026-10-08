@@ -248,6 +248,43 @@ value_mapping 定义在**适配器层**的 service 配置中：
 
 ---
 
+## disable_services：剔除该设备不具备的框架服务
+
+厂家适配器可用 `disable_services` 声明：该设备虽然匹配到这个 PID 的形状，但**不具备**其中某些
+服务。被列出的 service_id 会在三层合并时从最终 ProductDef 中剔除，C 侧与实体绑定都不会再看到它。
+
+**为什么必须显式声明**：框架层服务按 domain 找实体，只要该 domain 下存在实体就会绑上第一个
+候选。当设备只有部分形状时，这会静默绑错。实测案例：领普多键墙壁开关
+（`linp.switch.t2dbw3`）只有按键与指示灯，却被灯品类（PID 002）的 `brightness` / `cct`
+绑到了 `light.*_s_8_indicator_light`（指示灯），导致面板真实按键不可控。
+
+```json
+// config/adapters/linp/switch_panel.json
+{
+    "pid": "002",
+    "match_rules": [
+        {"type": "model_exact", "model": "linp.switch.t2dbw3"}
+    ],
+    "disable_services": ["brightness", "cct"],
+    "services": {
+        "switch": {
+            "domain": "switch",
+            "name_keywords": ["左键"]
+        }
+    }
+}
+```
+
+要点：
+
+1. `disable_services` 只在**厂家适配器被匹配**时生效；走 `auto_match` 的设备仍保留框架的
+   全部服务，因此普通灯照样有 `brightness` / `cct`。
+2. 剔除是整体移除，不是把 domain 置空——不要把它当作「改 domain」用。
+3. 只能用框架层已存在的 service_id，写错只是无效，不会报错；新增后建议跑
+   `python validate_config.py` 并确认日志无 `Adapter has service ... not in framework`。
+
+---
+
 ## 实现细节
 
 ### 核心类

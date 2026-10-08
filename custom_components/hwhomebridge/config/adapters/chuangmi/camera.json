@@ -1,0 +1,12 @@
+{
+    "pid": "006",
+    "match_rules": [
+        {"type": "model_keyword", "keywords": ["chuangmi.camera"]}
+    ],
+    "services": {
+        "switch": {
+            "domain": "switch",
+            "name_keywords": ["摄像机控制 开关"]
+        }
+    }
+}

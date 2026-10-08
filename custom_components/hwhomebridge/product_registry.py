@@ -279,10 +279,13 @@ class AdapterDef:
 
     引用框架层的 PID，提供 match_rules 和可选的 service 覆盖。
     services 中的值是 ha_mapping 字段的 dict（未解析为 HAMapping，在 merge 时合并）。
+    厂家适配器还可用 disable_services 声明该设备不适用的框架服务
+    （例如墙壁开关面板没有调光/色温能力，灯产品的 brightness / cct 不应暴露）。
     """
     pid: str                                      # 引用框架层 ProductDef 的 PID
     match_rules: list = field(default_factory=list)  # list[MatchRule]
     services: dict = field(default_factory=dict)     # service_id -> dict of ha_mapping fields
+    disable_services: list = field(default_factory=list)  # 该厂家不适用的框架 service_id
 
 
 # ---------------------------------------------------------------------------
@@ -503,6 +506,11 @@ class ProductRegistry:
         if isinstance(services_data, dict):
             adapter.services = services_data
 
+        # 声明该厂家不适用的框架服务（合并时从产品定义中剔除）
+        disabled = data.get('disable_services', [])
+        if isinstance(disabled, list):
+            adapter.disable_services = [s for s in disabled if isinstance(s, str)]
+
         return adapter
 
     def _parse_match_rule(self, data: dict) -> Optional[MatchRule]:
@@ -550,8 +558,15 @@ class ProductRegistry:
         )
 
         default_adapter = self._defaults.get(pid)
+        disabled_services = set(adapter.disable_services) if adapter else set()
 
         for svc_id, fw_svc in product.services.items():
+            # 厂家适配器声明该设备不具备此能力时，直接剔除该服务，
+            # 避免 C 侧查询到一个绑到错误实体（如指示灯）的服务。
+            if svc_id in disabled_services:
+                _LOGGER.debug(f"Service '{svc_id}' disabled by adapter for PID {pid}")
+                continue
+
             # 第一层：从默认适配器获取基础 ha_mapping
             base_mapping = HAMapping()
             if default_adapter:

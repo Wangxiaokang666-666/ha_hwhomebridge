@@ -1,0 +1,14 @@
+{
+    "pid": "006",
+    "match_rules": [
+        {"type": "model_keyword", "keywords": ["zhimi.airp"]},
+        {"type": "model_keyword", "keywords": ["zhimi.airpurifier"]}
+    ],
+    "disable_services": ["delay"],
+    "services": {
+        "switch": {
+            "domain": "switch",
+            "name_keywords": ["空气净化器 开关"]
+        }
+    }
+}

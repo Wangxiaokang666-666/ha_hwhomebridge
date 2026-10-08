@@ -1,0 +1,12 @@
+{
+    "pid": "006",
+    "match_rules": [
+        {"type": "model_keyword", "keywords": ["xiaomi.wifispeaker"]}
+    ],
+    "services": {
+        "switch": {
+            "domain": "switch",
+            "name_keywords": ["睡眠模式"]
+        }
+    }
+}

@@ -209,38 +209,36 @@ class ServiceRouter:
             _LOGGER.debug(f"_find_best_entity: no entity with domain '{mapping.domain}'")
             return None
 
-        # Level 1.5: exclude_keywords 排除（实体名/id 包含任意关键词则排除）
-        if mapping.exclude_keywords:
-            filtered = []
-            for entity in candidates:
-                entity_name = (entity.get("name") or "").lower()
-                entity_id = (entity.get("entity_id") or "").lower()
-                excluded = False
-                for kw in mapping.exclude_keywords:
-                    kw_lower = kw.lower()
-                    if kw_lower in entity_name or kw_lower in entity_id:
-                        excluded = True
-                        break
-                if not excluded:
-                    filtered.append(entity)
-            if filtered:
-                candidates = filtered
-                _LOGGER.debug(f"_find_best_entity: exclude_keywords filtered to {len(candidates)} candidates")
+        # 关键词只和实体名、entity_id 的 object_id 部分比较（不含 "switch." 这类域名前缀），
+        # 否则 include_keywords 里的 "switch" 会命中所有 switch.xxx 实体
+        def _kw_hit(entity, keywords):
+            entity_name = (entity.get("name") or "").lower()
+            object_id = (entity.get("entity_id") or "").lower().split(".", 1)[-1]
+            return any(kw.lower() in entity_name or kw.lower() in object_id for kw in keywords)
 
-        # Level 1.6: include_keywords 包含（实体名/id 必须包含至少一个关键词才保留）
+        # Level 1.5: exclude_keywords 排除（实体名/object_id 包含任意关键词则排除）
+        # 被排除的实体任何情况下都不再参与选择；全部被排除时不回退
+        if mapping.exclude_keywords:
+            candidates = [e for e in candidates if not _kw_hit(e, mapping.exclude_keywords)]
+            if not candidates:
+                _LOGGER.debug("_find_best_entity: all candidates excluded by exclude_keywords, skipping service")
+                return None
+            _LOGGER.debug(f"_find_best_entity: exclude_keywords filtered to {len(candidates)} candidates")
+
+        # Level 1.6: include_keywords 包含（实体名/object_id 必须包含至少一个关键词才保留）
+        # 没有一个命中时：只剩一个候选就用它（和旧行为一致）；多个候选时无法确定是哪个，跳过该服务，
+        # 避免把同设备上无关的开关（如儿童锁、蓝牙代理）当成主开关
         if mapping.include_keywords:
-            filtered = []
-            for entity in candidates:
-                entity_name = (entity.get("name") or "").lower()
-                entity_id = (entity.get("entity_id") or "").lower()
-                for kw in mapping.include_keywords:
-                    kw_lower = kw.lower()
-                    if kw_lower in entity_name or kw_lower in entity_id:
-                        filtered.append(entity)
-                        break
+            filtered = [e for e in candidates if _kw_hit(e, mapping.include_keywords)]
             if filtered:
                 candidates = filtered
                 _LOGGER.debug(f"_find_best_entity: include_keywords filtered to {len(candidates)} candidates")
+            elif len(candidates) > 1:
+                _LOGGER.warning(
+                    "_find_best_entity: no entity matched include_keywords %s among %s, skipping service",
+                    mapping.include_keywords, [e.get("entity_id") for e in candidates],
+                )
+                return None
 
         # Level 2: device_class 过滤（如果定义，必须匹配）
         if mapping.device_class:

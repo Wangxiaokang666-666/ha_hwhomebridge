@@ -1,0 +1,243 @@
+{
+  "date": "2026-10-17",
+  "scope": {
+    "production_accessed": false,
+    "physical_devices_controlled": false,
+    "source_HA_credentials_copied": false,
+    "existing_home_automation_changed": false,
+    "new_production_gateway_created": false
+  },
+  "offline_import": {
+    "native_generated_old_children": 8,
+    "old_root_and_child_IDs_preserved": true,
+    "only_version_pinned_amd64_source_supported": true,
+    "old_source_MAC_required": true,
+    "capacity_64_synthetic_and_local_C_only": true
+  },
+  "arm_linux": {
+    "vm_type": "VZ",
+    "architecture": "aarch64",
+    "HA_image_architecture": "arm64",
+    "one_native_engine": true,
+    "legacy_SDK_loaded": false,
+    "one_imported_parent": true,
+    "old_child_count": 8,
+    "new_supplement_count": 7,
+    "total_children": 15,
+    "cloud_online": true,
+    "all_child_online_responses_successful": true
+  },
+  "routing": {
+    "legacy_category_check.py": {
+      "passed": true,
+      "categories": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "child_count": 15,
+      "shared_temperature_and_electric_services": true,
+      "legacy_select_timer": true,
+      "cross_child_isolation": true,
+      "read_only_unmapped_or_invalid_writes_rejected": true,
+      "cross_process_identity_preserved": true,
+      "native_cloud_connection": false,
+      "physical_devices_accessed": false,
+      "architecture": "aarch64"
+    },
+    "single_engine_control_check.py": {
+      "passed": true,
+      "native_C_to_real_HA_virtual_services": true,
+      "legacy_light_power_brightness_CCT": true,
+      "six_gears_natural_wind_direction": true,
+      "native_device_timer_emulation": true,
+      "ambient_settings_effects": true,
+      "invalid_services_values_or_foreign_child_rejected": true,
+      "SDK_started_or_cloud_registration": false,
+      "physical_devices_accessed": false
+    },
+    "machine": "aarch64",
+    "HA_image_arch": "arm64"
+  },
+  "app": {
+    "arm_actual_app_writes": [
+      {
+        "key": "legacy-light",
+        "sid": "switch",
+        "write_confirmed": true
+      },
+      {
+        "key": "legacy-light",
+        "sid": "switch",
+        "write_confirmed": true
+      },
+      {
+        "key": "legacy-light",
+        "sid": "brightness",
+        "write_confirmed": true
+      },
+      {
+        "key": "legacy-light",
+        "sid": "cct",
+        "write_confirmed": true
+      },
+      {
+        "key": "legacy-008",
+        "sid": "switch",
+        "write_confirmed": true
+      },
+      {
+        "key": "fan-wifi",
+        "sid": "fan",
+        "write_confirmed": true
+      },
+      {
+        "key": "legacy-006",
+        "sid": "delay",
+        "write_confirmed": true
+      },
+      {
+        "key": "legacy-006",
+        "sid": "delay",
+        "write_confirmed": true
+      },
+      {
+        "key": "legacy-007",
+        "sid": "cooker",
+        "write_confirmed": true
+      }
+    ],
+    "legacy_002_observed": {
+      "on_off": true,
+      "brightness": 67,
+      "colorTemperature": 2009
+    },
+    "legacy_008_display": {
+      "totalConsum": 12.34,
+      "currentVoltage1": 220.56,
+      "currentElectric1": 0.17
+    },
+    "new_fan_observed_gear": 3,
+    "legacy_006_app_three_hour_timer": true,
+    "legacy_007_app_cooker_mode": 6,
+    "all_008_parameters_on_UI": false,
+    "all_001_008_UI_controls_exhausted": false
+  },
+  "cold_restart": {
+    "HA_backend_and_native_engine_restarted": true,
+    "root_and_five_account_fields_unchanged": true,
+    "all_15_child_IDs_and_SNs_unchanged": true,
+    "HA_state_unchanged": true,
+    "all_children_online_again": true,
+    "rebind_count": 0,
+    "old_child_metadata_sync_count": 0
+  },
+  "fallback": {
+    "from": "aarch64 OpenHarmony",
+    "to": "x86_64 original SDK",
+    "same_root_and_five_native_account_fields": true,
+    "source_paired_KV_retained": true,
+    "latest_virtual_HA_state_copied_before_start": true,
+    "device_status": 1,
+    "App_original_light_off_confirmed": true,
+    "no_PIN_unbind_or_factory_reset": true,
+    "new_fan_supported_by_old_SDK": false
+  },
+  "checks": {
+    "public_framework": 50,
+    "framework_adapter": 25,
+    "tools": 42,
+    "offline_import_and_callbacks": 8,
+    "configuration_validation": true,
+    "x86_64_category_runtime": true,
+    "aarch64_category_runtime": true,
+    "aarch64_capacity_and_duplicate_cloud_ID_rejection": true
+  },
+  "limitations": [
+    "Independent virtual HA Core host, not production HA lifecycle or installation acceptance.",
+    "App sampled original 002 light, 006 timer, 007 cooker, 008 switch/electrical values and new fan; not every UI action in every category.",
+    "Only existing mapped characteristics exposed; no unmapped kettle preserveTarget, cooker pause/action or OTA claims.",
+    "Legacy select timers preserve existing option rounding; not precise hardware countdown telemetry.",
+    "64-child cloud load not tested; native source fixture had 8 old children.",
+    "ARM old proprietary SDK execution not tested; source identity decoded from verified amd64 SDK."
+  ],
+  "builds": {
+    "arm64": {
+      "bridge_poc": {
+        "architecture": "aarch64",
+        "static": true,
+        "sha256": "29316c45430a7fa1e1fa87fb4d7400cb939b2f182fbebb49268dfe92fc061c1e"
+      },
+      "coap_alignment_test": {
+        "architecture": "aarch64",
+        "static": true,
+        "sha256": "1d5831c68a8f5eb56f0ada2448c9d33cc5321bea4ec48877150d36393705cc8d"
+      },
+      "ha_child_state_test": {
+        "architecture": "aarch64",
+        "static": true,
+        "sha256": "6c482aca84b031c57808e0556c3da6ee0fb53b252fa7590ea5a481df907235bb"
+      },
+      "virtual_child_state_test": {
+        "architecture": "aarch64",
+        "static": true,
+        "sha256": "5c50a0b6c46b5d2d0c9e6362aaa39075d666c63bc23143d2c1ef5b8843fce993"
+      },
+      "speke_vectors": {
+        "architecture": "aarch64",
+        "static": true,
+        "sha256": "387a9cf5ec76beb0279c230bf7bce49228062341c3d9dc8b7f8c24028e6fb267"
+      },
+      "identity_state_probe": {
+        "architecture": "aarch64",
+        "static": true,
+        "sha256": "a12ec656114a67077673b65b27452561b46b253a2848aa2ac037cef2686d3b9c"
+      }
+    },
+    "x86_64": {
+      "bridge_poc": {
+        "architecture": "x86_64",
+        "static": true,
+        "sha256": "0ccd36a6c15e80938819704d9f32d349a8ac0409aad5407fe00f5a10176eeb3e"
+      },
+      "coap_alignment_test": {
+        "architecture": "x86_64",
+        "static": true,
+        "sha256": "2c37a5fc7baeb56c482c9032afcdf06b3937f2a15822887ff6bdc0fbc05e5af4"
+      },
+      "ha_child_state_test": {
+        "architecture": "x86_64",
+        "static": true,
+        "sha256": "d33461f9ad05ddc3c01a6f2b1f0bea80cb78c30b1d613ad8904936317370463a"
+      },
+      "virtual_child_state_test": {
+        "architecture": "x86_64",
+        "static": true,
+        "sha256": "700b4605605b08df4fd37df7338c943a7c12d12f44e278914996321a502adf5e"
+      },
+      "speke_vectors": {
+        "architecture": "x86_64",
+        "static": true,
+        "sha256": "22c65234822933d3592a515f6dd6284ccbb16bfb20f82982edcbae34542a841b"
+      },
+      "identity_state_probe": {
+        "architecture": "x86_64",
+        "static": true,
+        "sha256": "5908344733292c1ab6c55999ffd388d76d0caa830d43629e26c69289828a38d9"
+      }
+    }
+  },
+  "cleanup": {
+    "all_evaluation_containers_stopped": true,
+    "x86_VM_stopped": true,
+    "new_ARM_VM_stopped": true,
+    "original_ARM_poc_kept_stopped": true,
+    "MatePad_timeout_restored": true,
+    "paired_test_identity_retained_privately": true
+  }
+}

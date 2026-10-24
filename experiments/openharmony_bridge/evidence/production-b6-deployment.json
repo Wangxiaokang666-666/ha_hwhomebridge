@@ -1,0 +1,78 @@
+{
+  "version": 1,
+  "recorded_at_utc": "2026-10-17T17:05:57.903901+00:00",
+  "scope": "production preserving installation and existing light acceptance; no OpenHarmony handover",
+  "installed_version": "1.1.0b6",
+  "package_sha256": "0de843ba3d3247379b26be0eb184cdb58524f10ebe8e61e52ad0c3b95257bd71",
+  "cold_runtime_v2_sha256": "008306121271c7dae91aa2c932f859df6441577ee42af03bab3ebf1d0fa2a672",
+  "postinstall": {
+    "passed": true,
+    "fresh_cold_copied_and_verified": true,
+    "paired_children": 32,
+    "raw_restore_to_new_directory_passed": true,
+    "raw_restore_source_written": false,
+    "raw_restore_SDK_started": false,
+    "all_four_services_running": true,
+    "watchdog_restored": true,
+    "boot_unchanged": true,
+    "runtime_override_removed": true
+  },
+  "preservation": {
+    "passed": true,
+    "protected_static_files_unchanged": 22,
+    "original_entry_options_and_identity_unchanged": true,
+    "entry_data_change_only_backend_type_legacy": true,
+    "legacy_sdk_reports_online_after_App_controls": true,
+    "device_count_after_App_controls": 32
+  },
+  "entry": {
+    "one_original_entry": true,
+    "entry_loaded": true,
+    "original_devices_retained": true,
+    "old_framework_pids_preserved": true
+  },
+  "current_router": {
+    "selected_backend": "legacy",
+    "active_backend": "legacy",
+    "resident_bindings": 32,
+    "target_old_PID": "002",
+    "target_switch_brightness_cct_bound_to_main": true
+  },
+  "actual_HA_frontend": {
+    "version_visible": true,
+    "original_gateway_entry_and_32_devices_visible": true,
+    "legacy_active_and_selected_visible": true,
+    "backend_changes_submitted": false
+  },
+  "actual_Smart_Life": {
+    "original_target_child_SN_matched": true,
+    "power_write_and_HA_readback": true,
+    "brightness_write_and_HA_readback": true,
+    "CCT_write_and_HA_readback": true,
+    "observed_brightness_HA_0_255": 94,
+    "observed_CCT_kelvin": 2997,
+    "brightness_restored_255": true,
+    "CCT_restored_4000_via_HA_service": true,
+    "main_light_restored_off_via_App": true,
+    "ambient_and_fan_state_and_updated_timestamp_unchanged": true,
+    "physical_light_visually_confirmed_by_human": false
+  },
+  "boundaries": {
+    "new_production_gateway_created": false,
+    "OpenHarmony_activated": false,
+    "production_fan_capabilities_enabled": false,
+    "automation_definitions_modified": false,
+    "pairing_or_unbinding": false,
+    "production_install_rollback_executed": false,
+    "adoption_ready": false
+  },
+  "validation": {
+    "local_public_tests": 64,
+    "local_tool_tests": 106,
+    "independent_ARM_public_tests": 64,
+    "independent_ARM_upgrade_tests": 23,
+    "independent_ARM_cold_preflight_tests": 33,
+    "config_validation": true
+  },
+  "Jev_role": "acceptance evidence classification only; no authorization, identity, or pass decision"
+}

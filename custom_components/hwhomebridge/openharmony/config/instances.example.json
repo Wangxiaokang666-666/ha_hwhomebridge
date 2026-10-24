@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "parent_sn": "OHPOC-EXAMPLE",
+  "ha": {
+    "url": "http://homeassistant.local:8123",
+    "token_file": "/absolute/private/ha_token"
+  },
+  "devices": [
+    {
+      "id": "replace-with-ha-device-registry-id",
+      "name": "示例风扇灯",
+      "model": "shhf.light.sflt11",
+      "manufacturer": "SHHF",
+      "key_prefix": "",
+      "roles": {
+        "main": "light.example_main",
+        "fan": "fan.example_fan",
+        "ambient": "light.example_ambient",
+        "flex": "switch.example_flex",
+        "sleep": "switch.example_sleep",
+        "wake": "switch.example_wake",
+        "default_on": "switch.example_default_on",
+        "light_timer_enable": "switch.example_light_timer_enable",
+        "light_timer_duration": "number.example_light_timer_duration",
+        "light_timer_remaining": "sensor.example_light_timer_remaining",
+        "fan_timer_enable": "switch.example_fan_timer_enable",
+        "fan_timer_duration": "number.example_fan_timer_duration",
+        "fan_timer_remaining": "sensor.example_fan_timer_remaining"
+      }
+    }
+  ]
+}

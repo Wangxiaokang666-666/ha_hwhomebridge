@@ -1,0 +1,112 @@
+{
+  "pid": "2NAL",
+  "services": {
+    "switch": {
+      "role": "main",
+      "domain": "light",
+      "action": "turn_on_off",
+      "value_attr": "state",
+      "options": {}
+    },
+    "switchFan": {
+      "role": "fan",
+      "domain": "fan",
+      "action": "turn_on_off",
+      "value_attr": "state",
+      "options": {}
+    },
+    "fan": {
+      "role": "fan",
+      "domain": "fan",
+      "action": "set_speed",
+      "value_attr": "percentage",
+      "options": {
+        "requires_on": true,
+        "unmapped": 0
+      },
+      "value_mapping": {
+        "type": "enum_to_number",
+        "mapping": {
+          "1": 16,
+          "2": 33,
+          "3": 50,
+          "4": 66,
+          "5": 83,
+          "6": 100
+        }
+      }
+    },
+    "fanMode": {
+      "role": "fan",
+      "domain": "fan",
+      "action": "set_fan_mode",
+      "value_attr": "preset_mode",
+      "options": {
+        "ha_service": "set_preset_mode",
+        "unmapped": 0,
+        "requires_on": true
+      },
+      "value_mapping": {
+        "type": "enum_to_number",
+        "mapping": {
+          "2": "natural"
+        }
+      }
+    },
+    "verticalswing": {
+      "role": "fan",
+      "domain": "fan",
+      "action": "set_direction",
+      "value_attr": "direction",
+      "options": {},
+      "value_mapping": {
+        "type": "enum_to_number",
+        "mapping": {
+          "0": "forward",
+          "1": "reverse"
+        }
+      }
+    },
+    "countdownht": {
+      "role": "fan_timer_duration",
+      "domain": "number",
+      "action": "countdown",
+      "value_attr": "state",
+      "options": {
+        "fields": {
+          "target": "Equipmentname",
+          "enabled": "countdownht",
+          "minutes": "timeing",
+          "remaining": "remainder"
+        },
+        "timers": {
+          "1": {
+            "enable": "light_timer_enable",
+            "duration": "light_timer_duration",
+            "remaining": "light_timer_remaining",
+            "maximum": 720
+          },
+          "2": {
+            "enable": "fan_timer_enable",
+            "duration": "fan_timer_duration",
+            "remaining": "fan_timer_remaining",
+            "maximum": 720
+          }
+        },
+        "targets": {
+          "0": [
+            "1",
+            "2"
+          ],
+          "1": [
+            "1"
+          ],
+          "2": [
+            "2"
+          ]
+        },
+        "combined_target": "0"
+      }
+    }
+  }
+}

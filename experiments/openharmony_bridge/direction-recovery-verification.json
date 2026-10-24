@@ -1,0 +1,169 @@
+{
+  "live": {
+    "cases": [
+      {
+        "card": "aux",
+        "reverse_on": 1,
+        "HA_direction": "forward",
+        "both_cards_agree": true
+      },
+      {
+        "card": "aux",
+        "reverse_on": 0,
+        "HA_direction": "reverse",
+        "both_cards_agree": true
+      },
+      {
+        "card": "timer-controls",
+        "reverse_on": 1,
+        "HA_direction": "forward",
+        "both_cards_agree": true
+      },
+      {
+        "card": "timer-controls",
+        "reverse_on": 0,
+        "HA_direction": "reverse",
+        "both_cards_agree": true
+      }
+    ],
+    "cloud_online": true,
+    "children_online": 8,
+    "identity_unchanged": true,
+    "rebind": 0,
+    "pin_callbacks": 0,
+    "original_direction_restored": true
+  },
+  "reload": {
+    "disabled_process_stopped": true,
+    "new_process_started": true,
+    "cloud_online": true,
+    "children_online": 8,
+    "identity_unchanged": true,
+    "direction_preserved": true,
+    "both_cards_reverse_off_after_reload": true,
+    "rebind": 0,
+    "pin_callbacks": 0,
+    "first_30_second_online_poll_timed_out": true,
+    "subsequent_online_check_passed": true
+  },
+  "protection": {
+    "direct_HA_authenticated": true,
+    "source_calls": 4,
+    "all_writes_fan_direction_only": true,
+    "directions": [
+      "forward",
+      "reverse",
+      "forward",
+      "reverse"
+    ],
+    "light_related_entities": 9,
+    "light_states_and_attributes_unchanged": true,
+    "light_full_records_unchanged": true,
+    "fan_power_preserved": true,
+    "fan_percentage_preserved": true,
+    "fan_direction_restored": true
+  },
+  "config_hashes": {
+    "compositions.json": "8389c88956ec9dfca6f4d8c4cd67645f2b2452b2907cc1b9421219b67c4ab820",
+    "adapters/xiaomi/sflt11.json": "937287d1bc4ea59ba970c38fd49bdc88e292fd88bb9446aadc6b6f0aaf76536c"
+  },
+  "verified_at": "2026-10-16T20:49:20.125409+08:00",
+  "fix_commit": "41d472a",
+  "environment": "hwhomebridge-poc / hwhomebridge-paired-ha-test",
+  "acceptance_scope": "Independent backend API writes/readback on both cards, followed by real Smart Life App on/off on timer-controls after backend reload",
+  "network": {
+    "before": "LAN TCP immediately refused, public TCP worked, no Linux filter reject rules",
+    "recovery": "Gracefully stopped and restarted this Lima VZ instance; no proxy or OS permission changes",
+    "after": "Direct authenticated HA requests and source state polling restored",
+    "exact_trigger": "not determined"
+  },
+  "deployment": {
+    "only_two_config_files_changed": true,
+    "other_52_component_files_unchanged": true,
+    "original_files_backed_up_privately": true,
+    "production_install_or_restart": false,
+    "M3_archive_rebuilt": false
+  },
+  "regression": {
+    "framework_tests": 25,
+    "passed": true,
+    "configuration_validation_passed": true
+  },
+  "smart_life_app": {
+    "card": "timer-controls",
+    "sid": "verticalswing",
+    "actual_App_clicks": 2,
+    "C_writes_confirmed": 2,
+    "C_read_callbacks": 2,
+    "source_calls": 2,
+    "directions": [
+      "forward",
+      "reverse"
+    ],
+    "writes_fan_direction_only": true,
+    "light_related_entities": 9,
+    "light_full_records_unchanged": true,
+    "fan_power_preserved": true,
+    "fan_percentage_preserved": true,
+    "fan_direction_restored": true,
+    "fan_timers_unchanged": true,
+    "cloud_online": true,
+    "children_online": 8,
+    "identity_unchanged": true,
+    "rebind": 0,
+    "pin_callbacks": 0,
+    "no_C_panic_during_App_test": true,
+    "verified_this_run": true,
+    "verified_at": "2026-10-16T21:13:34.344141+08:00",
+    "paired_card_SN_verified": true,
+    "App_toggle_on_and_off_visually_verified": true,
+    "reconnected_after_unlock": true,
+    "screen_timeout_override_restored": true,
+    "physical_blade_rotation_directly_observed": false,
+    "initial_blocker_history": "Previous run had a locked MatePad and failed reconnect; resumed after user unlocked it."
+  },
+  "jev": {
+    "model": "jev-1.13.0",
+    "use": "Classified diagnostic priority as virtual network layer; diagnosis and recovery verified by Codex",
+    "App_acceptance_classification": {
+      "model": "jev-1.13.0",
+      "answers": {
+        "path": {
+          "type": "choice",
+          "choice": "app_path",
+          "confidence": 0.98,
+          "probabilities": {
+            "app_path": 0.99,
+            "api_only": 0.0,
+            "insufficient": 0.01
+          }
+        },
+        "physical_observation": {
+          "type": "choice",
+          "choice": "not_observed",
+          "confidence": 1.0,
+          "probabilities": {
+            "observed": 0.0,
+            "not_observed": 1.0,
+            "unclear": 0.0
+          }
+        }
+      }
+    }
+  },
+  "network_stability": {
+    "direct_authenticated_probes": 6,
+    "all_HTTP_200": true,
+    "probe_interval_seconds": 4,
+    "uses_Mac_proxy_or_SSH_data_tunnel": false
+  },
+  "final_health": {
+    "active": "openharmony",
+    "entry_state": "loaded",
+    "cloud_online": true,
+    "children_online": 8,
+    "no_native_panic_since_latest_start": true,
+    "rebind": 0,
+    "pin_callbacks": 0
+  }
+}

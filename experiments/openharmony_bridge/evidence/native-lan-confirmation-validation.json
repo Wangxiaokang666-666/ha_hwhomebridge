@@ -1,0 +1,769 @@
+{
+  "date": "2026-10-21",
+  "scope": "independent_virtual_gateway_only",
+  "production_HA_accessed": false,
+  "production_cutover_performed": false,
+  "existing_lights_or_Mijia_automation_modified": false,
+  "release_archive_rebuilt": false,
+  "production_adoption_ready": false,
+  "native_x86_hardware_verified": false,
+  "native_x86_host_unavailable_user_confirmed": true,
+  "external_physical_LAN_peer_verified": false,
+  "Smart_Life_App_LAN_verified": false,
+  "historical_App_failure_root_cause_proven": false,
+  "builds": {
+    "arm64": {
+      "target": "aarch64-linux-musl",
+      "source_tree_sha256": "a22442c2ccf8246f27ae07d748e27685ecba547ca3bbe8a72175f43de431b8ec",
+      "source_files_sha256": {
+        "CMakeLists.txt": "7016daf702dcf0b8ce7a2ceb17bece5f383f718a441e1303a7b1c2938d52f1d9",
+        "bootstrap.py": "d4d5bf71890e8f28e2e5f1814e8d18106f5a4592568caa465c28615eccedd1ba",
+        "sources.lock.json": "6276aa37bd689ed53722ef48b15561b03bc9cba28a0419a1f1254aad6bd22aa3",
+        "build-ha-static.sh": "922a18a4548a7a4a59614b736f272563f6a9f30365ebb7c7797e22f2b7eba182",
+        "zig-cc.sh": "7bc70cfd7cfaecc4f7da8395340f01bcf3a47e664b560f4fbf9b8b4b138da0dc",
+        "build_manifest.py": "9e142d73bde501aed9fcdbb07983dd771ac5d98d5f9d8da1c408ead7ac76acbd",
+        "main.c": "0105e77e7d195f556d073e9e3ffc851800f8dfa74f84b0f9eb434949629972f3",
+        "linux_network.c": "1a7580a181a2995449052267811a0e04e1c4de78730c39cfb132cc2f2e74ae87",
+        "poc_network.h": "4a5d681993e10e0b46646450e9c54dc3237aa38bdc16d698163c33b6025526da",
+        "ha_children.c": "986286c906124329c8eafa30237d7726974226a9070d86418a30f8eb76f28d48",
+        "ha_children.h": "17355004d96d1d14ab642440c727a2043d6f015876e351c2856c9628a329b2cd",
+        "virtual_child.c": "71dbc97dc03fe43d2dada98183e2e0db50f5b92150d5d875388c4f579298bc72",
+        "virtual_child.h": "24deae6be26271d7c8629342709b78dbe3f7aa744a25b178ac3239be4a3b63f5",
+        "coap_alignment_test.c": "354b227b14d1ff652a5862efc31615c7248dba2d5fafd24c240df31db9f152b2",
+        "ha_child_state_test.c": "fdd4f096ea5003d474bd95ea9d6ca0e0c2bbdcb1b72a144f7b55a3e925c689ee",
+        "virtual_child_state_test.c": "debecbcbfa9e40d2c96cb8c262378ee541eee91320581902cd455fffdbb320a7",
+        "speke_vectors.c": "2a3ba33d26e82c713da6107779f94fbc7d6b0aac21102f9e5a728d7d7c313275",
+        "identity_state_probe.c": "53e1715121e9f6b60fc5992f28bf72bdbf462e2c72b11c53543faa0aa60e4189",
+        "ha_child_availability_test.c": "3f9f2a3cba78f13acb52c4b4e61a50577f93c1690f54e94de1c9b0aac49c74df"
+      },
+      "artifacts": {
+        "ha_child_availability_test": {
+          "architecture": "aarch64",
+          "static": true,
+          "sha256": "6f8571cf7b84d2cf5b2916bb0595378e5500fbbd27c943441a4511919294e350"
+        },
+        "bridge_poc": {
+          "architecture": "aarch64",
+          "static": true,
+          "sha256": "d67afb35ab76302ca19ed45824e677f75ac0dca1886a40b340a313b62688fe16"
+        },
+        "coap_alignment_test": {
+          "architecture": "aarch64",
+          "static": true,
+          "sha256": "7a40e3deaeccd9c11c572e6520508c4a52bd0b84ce58b6aa7e4355895ef122c5"
+        },
+        "ha_child_state_test": {
+          "architecture": "aarch64",
+          "static": true,
+          "sha256": "b72151942e38b2857b3a5fead2a2871fa16d75c24f6231515d9c88c3882cda4b"
+        },
+        "virtual_child_state_test": {
+          "architecture": "aarch64",
+          "static": true,
+          "sha256": "933e2747d7bacc3a68e5be553d16e1d1e7c375f50e5bac2363acce4004c9dff0"
+        },
+        "speke_vectors": {
+          "architecture": "aarch64",
+          "static": true,
+          "sha256": "51370bb3bdbef7cbd7e2751795079ac78ea898e455d9dcb6855718ea0f1961cc"
+        },
+        "identity_state_probe": {
+          "architecture": "aarch64",
+          "static": true,
+          "sha256": "88412a94d6b364e8f9d73daa1140e8e301ac2d7cefe19c5c9f27320f571b42d8"
+        }
+      },
+      "zig_version": "0.15.1",
+      "cmake_version": "cmake version 3.28.3"
+    },
+    "x86_64": {
+      "target": "x86_64-linux-musl",
+      "source_tree_sha256": "a22442c2ccf8246f27ae07d748e27685ecba547ca3bbe8a72175f43de431b8ec",
+      "source_files_sha256": {
+        "CMakeLists.txt": "7016daf702dcf0b8ce7a2ceb17bece5f383f718a441e1303a7b1c2938d52f1d9",
+        "bootstrap.py": "d4d5bf71890e8f28e2e5f1814e8d18106f5a4592568caa465c28615eccedd1ba",
+        "sources.lock.json": "6276aa37bd689ed53722ef48b15561b03bc9cba28a0419a1f1254aad6bd22aa3",
+        "build-ha-static.sh": "922a18a4548a7a4a59614b736f272563f6a9f30365ebb7c7797e22f2b7eba182",
+        "zig-cc.sh": "7bc70cfd7cfaecc4f7da8395340f01bcf3a47e664b560f4fbf9b8b4b138da0dc",
+        "build_manifest.py": "9e142d73bde501aed9fcdbb07983dd771ac5d98d5f9d8da1c408ead7ac76acbd",
+        "main.c": "0105e77e7d195f556d073e9e3ffc851800f8dfa74f84b0f9eb434949629972f3",
+        "linux_network.c": "1a7580a181a2995449052267811a0e04e1c4de78730c39cfb132cc2f2e74ae87",
+        "poc_network.h": "4a5d681993e10e0b46646450e9c54dc3237aa38bdc16d698163c33b6025526da",
+        "ha_children.c": "986286c906124329c8eafa30237d7726974226a9070d86418a30f8eb76f28d48",
+        "ha_children.h": "17355004d96d1d14ab642440c727a2043d6f015876e351c2856c9628a329b2cd",
+        "virtual_child.c": "71dbc97dc03fe43d2dada98183e2e0db50f5b92150d5d875388c4f579298bc72",
+        "virtual_child.h": "24deae6be26271d7c8629342709b78dbe3f7aa744a25b178ac3239be4a3b63f5",
+        "coap_alignment_test.c": "354b227b14d1ff652a5862efc31615c7248dba2d5fafd24c240df31db9f152b2",
+        "ha_child_state_test.c": "fdd4f096ea5003d474bd95ea9d6ca0e0c2bbdcb1b72a144f7b55a3e925c689ee",
+        "virtual_child_state_test.c": "debecbcbfa9e40d2c96cb8c262378ee541eee91320581902cd455fffdbb320a7",
+        "speke_vectors.c": "2a3ba33d26e82c713da6107779f94fbc7d6b0aac21102f9e5a728d7d7c313275",
+        "identity_state_probe.c": "53e1715121e9f6b60fc5992f28bf72bdbf462e2c72b11c53543faa0aa60e4189",
+        "ha_child_availability_test.c": "3f9f2a3cba78f13acb52c4b4e61a50577f93c1690f54e94de1c9b0aac49c74df"
+      },
+      "artifacts": {
+        "ha_child_availability_test": {
+          "architecture": "x86_64",
+          "static": true,
+          "sha256": "b248cb86bc65d0835ef0aad708821a1390fb81c92d16e580728bf9bd046ede25"
+        },
+        "bridge_poc": {
+          "architecture": "x86_64",
+          "static": true,
+          "sha256": "61861eb35eb7bc691d2f8a1ddf2a473e2c1bfe0699f29ff6dca13bb1036b986f"
+        },
+        "coap_alignment_test": {
+          "architecture": "x86_64",
+          "static": true,
+          "sha256": "eb072df833fb2f8f5d2f359b7b46f62f94ee4f4beb02004b6508e88c55a7176b"
+        },
+        "ha_child_state_test": {
+          "architecture": "x86_64",
+          "static": true,
+          "sha256": "e7cdac78028243602484e9b6a691cedda5312767b330a01fcf9042c6a46ce5b9"
+        },
+        "virtual_child_state_test": {
+          "architecture": "x86_64",
+          "static": true,
+          "sha256": "45f3bd438584eca7669d65139710428614afbdde0dc5923b3d26844d50f4d4b0"
+        },
+        "speke_vectors": {
+          "architecture": "x86_64",
+          "static": true,
+          "sha256": "a9804113321b109a766fb059e7863251c10557dd7cdf77c5a1c0be3b7d211076"
+        },
+        "identity_state_probe": {
+          "architecture": "x86_64",
+          "static": true,
+          "sha256": "691e6fdae7c954b2c28d85d2f5d301d46ee1d081437e03f45f4c0d02f79b0cbb"
+        }
+      },
+      "zig_version": "0.15.1",
+      "cmake_version": "cmake version 3.28.3"
+    }
+  },
+  "C_loopback": {
+    "native_ARM": {
+      "passed": true,
+      "cases": [
+        {
+          "case": "accepted",
+          "reason": "accepted",
+          "error_type": "none",
+          "elapsed_seconds": 0.015,
+          "writes": 1
+        },
+        {
+          "case": "keep_open",
+          "reason": "accepted",
+          "error_type": "none",
+          "elapsed_seconds": 0.003,
+          "writes": 1
+        },
+        {
+          "case": "applied_but_unconfirmed",
+          "reason": "backend_rejected",
+          "error_type": "TimeoutError",
+          "elapsed_seconds": 0.01,
+          "writes": 1
+        },
+        {
+          "case": "unsafe_error",
+          "reason": "backend_rejected",
+          "error_type": "BackendError",
+          "elapsed_seconds": 0.006,
+          "writes": 1
+        },
+        {
+          "case": "unavailable",
+          "reason": "backend_rejected",
+          "error_type": "SourceUnavailable",
+          "elapsed_seconds": 0.003,
+          "writes": 1
+        },
+        {
+          "case": "invalid_http",
+          "reason": "invalid_http",
+          "error_type": "none",
+          "elapsed_seconds": 0.003,
+          "writes": 1
+        },
+        {
+          "case": "invalid_json",
+          "reason": "invalid_json",
+          "error_type": "none",
+          "elapsed_seconds": 0.005,
+          "writes": 1
+        },
+        {
+          "case": "truncated_http",
+          "reason": "truncated_http",
+          "error_type": "none",
+          "elapsed_seconds": 0.004,
+          "writes": 1
+        },
+        {
+          "case": "receive_timeout",
+          "reason": "receive_timeout",
+          "error_type": "none",
+          "elapsed_seconds": 12.248,
+          "writes": 1
+        }
+      ],
+      "production_access": false,
+      "baseline_complete_response_rejected": true,
+      "real_cloud_or_app_verified": false,
+      "historical_failure_root_cause_proven": false
+    },
+    "qemu_user_x86": {
+      "passed": true,
+      "cases": [
+        {
+          "case": "accepted",
+          "reason": "accepted",
+          "error_type": "none",
+          "elapsed_seconds": 0.174,
+          "writes": 1
+        },
+        {
+          "case": "keep_open",
+          "reason": "accepted",
+          "error_type": "none",
+          "elapsed_seconds": 0.148,
+          "writes": 1
+        },
+        {
+          "case": "applied_but_unconfirmed",
+          "reason": "backend_rejected",
+          "error_type": "TimeoutError",
+          "elapsed_seconds": 0.152,
+          "writes": 1
+        },
+        {
+          "case": "unsafe_error",
+          "reason": "backend_rejected",
+          "error_type": "BackendError",
+          "elapsed_seconds": 0.312,
+          "writes": 1
+        },
+        {
+          "case": "unavailable",
+          "reason": "backend_rejected",
+          "error_type": "SourceUnavailable",
+          "elapsed_seconds": 0.303,
+          "writes": 1
+        },
+        {
+          "case": "invalid_http",
+          "reason": "invalid_http",
+          "error_type": "none",
+          "elapsed_seconds": 0.107,
+          "writes": 1
+        },
+        {
+          "case": "invalid_json",
+          "reason": "invalid_json",
+          "error_type": "none",
+          "elapsed_seconds": 0.126,
+          "writes": 1
+        },
+        {
+          "case": "truncated_http",
+          "reason": "truncated_http",
+          "error_type": "none",
+          "elapsed_seconds": 0.088,
+          "writes": 1
+        },
+        {
+          "case": "receive_timeout",
+          "reason": "receive_timeout",
+          "error_type": "none",
+          "elapsed_seconds": 12.374,
+          "writes": 1
+        }
+      ],
+      "production_access": false,
+      "baseline_complete_response_rejected": false,
+      "real_cloud_or_app_verified": false,
+      "historical_failure_root_cause_proven": false
+    }
+  },
+  "local_protocol": {
+    "native_ARM_real_HA_and_SDK": {
+      "passed": true,
+      "production_access": false,
+      "discovery_identity_matched": true,
+      "AES_GCM_session_confirmed": true,
+      "cases": [
+        {
+          "key": "fan-wifi",
+          "sid": "fan",
+          "value": 1,
+          "SDK_encrypted_response_confirmed": true,
+          "HA_service_call_and_readback_confirmed": true,
+          "HA_write_calls": 1,
+          "elapsed_seconds": 2.12
+        },
+        {
+          "key": "fan-wifi",
+          "sid": "fan",
+          "value": 6,
+          "SDK_encrypted_response_confirmed": true,
+          "HA_service_call_and_readback_confirmed": true,
+          "HA_write_calls": 1,
+          "elapsed_seconds": 2.138
+        },
+        {
+          "key": "fan-wifi",
+          "sid": "fan",
+          "value": 1,
+          "SDK_encrypted_response_confirmed": true,
+          "HA_service_call_and_readback_confirmed": true,
+          "HA_write_calls": 1,
+          "elapsed_seconds": 2.092
+        },
+        {
+          "key": "fan-wifi",
+          "sid": "fan",
+          "value": 6,
+          "SDK_encrypted_response_confirmed": true,
+          "HA_service_call_and_readback_confirmed": true,
+          "HA_write_calls": 1,
+          "elapsed_seconds": 2.069
+        },
+        {
+          "key": "fan-wifi",
+          "sid": "fan",
+          "value": 1,
+          "SDK_encrypted_response_confirmed": true,
+          "HA_service_call_and_readback_confirmed": true,
+          "HA_write_calls": 1,
+          "elapsed_seconds": 2.132
+        },
+        {
+          "key": "fan-wifi",
+          "sid": "fan",
+          "value": 6,
+          "SDK_encrypted_response_confirmed": true,
+          "HA_service_call_and_readback_confirmed": true,
+          "HA_write_calls": 1,
+          "elapsed_seconds": 2.176
+        },
+        {
+          "key": "fan-wifi",
+          "sid": "fan",
+          "value": 1,
+          "SDK_encrypted_response_confirmed": true,
+          "HA_service_call_and_readback_confirmed": true,
+          "HA_write_calls": 1,
+          "elapsed_seconds": 2.167
+        },
+        {
+          "key": "fan-wifi",
+          "sid": "fan",
+          "value": 6,
+          "SDK_encrypted_response_confirmed": true,
+          "HA_service_call_and_readback_confirmed": true,
+          "HA_write_calls": 1,
+          "elapsed_seconds": 2.08
+        },
+        {
+          "key": "fan-wifi",
+          "sid": "fan",
+          "value": 1,
+          "SDK_encrypted_response_confirmed": true,
+          "HA_service_call_and_readback_confirmed": true,
+          "HA_write_calls": 1,
+          "elapsed_seconds": 2.157
+        },
+        {
+          "key": "fan-wifi",
+          "sid": "fan",
+          "value": 6,
+          "SDK_encrypted_response_confirmed": true,
+          "HA_service_call_and_readback_confirmed": true,
+          "HA_write_calls": 1,
+          "elapsed_seconds": 2.279
+        },
+        {
+          "key": "aux",
+          "sid": "switch2",
+          "value": 0,
+          "SDK_encrypted_response_confirmed": true,
+          "HA_service_call_and_readback_confirmed": true,
+          "HA_write_calls": 1,
+          "elapsed_seconds": 1.08
+        },
+        {
+          "key": "aux",
+          "sid": "switch2",
+          "value": 1,
+          "SDK_encrypted_response_confirmed": true,
+          "HA_service_call_and_readback_confirmed": true,
+          "HA_write_calls": 1,
+          "elapsed_seconds": 1.033
+        },
+        {
+          "key": "aux",
+          "sid": "switch2",
+          "value": 0,
+          "SDK_encrypted_response_confirmed": true,
+          "HA_service_call_and_readback_confirmed": true,
+          "HA_write_calls": 1,
+          "elapsed_seconds": 1.072
+        },
+        {
+          "key": "aux",
+          "sid": "switch2",
+          "value": 1,
+          "SDK_encrypted_response_confirmed": true,
+          "HA_service_call_and_readback_confirmed": true,
+          "HA_write_calls": 1,
+          "elapsed_seconds": 1.035
+        },
+        {
+          "key": "aux",
+          "sid": "switch2",
+          "value": 0,
+          "SDK_encrypted_response_confirmed": true,
+          "HA_service_call_and_readback_confirmed": true,
+          "HA_write_calls": 1,
+          "elapsed_seconds": 1.134
+        },
+        {
+          "key": "aux",
+          "sid": "switch2",
+          "value": 1,
+          "SDK_encrypted_response_confirmed": true,
+          "HA_service_call_and_readback_confirmed": true,
+          "HA_write_calls": 1,
+          "elapsed_seconds": 1.035
+        },
+        {
+          "key": "aux",
+          "sid": "switch2",
+          "value": 0,
+          "SDK_encrypted_response_confirmed": true,
+          "HA_service_call_and_readback_confirmed": true,
+          "HA_write_calls": 1,
+          "elapsed_seconds": 1.039
+        },
+        {
+          "key": "aux",
+          "sid": "switch2",
+          "value": 1,
+          "SDK_encrypted_response_confirmed": true,
+          "HA_service_call_and_readback_confirmed": true,
+          "HA_write_calls": 1,
+          "elapsed_seconds": 1.066
+        },
+        {
+          "key": "aux",
+          "sid": "switch2",
+          "value": 0,
+          "SDK_encrypted_response_confirmed": true,
+          "HA_service_call_and_readback_confirmed": true,
+          "HA_write_calls": 1,
+          "elapsed_seconds": 1.057
+        },
+        {
+          "key": "aux",
+          "sid": "switch2",
+          "value": 1,
+          "SDK_encrypted_response_confirmed": true,
+          "HA_service_call_and_readback_confirmed": true,
+          "HA_write_calls": 1,
+          "elapsed_seconds": 1.045
+        },
+        {
+          "key": "effects-2",
+          "sid": "switch4",
+          "value": 1,
+          "SDK_encrypted_response_confirmed": true,
+          "HA_service_call_and_readback_confirmed": true,
+          "HA_write_calls": 1,
+          "elapsed_seconds": 1.139
+        },
+        {
+          "key": "effects-2",
+          "sid": "switch4",
+          "value": 0,
+          "SDK_encrypted_response_confirmed": true,
+          "HA_service_call_and_readback_confirmed": true,
+          "HA_write_calls": 1,
+          "elapsed_seconds": 1.045
+        },
+        {
+          "key": "effects-2",
+          "sid": "switch4",
+          "value": 1,
+          "SDK_encrypted_response_confirmed": true,
+          "HA_service_call_and_readback_confirmed": true,
+          "HA_write_calls": 1,
+          "elapsed_seconds": 1.046
+        },
+        {
+          "key": "effects-2",
+          "sid": "switch4",
+          "value": 0,
+          "SDK_encrypted_response_confirmed": true,
+          "HA_service_call_and_readback_confirmed": true,
+          "HA_write_calls": 1,
+          "elapsed_seconds": 1.053
+        },
+        {
+          "key": "effects-2",
+          "sid": "switch4",
+          "value": 1,
+          "SDK_encrypted_response_confirmed": true,
+          "HA_service_call_and_readback_confirmed": true,
+          "HA_write_calls": 1,
+          "elapsed_seconds": 1.043
+        },
+        {
+          "key": "effects-2",
+          "sid": "switch4",
+          "value": 0,
+          "SDK_encrypted_response_confirmed": true,
+          "HA_service_call_and_readback_confirmed": true,
+          "HA_write_calls": 1,
+          "elapsed_seconds": 1.036
+        },
+        {
+          "key": "effects-2",
+          "sid": "switch4",
+          "value": 1,
+          "SDK_encrypted_response_confirmed": true,
+          "HA_service_call_and_readback_confirmed": true,
+          "HA_write_calls": 1,
+          "elapsed_seconds": 1.086
+        },
+        {
+          "key": "effects-2",
+          "sid": "switch4",
+          "value": 0,
+          "SDK_encrypted_response_confirmed": true,
+          "HA_service_call_and_readback_confirmed": true,
+          "HA_write_calls": 1,
+          "elapsed_seconds": 1.034
+        },
+        {
+          "key": "effects-2",
+          "sid": "switch4",
+          "value": 1,
+          "SDK_encrypted_response_confirmed": true,
+          "HA_service_call_and_readback_confirmed": true,
+          "HA_write_calls": 1,
+          "elapsed_seconds": 1.065
+        },
+        {
+          "key": "effects-2",
+          "sid": "switch4",
+          "value": 0,
+          "SDK_encrypted_response_confirmed": true,
+          "HA_service_call_and_readback_confirmed": true,
+          "HA_write_calls": 1,
+          "elapsed_seconds": 1.023
+        }
+      ],
+      "invalid_controls_rejected_without_HA_calls": [
+        "tampered_GCM",
+        "replayed_sequence",
+        "unsupported_gear"
+      ],
+      "app_LAN_verified": false,
+      "native_x86_verified": false
+    },
+    "emulated_x86_real_HA_and_SDK": {
+      "passed": true,
+      "production_access": false,
+      "discovery_identity_matched": true,
+      "AES_GCM_session_confirmed": true,
+      "cases": [
+        {
+          "key": "fan-wifi",
+          "sid": "fan",
+          "value": 1,
+          "SDK_encrypted_response_confirmed": true,
+          "HA_service_call_and_readback_confirmed": true,
+          "HA_write_calls": 1,
+          "elapsed_seconds": 2.724
+        },
+        {
+          "key": "fan-wifi",
+          "sid": "fan",
+          "value": 6,
+          "SDK_encrypted_response_confirmed": true,
+          "HA_service_call_and_readback_confirmed": true,
+          "HA_write_calls": 1,
+          "elapsed_seconds": 2.764
+        },
+        {
+          "key": "aux",
+          "sid": "switch2",
+          "value": 0,
+          "SDK_encrypted_response_confirmed": true,
+          "HA_service_call_and_readback_confirmed": true,
+          "HA_write_calls": 1,
+          "elapsed_seconds": 1.8
+        },
+        {
+          "key": "aux",
+          "sid": "switch2",
+          "value": 1,
+          "SDK_encrypted_response_confirmed": true,
+          "HA_service_call_and_readback_confirmed": true,
+          "HA_write_calls": 1,
+          "elapsed_seconds": 1.035
+        },
+        {
+          "key": "effects-2",
+          "sid": "switch4",
+          "value": 1,
+          "SDK_encrypted_response_confirmed": true,
+          "HA_service_call_and_readback_confirmed": true,
+          "HA_write_calls": 1,
+          "elapsed_seconds": 2.839
+        },
+        {
+          "key": "effects-2",
+          "sid": "switch4",
+          "value": 0,
+          "SDK_encrypted_response_confirmed": true,
+          "HA_service_call_and_readback_confirmed": true,
+          "HA_write_calls": 1,
+          "elapsed_seconds": 1.954
+        }
+      ],
+      "invalid_controls_rejected_without_HA_calls": [
+        "tampered_GCM",
+        "replayed_sequence",
+        "unsupported_gear"
+      ],
+      "app_LAN_verified": false,
+      "native_x86_verified": false
+    },
+    "Mac_LAN_IP_relay_after_restart": {
+      "passed": true,
+      "transport": "Mac LAN IP unicast via SSH UDP relay to independent ARM Linux container",
+      "physical_external_peer_verified": false,
+      "app_LAN_verified": false,
+      "native_x86_verified": false,
+      "production_access": false,
+      "discovery_identity_matched": true,
+      "cases": [
+        {
+          "key": "fan-wifi",
+          "sid": "fan",
+          "value": 1,
+          "encrypted_SDK_confirmation": true,
+          "HA_call_and_readback": true,
+          "elapsed_seconds": 3.198
+        },
+        {
+          "key": "fan-wifi",
+          "sid": "fan",
+          "value": 6,
+          "encrypted_SDK_confirmation": true,
+          "HA_call_and_readback": true,
+          "elapsed_seconds": 2.415
+        },
+        {
+          "key": "aux",
+          "sid": "switch2",
+          "value": 0,
+          "encrypted_SDK_confirmation": true,
+          "HA_call_and_readback": true,
+          "elapsed_seconds": 1.695
+        },
+        {
+          "key": "aux",
+          "sid": "switch2",
+          "value": 1,
+          "encrypted_SDK_confirmation": true,
+          "HA_call_and_readback": true,
+          "elapsed_seconds": 2.513
+        },
+        {
+          "key": "effects-2",
+          "sid": "switch4",
+          "value": 1,
+          "encrypted_SDK_confirmation": true,
+          "HA_call_and_readback": true,
+          "elapsed_seconds": 1.593
+        },
+        {
+          "key": "effects-2",
+          "sid": "switch4",
+          "value": 0,
+          "encrypted_SDK_confirmation": true,
+          "HA_call_and_readback": true,
+          "elapsed_seconds": 1.322
+        }
+      ]
+    },
+    "disabled_SDK_no_discovery_reply": {
+      "SDK_disabled_native_owners": 0,
+      "discovery_reply_while_disabled": false,
+      "production_access": false
+    }
+  },
+  "C_availability": {
+    "native_ARM": {
+      "passed": true,
+      "virtual_children": 3,
+      "startup_offline_isolated": true,
+      "stale_cache_rejected": true,
+      "identical_recovery_reported": true,
+      "status_timeout_retry": true,
+      "retry_after_three_failures": true,
+      "cloud_reconnect_resync": true,
+      "identities_unchanged": true,
+      "batch_bind_calls": 0,
+      "metadata_sync_calls": 0,
+      "real_cloud_or_app_verified": false
+    },
+    "qemu_user_x86": {
+      "passed": true,
+      "virtual_children": 3,
+      "startup_offline_isolated": true,
+      "stale_cache_rejected": true,
+      "identical_recovery_reported": true,
+      "status_timeout_retry": true,
+      "retry_after_three_failures": true,
+      "cloud_reconnect_resync": true,
+      "identities_unchanged": true,
+      "batch_bind_calls": 0,
+      "metadata_sync_calls": 0,
+      "real_cloud_or_app_verified": false
+    }
+  },
+  "clean_stops": {
+    "arm": {
+      "passed": true,
+      "all_native_owners_stopped": true,
+      "paired_files_unchanged": true
+    },
+    "x86": {
+      "passed": true,
+      "all_native_owners_stopped": true,
+      "paired_files_unchanged": true
+    }
+  },
+  "regression": {
+    "main_public_tests": 85,
+    "tool_tests": 125,
+    "configuration_validation": true,
+    "contribution_public_tests_on_Mac_and_native_ARM_Linux": 52,
+    "contribution_real_HA_Core_without_network_or_SDK": true
+  },
+  "contribution": {
+    "branch": "codex/reusable-fan-core",
+    "base": "9033ac0",
+    "head": "a749af2952bbbdea6a2a6c3ae50485d411fef757",
+    "public_tested_source_files_compared": 58,
+    "changed_files": 27,
+    "pushed": false,
+    "remote_PR_created": false
+  },
+  "Jev_evidence": "jev-native-lan-evidence.json"
+}

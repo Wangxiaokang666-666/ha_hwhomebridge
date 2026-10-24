@@ -1,0 +1,9 @@
+_deps/
+build*/
+runtime*/
+evidence/
+__pycache__/
+image-root/
+_native/
+*.local.json
+assets/

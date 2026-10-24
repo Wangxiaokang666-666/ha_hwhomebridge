@@ -1,0 +1,189 @@
+{
+  "version": "1.1.0b8",
+  "validation_date": "2026-10-21",
+  "environment": {
+    "HA": "2026.10.1",
+    "kernel_architecture": "aarch64",
+    "userspace_architecture": "x86_64",
+    "execution": "qemu-user",
+    "real_legacy_library": true,
+    "real_OpenHarmony_C": true,
+    "native_x86_hardware_verified": false,
+    "virtual_entities_only": true,
+    "production_identity_started": false
+  },
+  "x86_phases": {
+    "availability-exercise-result.json": {
+      "phase": "exercise",
+      "passed": true,
+      "virtual_only": true,
+      "real_legacy_starts_with_one_of_eight_children_offline": true,
+      "real_native_cloud_acknowledges_child_offline": true,
+      "runtime_drop_and_identical_state_recovery": true,
+      "same_gateway_real_HA_fan_write_readback": true,
+      "native_exit_falls_back_while_old_child_offline": true,
+      "real_legacy_engine_verified": true,
+      "original_entry_preserved": true,
+      "paired_identity_files_unchanged": true,
+      "one_native_owner": true,
+      "real_cloud_verified": true,
+      "real_App_verified": false,
+      "workers_stopped_with_HA": true
+    },
+    "availability-failback-result.json": {
+      "phase": "failback",
+      "passed": true,
+      "virtual_only": true,
+      "real_legacy_failback_persisted_for_cold_HA_restart": true,
+      "original_entry_preserved": true,
+      "paired_identity_files_unchanged": true,
+      "one_native_owner": true,
+      "real_cloud_verified": true,
+      "real_App_verified": false,
+      "workers_stopped_with_HA": true
+    }
+  },
+  "cold_restart_selected_legacy": {
+    "backend": "legacy",
+    "native_owners": 1,
+    "paired_files_unchanged": true,
+    "selected_engine_restored_on_cold_HA_boot": true,
+    "same_configuration_entry": true
+  },
+  "production_offline_verifier": {
+    "passed": true,
+    "architecture": "x86_64",
+    "parent_gateways": 1,
+    "old_children": 32,
+    "supplement_children": 7,
+    "native_identity_reader_verified": true,
+    "paired_files_unchanged": true,
+    "network_namespace_loopback_only": true,
+    "both_engine_starts_blocked": true,
+    "SDK_main_started": false,
+    "production_adoption_ready": false
+  },
+  "production_preservation": {
+    "passed": true,
+    "protected_static_files_unchanged": 22,
+    "original_entry_options_and_identity_unchanged": true,
+    "entry_data_change_only_backend_type_legacy": true,
+    "original_legacy_gateway_reports_online": true,
+    "original_device_inventory_count": 32
+  },
+  "automated_tests": {
+    "public": 80,
+    "tools": 121,
+    "config_validation": true
+  },
+  "App_acceptance_complete": true,
+  "production_adoption_ready": false,
+  "package_install_restore": {
+    "passed": true,
+    "baseline": "1.1.0b6",
+    "candidate": "1.1.0b8",
+    "install_restore_reinstall": true,
+    "all_package_files_verified": 56,
+    "entry_bytes_unchanged": true,
+    "paired_directory_unchanged": true,
+    "original_configuration_library_profiles_unchanged": true,
+    "HA_started_by_installer": false
+  },
+  "package_install_environment": "aarch64 native Linux with actual aarch64 HA image; SDK not started",
+  "production_image_export_preservation": {
+    "Id": true,
+    "Image": true,
+    "Config": true,
+    "HostConfig": true,
+    "same_started_at": true,
+    "same_mount_set": true
+  },
+  "template_strategy": "retain full services; explicitly share equivalent plain primary switch",
+  "App_functional_acceptance": {
+    "virtual_entities_only": true,
+    "exact_SN_checked_for_each_card": true,
+    "six_gears_HA_percentages": [
+      25,
+      37,
+      50,
+      62,
+      75,
+      87
+    ],
+    "natural_wind_HA_percentage": 100,
+    "reverse_switch_HA_values": [
+      "reverse",
+      "forward"
+    ],
+    "ambient_switch_states": [
+      "off",
+      "on"
+    ],
+    "light_options": [
+      "flex",
+      "sleep",
+      "wake",
+      "default_on"
+    ],
+    "effects": [
+      "日光模式",
+      "月光模式",
+      "温馨模式",
+      "阅读模式",
+      "影院模式",
+      "电脑模式",
+      "会客模式",
+      "娱乐模式",
+      "儿童模式",
+      "办公模式",
+      "护眼模式",
+      "空场景"
+    ],
+    "shared_primary_switch_HA_states": [
+      "off",
+      "on"
+    ],
+    "fan_native_timer_start_readback": true,
+    "combined_native_timer_start_and_cancel_readback": true,
+    "combined_timer_actual_minutes": 1,
+    "other_virtual_entities_unchanged_after_timer_cancel": true,
+    "cold_OpenHarmony_boot_did_not_send_HA_controls": true,
+    "final_new_config_crash_fell_back_to_real_legacy_SDK": true,
+    "real_legacy_App_callbacks_after_final_crash": 2,
+    "real_legacy_App_writes_after_final_crash": 2,
+    "old_main_brightness_and_color_temperature_preserved_across_fallback": true
+  },
+  "initial_unconfirmed_write": {
+    "effect": "空场景",
+    "HA_executed": true,
+    "C_confirmed": false,
+    "root_cause": "unresolved",
+    "App_off_on_retry_C_and_HA_confirmed": true,
+    "retry_seconds": [
+      3.17,
+      3.97
+    ],
+    "first_try_all_commands_succeeded": false
+  },
+  "limitations": {
+    "native_x86_hardware_verified": false,
+    "physical_fan_and_physical_timer_elapsed_verified": false,
+    "original_HA_cutover_verified": false,
+    "original_LAN_adoption_verified": false,
+    "vendor_template_extra_controls_fully_mapped": false
+  },
+  "final_new_config_cold_legacy_restart": {
+    "backend": "legacy",
+    "native_owners": 1,
+    "paired_files_unchanged": true,
+    "same_configuration_entry": true,
+    "selected_engine_restored_on_cold_HA_boot": true,
+    "real_legacy_cloud_online": true,
+    "HA_control_calls": 0
+  },
+  "final_cleanup": {
+    "passed": true,
+    "all_native_owners_stopped": true,
+    "paired_files_unchanged": true
+  }
+}

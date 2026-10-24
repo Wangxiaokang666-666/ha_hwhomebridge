@@ -1,0 +1,68 @@
+{
+  "request": {
+    "model": "jev-latest",
+    "state": {
+      "cases": {
+        "channel": "HA OS host SSH port 22222 remains available independently of Core; addon ingress depends on Core; no password or authorized key modifications allowed now.",
+        "binding": "Current entity order replay selects main lamp, reversed order selects ambient; actual legacy service mapping appears only in DEBUG logs; no runtime map read yet."
+      }
+    },
+    "questions": {
+      "channel": {
+        "type": "choice",
+        "instructions": "Classify the suggested host port 22222 maintenance channel in cases.channel. Do not grant authorization.",
+        "criteria": {
+          "host_ssh": "Independent OS host maintenance channel",
+          "core_ingress": "Core-dependent file channel",
+          "runtime_proof": "Direct current runtime service-entity evidence",
+          "reconstruction_only": "Configuration/order replay rather than current runtime evidence",
+          "unknown": "No sufficient evidence"
+        }
+      },
+      "binding": {
+        "type": "choice",
+        "instructions": "Classify the binding evidence currently described in cases.binding, not the log evidence that may later be collected.",
+        "criteria": {
+          "host_ssh": "Independent OS host maintenance channel",
+          "core_ingress": "Core-dependent file channel",
+          "runtime_proof": "Direct current runtime service-entity evidence",
+          "reconstruction_only": "Configuration/order replay rather than current runtime evidence",
+          "unknown": "No sufficient evidence"
+        }
+      }
+    }
+  },
+  "response": {
+    "model": "jev-1.13.0",
+    "answers": {
+      "channel": {
+        "type": "choice",
+        "choice": "host_ssh",
+        "confidence": 1.0,
+        "probabilities": {
+          "host_ssh": 1.0,
+          "core_ingress": 0.0,
+          "runtime_proof": 0.0,
+          "reconstruction_only": 0.0,
+          "unknown": 0.0
+        }
+      },
+      "binding": {
+        "type": "choice",
+        "choice": "reconstruction_only",
+        "confidence": 0.99,
+        "probabilities": {
+          "host_ssh": 0.0,
+          "core_ingress": 0.0,
+          "runtime_proof": 0.01,
+          "reconstruction_only": 0.99,
+          "unknown": 0.0
+        }
+      }
+    },
+    "usage": {
+      "input_tokens": 605,
+      "output_tokens": 130
+    }
+  }
+}

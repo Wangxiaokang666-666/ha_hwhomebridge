@@ -1,0 +1,48 @@
+{
+  "pid": "2151",
+  "services": {
+    "switch": {
+      "role": "",
+      "domain": "",
+      "action": "aggregate",
+      "value_attr": "state",
+      "options": {
+        "members": [
+          "switch1",
+          "switch2",
+          "switch3",
+          "switch4"
+        ],
+        "field": "on"
+      }
+    },
+    "switch1": {
+      "role": "channel1",
+      "domain": "switch",
+      "action": "turn_on_off",
+      "value_attr": "state",
+      "options": {}
+    },
+    "switch2": {
+      "role": "channel2",
+      "domain": "switch",
+      "action": "turn_on_off",
+      "value_attr": "state",
+      "options": {}
+    },
+    "switch3": {
+      "role": "channel3",
+      "domain": "switch",
+      "action": "turn_on_off",
+      "value_attr": "state",
+      "options": {}
+    },
+    "switch4": {
+      "role": "channel4",
+      "domain": "switch",
+      "action": "turn_on_off",
+      "value_attr": "state",
+      "options": {}
+    }
+  }
+}

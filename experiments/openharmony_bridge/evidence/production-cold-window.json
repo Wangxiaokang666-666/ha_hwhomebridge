@@ -1,0 +1,106 @@
+{
+  "version": 1,
+  "date_utc": "2026-10-17T09:48:57.393765+00:00",
+  "scope": "read-only production refresh and isolated cold-window preparation",
+  "production_readonly_review": {
+    "version": 1,
+    "kind": "hwhomebridge-maintenance-readonly-review",
+    "observations_consistent": true,
+    "component_bytes_unchanged": true,
+    "owned_entries_unchanged": true,
+    "same_running_Core_and_host": true,
+    "adapter_copy_matches_entity_preflight": true,
+    "component_files": 38,
+    "legacy_devices": 32,
+    "proposed_role_count": 13,
+    "composition_cards": 7,
+    "issue_counts": {
+      "legacy_mapping_order_ambiguous": 1,
+      "entity_unavailable": 1
+    },
+    "target_legacy_pid": "002",
+    "target_ambiguous_services": [
+      "brightness",
+      "cct",
+      "switch"
+    ],
+    "historical_route_count": 0,
+    "original_runtime_bindings_confirmed": false,
+    "cold_backup": false,
+    "migration_allowed": false,
+    "production_install_allowed": false
+  },
+  "matches_previous_private_observation": {
+    "registry_sha256": true,
+    "config_sha256": true,
+    "instances_sha256": true,
+    "capability_config_sha256": true,
+    "legacy_bindings": true,
+    "issues": true,
+    "proposed_roles": true
+  },
+  "original_watchdog_and_boot_unchanged": true,
+  "original_watchdog": true,
+  "original_boot": true,
+  "production_actions": {
+    "file_writes": 0,
+    "HA_service_calls": 0,
+    "logger_changes": 0,
+    "install_or_deploy": 0,
+    "stop_or_restart": 0,
+    "cold_export": 0,
+    "pairing_KV_reads": 0,
+    "watchdog_changes": 0,
+    "device_or_automation_changes": 0
+  },
+  "independent_rehearsal": {
+    "passed": true,
+    "synthetic_identity_only": true,
+    "SDK_started": false,
+    "official_HA_OS_userspace": "18.3",
+    "kernel_and_PID1_from_independent_Ubuntu_host": true,
+    "production_HA_OS_boot_tested": false,
+    "self_test_without_system_Python": true,
+    "runtime_versions": {
+      "passed": true,
+      "python": "3.12.15",
+      "cryptography": "50.0.2",
+      "bundled_runtime": true,
+      "system_Python_required": false,
+      "SDK_started": false
+    },
+    "running_owner_refused": true,
+    "restart_policy_refused": true,
+    "active_writable_alias_refused": true,
+    "actual_host_file_owner_refused": true,
+    "export_with_foreign_Python_environment_ignored": true,
+    "offline_verify_passed": true,
+    "new_private_directory_raw_restore_bytes_ownership_modes_mtime_passed": true,
+    "existing_restore_target_refused": true,
+    "tampered_export_verify_and_restore_refused": true,
+    "successful_backup_resumes_same_test_owner": true,
+    "offline_restore_while_original_test_owner_runs": true,
+    "failed_backup_resumes_same_test_owner_without_export": true,
+    "real_Supervisor_stop_start_tested": false,
+    "real_HA_or_SDK_started": false,
+    "source_bytes_and_metadata_unchanged": true,
+    "owned_containers_removed_and_bind_mounts_unmounted": true,
+    "ordinary_container_self_test_and_Docker_inspect_pass_but_export_refused": true
+  },
+  "independent_SSH_responded_while_test_owner_stopped": true,
+  "runtime_archive_sha256": "fe5732626b7e04e139c8484f863ac7529d310ad8744519818d665ca9c081c5f1",
+  "tested_source_hashes": {
+    "experiments/openharmony_bridge/portable_cold_acceptance.py": "ac2de413f3c562c99179b4467dc0c80b96d761428bb610c5f84e3939f5b4abdd",
+    "tools/ha_maintenance_review.py": "0c1cd3141ed76b40f502859776e76f8ed501c988d785b7203e8050003f1c4cce",
+    "tools/test_ha_maintenance_review.py": "27a89ac871ed0065f81650bb3eb9d45a90e5162da8a5441a7f6af49317794114"
+  },
+  "no_active_root_Docker_or_rootless_or_root_Podman_containers": true,
+  "checks": {
+    "Mac_tool_tests": 93,
+    "Linux_new_review_tests": 7,
+    "configuration_validation": true
+  },
+  "real_Supervisor_lifecycle_tested": false,
+  "production_maintenance_executed": false,
+  "production_deployment_allowed": false
+}

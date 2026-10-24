@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "date": "2026-10-21",
+  "scope": "isolated ARM Linux and actual HA Core; virtual entities only",
+  "production_access": false,
+  "app_direct_lan_verified": false,
+  "empty_scene_first_control_verified": false,
+  "native_x86_verified": false,
+  "independent_HA_restart": {
+    "new_HA_process_observed": true,
+    "same_configuration_entry": true,
+    "same_engine_restored": true,
+    "single_native_owner": true,
+    "virtual_states_preserved": true,
+    "paired_files_unchanged": true,
+    "control_writes": 0,
+    "C_write_confirmations": 0,
+    "App_control_performed": false
+  },
+  "observer_regression": {
+    "preexisting_historical_C_confirmations": 136,
+    "old_observer_incorrectly_included_history": true,
+    "fixed_first_start_C_confirmations": 0,
+    "fixed_restart_C_confirmations": 0,
+    "fixed_first_start_HA_calls": 0,
+    "fixed_restart_HA_calls": 0,
+    "native_log_preserved": true
+  },
+  "App": {
+    "MatePad_identified": true,
+    "existing_virtual_light_exact_SN_match": true,
+    "experimental_cards_currently_show_offline": true,
+    "first_empty_scene_control_not_attempted": true
+  },
+  "network": {
+    "current_VM": "NAT",
+    "Mac_UDP_SSH_proxy_used": false,
+    "VM_bridged_candidate_validated": true,
+    "original_VM_configuration_unchanged": true,
+    "privileged_bridge_runtime_verified": false,
+    "administrator_action_pending": true,
+    "component_version": "socket_vmnet v1.2.2 arm64",
+    "official_archive_sha256": "c7bf62308fbcfdc29bdfb8373c9b1951f7ac2396446e4390919796a94972e6dc",
+    "binary_sha256": "b8a72a62237312f2f756027dea504a844edeb40014702d4a320292c026d282b0",
+    "checks": [
+      "bash syntax",
+      "correct official binary digest",
+      "wrong binary rejected",
+      "non-root run refused without creating files"
+    ]
+  },
+  "regressions": {
+    "public_tests": 85,
+    "tool_tests": 125,
+    "config_validation": true,
+    "inventory_paths_checked": 222,
+    "clean_core_paths_accounted_for": 27
+  },
+  "raw_logs_and_screenshots": "private local lab only",
+  "cleanup": {
+    "independent_HA_and_native_owners_stopped": true,
+    "independent_test_container_stopped": true,
+    "VM_restored_to_initial_stopped_state": true,
+    "original_VM_configuration_unchanged": true,
+    "MatePad_screen_timeout_override_restored": true,
+    "temporary_bridge_not_started": true
+  }
+}

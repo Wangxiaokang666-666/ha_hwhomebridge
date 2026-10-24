@@ -18,6 +18,7 @@ from .product_matcher import ProductMatcher, DeviceInfo
 from .virtual_device import VirtualDevice, ServiceEntry, SNManager
 from .service_action import ServiceActionDispatcher
 from .native_async import submit_native
+from .fan_mapping import fan_state, is_mapped_fan
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -326,6 +327,9 @@ class ServiceRouter:
             _LOGGER.error(f"route_action: invalid payload JSON: {payload}")
             return False
 
+        if not isinstance(payload_dict, dict) or not payload_dict:
+            return False
+
         # 3. 确定目标 service
         service_id = self._determine_target_service(payload_dict, vd)
         if service_id is None:
@@ -343,6 +347,10 @@ class ServiceRouter:
         if svc_def is None or svc_def.ha_mapping is None:
             _LOGGER.warning(f"route_action: service '{service_id}' has no ServiceDef or HAMapping")
             return False
+
+        if is_mapped_fan(svc_def.ha_mapping):
+            if not isinstance(payload_dict, dict) or set(payload_dict) != {svc_def.char_name}:
+                return False
 
         _LOGGER.info(f"route_action: sn={sn}, service={service_id}, "
                       f"entity={entity_id}, payload={payload_dict}")
@@ -470,6 +478,17 @@ class ServiceRouter:
             "preserveTarget": ["temperature"],
         }
 
+        # 新能力按已配置的 profile characteristic 路由，不硬编码型号或字段名。
+        fan_matches = [sid for sid, service in vd.product.services.items()
+                       if sid in vd.service_entries and is_mapped_fan(service.ha_mapping)
+                       and service.char_name in payload]
+        if fan_matches:
+            all_matches = [sid for sid, service in vd.product.services.items()
+                           if sid in vd.service_entries and service.char_name in payload]
+            if len(all_matches) == 1:
+                return fan_matches[0]
+            return None
+
         for key in payload:
             candidates = key_service_candidates.get(key, [])
             for service_id in candidates:
@@ -552,6 +571,12 @@ class ServiceRouter:
         value_attr = mapping.value_attr
         char_name = svc_def.char_name
         c_svc_id = svc_def.c_service_id or service_id
+
+        if is_mapped_fan(mapping):
+            value = fan_state(mapping, entity_state.state, entity_state.attributes)
+            if value is not None:
+                self._update_hw_bridge_status(sn, c_svc_id, {char_name: value})
+            return
 
         if value_attr == "state" and domain in ("switch", "light", "fan"):
             # switch 类型：上报 on/off
@@ -911,6 +936,10 @@ class ServiceRouter:
         state_value = entity_state.state
 
         try:
+            if is_mapped_fan(mapping):
+                value = fan_state(mapping, state_value, entity_state.attributes)
+                return json.dumps({char_name: value}) if value is not None else None
+
             # --- switch / light / fan: 返回 on/off ---
             if value_attr == "state" and domain in ("switch", "light", "fan"):
                 is_on = (state_value == "on")

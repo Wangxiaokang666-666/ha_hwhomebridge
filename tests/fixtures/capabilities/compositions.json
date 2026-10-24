@@ -1,0 +1,15 @@
+{
+  "bundles": {
+    "fan_light": [
+      {
+        "key": "light",
+        "pid": "fixture-light",
+        "primary": true
+      },
+      {
+        "key": "fan",
+        "pid": "fixture-fan"
+      }
+    ]
+  }
+}

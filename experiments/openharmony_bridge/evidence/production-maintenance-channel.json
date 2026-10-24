@@ -1,0 +1,118 @@
+{
+  "date": "2026-10-17",
+  "scope": "maintenance channel preparation, independent actual Docker acceptance, production read-only audit",
+  "independent_environment": {
+    "architecture": "x86_64",
+    "OS": "Ubuntu 24.04",
+    "Docker_version": "29.1.3",
+    "production_identity_used": false,
+    "synthetic_credentials_only": true,
+    "containers_run_sleep_only": true,
+    "native_SDK_started": false
+  },
+  "Docker_cold_export_acceptance": {
+    "passed": true,
+    "engine": "docker",
+    "synthetic_credentials_only": true,
+    "native_SDK_started": false,
+    "actual_running_owner_refused": true,
+    "actual_restart_policy_refused": true,
+    "actual_writable_alias_refused": true,
+    "actual_local_file_owner_refused": true,
+    "actual_stopped_owner_export_and_verify": true,
+    "isolated_raw_restore_preserves_entries_identity_and_permissions": true,
+    "tampered_export_refused": true,
+    "source_files_and_metadata_unchanged": true,
+    "legacy_library_not_loaded": true,
+    "all_owned_test_containers_removed": true
+  },
+  "SSH_acceptance": {
+    "dedicated_public_key_authenticated_on_independent_root_host": true,
+    "host_probe_via_SSH_passed": true,
+    "actual_host_systemd_root": true,
+    "exact_config_mount_metadata_runtime_UID_and_host_network_verified": true,
+    "synthetic_Core_stopped_SSH_still_available": true,
+    "stopped_Core_refused_as_online_preflight": true,
+    "source_tool_hashes_match_final_checkout": true,
+    "production_Core_stop_tested": false
+  },
+  "production_read_only": {
+    "component_files_unchanged_before_after": 38,
+    "owned_config_entries_unchanged": true,
+    "previous_turn_component_files_unchanged": true,
+    "original_bridge_entry_count": 1,
+    "old_devices_identified": 32,
+    "study_roles": 13,
+    "composition_state_projections": 7,
+    "entity_issue_counts": {
+      "entity_unavailable": 1,
+      "legacy_mapping_order_ambiguous": 1
+    },
+    "SSH_22222_open": true,
+    "SSH_22_open": false,
+    "Docker_TCP_2375_and_2376_closed": true,
+    "existing_local_Ed25519_and_RSA_authentication_failed": true,
+    "production_host_authenticated": false,
+    "production_Docker_preflight_executed": false,
+    "SSH_addons_error": 2,
+    "dedicated_public_key_prepared_locally_only": true,
+    "production_authorized_keys_changed": false,
+    "SSH_server_key_independently_verified": false,
+    "production_cold_backup": false,
+    "SDK_runtime_KV_read": false,
+    "deployment_requests": 0,
+    "Core_restart_or_stop_requests": 0,
+    "addon_configuration_or_start_requests": 0,
+    "HA_service_calls": 0,
+    "Mijia_automation_changes": 0
+  },
+  "study_old_binding_audit": {
+    "old_logical_products": 1,
+    "PID": "002",
+    "old_services": [
+      "switch",
+      "brightness",
+      "cct"
+    ],
+    "observed_registry_order_replay_selects": "main_light",
+    "ambient_light_is_order_sensitive_candidate": true,
+    "separate_old_ambient_binding_confirmed": false,
+    "existing_Core_log_bytes": 934594,
+    "historical_target_routes_observed": 0,
+    "runtime_binding_read_API_in_deployed_component": false,
+    "original_runtime_bindings_confirmed": false,
+    "automatic_rebind_or_freeze_performed": false,
+    "logging_changes": 0,
+    "device_control_calls": 0
+  },
+  "validation": {
+    "public_framework_tests": 60,
+    "tool_tests": 75,
+    "offline_identity_tests": 8,
+    "experimental_framework_tests": 25,
+    "total_Mac_tests": 168,
+    "new_Linux_tool_tests": 12,
+    "configuration_validation_passed": true,
+    "shell_syntax_passed": true
+  },
+  "cleanup": {
+    "all_owned_test_containers_removed": true,
+    "independent_test_public_key_authorization_removed": true,
+    "active_Docker_and_rootful_and_rootless_Podman_containers": 0,
+    "all_three_lab_VMs_stopped": true
+  },
+  "package": {
+    "b5_changed": false,
+    "b5_SHA256": "e2492d1a9d73579b75e1fa21b455a69dd768fdc9f89dadc9db127184e6df6962",
+    "new_maintenance_tools_bundled_in_b5": false
+  },
+  "production_install_allowed": false,
+  "remaining_gates": [
+    "review and authorize dedicated host SSH public-key append while retaining existing authorizations",
+    "verify production host fingerprint and authenticated SSH",
+    "actual production Docker online preflight and host cold-export runtime dependencies",
+    "maintenance window and real cold export",
+    "review and freeze old study light bindings; unavailable kitchen entity",
+    "offline original identity conversion, formal parent SN and native catalog verification"
+  ]
+}

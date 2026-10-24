@@ -19,10 +19,13 @@ Product Registry - 产品定义注册表（框架层 + 默认适配器 + 厂家�
 import json
 import os
 import copy
+import hashlib
 import logging
 import aiofiles
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field
 from typing import Optional
+
+from .fan_mapping import validate_fan_mapping
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -37,6 +40,13 @@ VALID_ACTION_DOMAIN_MAP = {
     "set_color_temp": ["light"],
     "set_color": ["light"],
     "set_speed": ["fan"],
+    "set_direction": ["fan"],
+    "set_fan_mode": ["fan"],
+    "set_effect": ["light"],
+    "native_timer": ["number"],
+    "countdown": ["number"],
+    "timer_array": ["number"],
+    "aggregate": [""],
     "set_temperature": ["climate", "water_heater"],
     "press": ["button"],
     "set_option": ["select", "input_select"],
@@ -176,6 +186,8 @@ class HAMapping:
     stop_option: Optional[str] = None        # select域 turn_on_off off 时选择的选项（如 "停止"）
     on_command: Optional[dict] = None        # on=1 时的声明式控制覆盖（如触发 cooker 服务）
     default_mode: Optional[str] = None       # 默认模式（用于 cooker 等需要默认值的服务）
+    options: dict = field(default_factory=dict)  # 显式能力参数，厂家按完整字段覆盖
+    role: str = ""                           # 可选显式角色；旧自动匹配保持默认行为
 
 
 # ---------------------------------------------------------------------------
@@ -267,6 +279,7 @@ class ProductDef:
     name: str = ""                                # 产品名称，如 "床头灯"
     auto_match: Optional[dict] = None             # 自动匹配规则 {required_domains, name_keywords}
     services: dict = field(default_factory=dict)  # dict[str, ServiceDef]
+    composition: Optional[str] = None             # 厂家选择的逻辑子卡组合
 
 
 # ---------------------------------------------------------------------------
@@ -283,6 +296,13 @@ class AdapterDef:
     pid: str                                      # 引用框架层 ProductDef 的 PID
     match_rules: list = field(default_factory=list)  # list[MatchRule]
     services: dict = field(default_factory=dict)     # service_id -> dict of ha_mapping fields
+    composition: Optional[str] = None
+
+
+def product_fingerprint(product):
+    """冻结后的完整产品映射摘要；配置改变时须重新离线核对。"""
+    raw = json.dumps(asdict(product), sort_keys=True, separators=(',', ':'), ensure_ascii=False).encode()
+    return hashlib.sha256(raw).hexdigest()
 
 
 # ---------------------------------------------------------------------------
@@ -425,7 +445,14 @@ class ProductRegistry:
             stop_option=mapping_data.get('stop_option'),
             on_command=mapping_data.get('on_command'),
             default_mode=mapping_data.get('default_mode'),
+            options=copy.deepcopy(mapping_data.get('options', {})),
+            role=mapping_data.get('role', ''),
         )
+
+        if not isinstance(mapping.role, str) or not isinstance(mapping.options, dict):
+            raise ValueError("invalid mapping role/options")
+
+        validate_fan_mapping(mapping)
 
         # 验证 action + domain
         if not validate_action_domain(mapping.action, mapping.domain):
@@ -490,6 +517,9 @@ class ProductRegistry:
             return None
 
         adapter = AdapterDef(pid=pid)
+        adapter.composition = data.get('composition')
+        if adapter.composition is not None and (not isinstance(adapter.composition, str) or not adapter.composition):
+            raise ValueError("invalid composition name")
 
         # 解析匹配规则
         rules_data = data.get('match_rules', [])
@@ -550,6 +580,9 @@ class ProductRegistry:
         )
 
         default_adapter = self._defaults.get(pid)
+        merged.composition = default_adapter.composition if default_adapter else None
+        if adapter and adapter.composition is not None:
+            merged.composition = adapter.composition
 
         for svc_id, fw_svc in product.services.items():
             # 第一层：从默认适配器获取基础 ha_mapping
@@ -627,7 +660,14 @@ class ProductRegistry:
             stop_option=override.get('stop_option', base.stop_option),
             on_command=override.get('on_command', base.on_command),
             default_mode=override.get('default_mode', base.default_mode),
+            options=copy.deepcopy(override.get('options', base.options)),
+            role=override.get('role', base.role),
         )
+
+        if not isinstance(mapping.role, str) or not isinstance(mapping.options, dict):
+            raise ValueError("invalid mapping role/options")
+
+        validate_fan_mapping(mapping)
 
         # 验证合并后的 action + domain
         if not validate_action_domain(mapping.action, mapping.domain):

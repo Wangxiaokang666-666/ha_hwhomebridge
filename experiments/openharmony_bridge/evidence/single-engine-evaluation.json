@@ -1,0 +1,301 @@
+{
+  "catalog": {
+    "one_parent": true,
+    "child_count": 8,
+    "old_framework_pid": "002",
+    "old_cloud_pid": "9MU7",
+    "old_SN_algorithm_unchanged": true,
+    "old_primary_object_preserved": true,
+    "duplicate_main_light": false,
+    "new_root_created_by_backend": false
+  },
+  "app_confirmed_writes": [
+    {
+      "key": "legacy-light",
+      "sid": "switch",
+      "write_confirmed": true
+    },
+    {
+      "key": "legacy-light",
+      "sid": "switch",
+      "write_confirmed": true
+    },
+    {
+      "key": "legacy-light",
+      "sid": "brightness",
+      "write_confirmed": true
+    },
+    {
+      "key": "fan-wifi",
+      "sid": "switch",
+      "write_confirmed": true
+    },
+    {
+      "key": "fan-wifi",
+      "sid": "switch",
+      "write_confirmed": true
+    },
+    {
+      "key": "fan-wifi",
+      "sid": "switch",
+      "write_confirmed": true
+    },
+    {
+      "key": "fan-wifi",
+      "sid": "switch",
+      "write_confirmed": true
+    },
+    {
+      "key": "legacy-light",
+      "sid": "cct",
+      "write_confirmed": true
+    }
+  ],
+  "restart": {
+    "passed": true,
+    "root_cloud_id_unchanged": true,
+    "nine_child_identity_files_unchanged": true,
+    "virtual_device_state_unchanged": true,
+    "children_ready": [
+      "aux",
+      "effects-0",
+      "effects-1",
+      "effects-2",
+      "fan-wifi",
+      "legacy-light",
+      "light-options",
+      "timer-controls"
+    ],
+    "fresh_child_bind_count": 0,
+    "PIN_callbacks": 0,
+    "independent_backend_and_C_processes_restarted": true,
+    "discovery_relay_running": false,
+    "production_access": false
+  },
+  "post_restart_app": {
+    "post_restart_writes": [
+      {
+        "key": "fan-wifi",
+        "sid": "switch",
+        "write_confirmed": true
+      }
+    ],
+    "cloud_only": true
+  },
+  "native_boundaries": {
+    "passed": true,
+    "explicit_legacy_SN_preserved": true,
+    "default_SN_unchanged": true,
+    "restart_preserves_identity": true,
+    "invalid_duplicate_or_replaced_SN_rejected": true,
+    "SDK_started_or_cloud_registration": false
+  },
+  "local_HA_controls": {
+    "passed": true,
+    "native_C_to_real_HA_virtual_services": true,
+    "legacy_light_power_brightness_CCT": true,
+    "six_gears_natural_wind_direction": true,
+    "native_device_timer_emulation": true,
+    "ambient_settings_effects": true,
+    "invalid_services_values_or_foreign_child_rejected": true,
+    "SDK_started_or_cloud_registration": false,
+    "physical_devices_accessed": false
+  },
+  "identity_storage": {
+    "checks": {
+      "positive": {
+        "config_init": 0,
+        "storage_read": 0,
+        "bound_identity_loaded": true,
+        "network_started": false
+      },
+      "changed_ac": {
+        "config_init": 0,
+        "storage_read": -131049,
+        "bound_identity_loaded": false,
+        "network_started": false
+      },
+      "corrupt_state": {
+        "config_init": 0,
+        "storage_read": -196576,
+        "bound_identity_loaded": false,
+        "network_started": false
+      },
+      "legacy_original_names": {
+        "config_init": 0,
+        "storage_read": 0,
+        "bound_identity_loaded": false,
+        "network_started": false
+      },
+      "legacy_renamed_config": {
+        "config_init": 0,
+        "storage_read": -196577,
+        "bound_identity_loaded": false,
+        "network_started": false
+      }
+    },
+    "paired_sources_unchanged": true,
+    "network_started": false,
+    "legacy_importer_available": false,
+    "live_legacy_takeover_allowed": false
+  },
+  "legacy_restart": {
+    "same_test_SN_confirmed": true,
+    "legacy_SDK_status": 1,
+    "PIN_callbacks_after_restart": 0,
+    "process_running": true,
+    "root_KV_unchanged": true,
+    "AC_and_SN_files_unchanged": true,
+    "cloud_device_id_verified": false,
+    "app_child_control": "failed_native_process_exit_139",
+    "takeover": "blocked_before_live_start",
+    "full_control_rollback_verified": false
+  },
+  "handover_refusal": {
+    "blocked": true,
+    "legacy_files_unchanged": true,
+    "network": "none",
+    "new_SDK_started": false
+  },
+  "date": "2026-10-17",
+  "purpose": "isolated single-engine evaluation; not production migration acceptance",
+  "production_access": false,
+  "legacy_identity_takeover": "blocked",
+  "release_gate": "not_met",
+  "legacy_light_transport_check": {
+    "same_SN_PID_and_model": true,
+    "protType_1_rejected_errcode": 15013,
+    "protType_6_registered_synced_online": true,
+    "error_code_semantics_not_inferred": true
+  },
+  "old_light_App_SN_verified_against_framework_SN": true,
+  "tests": {
+    "public_core": 46,
+    "prototype_framework": 25,
+    "tools": 42,
+    "configuration_valid": true
+  },
+  "jev": {
+    "model": "jev-1.13.0",
+    "used_for": "select reusable historical test evidence only; no secrets",
+    "complex_identity_and_ABI_judgment": "Codex"
+  },
+  "builds": {
+    "x86_64": {
+      "target": "x86_64-linux-musl",
+      "source_tree_sha256": "3e253f8c3da169552de8d026c492ba0c202d48c215f0f4d41b11fefe4eb39293",
+      "artifacts": {
+        "bridge_poc": {
+          "architecture": "x86_64",
+          "static": true,
+          "sha256": "6e59f2ad667ca88e60958b0dba47ef8b19b99098afb0fd924a8c240ba13baa4c"
+        },
+        "coap_alignment_test": {
+          "architecture": "x86_64",
+          "static": true,
+          "sha256": "2c37a5fc7baeb56c482c9032afcdf06b3937f2a15822887ff6bdc0fbc05e5af4"
+        },
+        "ha_child_state_test": {
+          "architecture": "x86_64",
+          "static": true,
+          "sha256": "45f0aac0dbfc358aef84d4716558fea56f0b9e081e3410732069066703d2bccd"
+        },
+        "virtual_child_state_test": {
+          "architecture": "x86_64",
+          "static": true,
+          "sha256": "700b4605605b08df4fd37df7338c943a7c12d12f44e278914996321a502adf5e"
+        },
+        "speke_vectors": {
+          "architecture": "x86_64",
+          "static": true,
+          "sha256": "22c65234822933d3592a515f6dd6284ccbb16bfb20f82982edcbae34542a841b"
+        },
+        "identity_state_probe": {
+          "architecture": "x86_64",
+          "static": true,
+          "sha256": "df9649db72e7f6650d1c7ce3db0c867a383ff994d51d42917e11700054b64845"
+        }
+      },
+      "current_Linux_runtime_executed": true
+    },
+    "arm64": {
+      "target": "aarch64-linux-musl",
+      "source_tree_sha256": "3e253f8c3da169552de8d026c492ba0c202d48c215f0f4d41b11fefe4eb39293",
+      "artifacts": {
+        "bridge_poc": {
+          "architecture": "aarch64",
+          "static": true,
+          "sha256": "c4b06757860a244e2d97323d3e4578a5c3fad8a6f54cfdcf623be8f945765751"
+        },
+        "coap_alignment_test": {
+          "architecture": "aarch64",
+          "static": true,
+          "sha256": "1d5831c68a8f5eb56f0ada2448c9d33cc5321bea4ec48877150d36393705cc8d"
+        },
+        "ha_child_state_test": {
+          "architecture": "aarch64",
+          "static": true,
+          "sha256": "e50d780461e10631c0d21a1997b7da1eaea06d49f2a8b3a9c4a013a8dc4d793e"
+        },
+        "virtual_child_state_test": {
+          "architecture": "aarch64",
+          "static": true,
+          "sha256": "5c50a0b6c46b5d2d0c9e6362aaa39075d666c63bc23143d2c1ef5b8843fce993"
+        },
+        "speke_vectors": {
+          "architecture": "aarch64",
+          "static": true,
+          "sha256": "387a9cf5ec76beb0279c230bf7bce49228062341c3d9dc8b7f8c24028e6fb267"
+        },
+        "identity_state_probe": {
+          "architecture": "aarch64",
+          "static": true,
+          "sha256": "78062f58775a557d4848108e293dc2f7a0501bae1fabe70affddad459a7ecfa1"
+        }
+      },
+      "current_Linux_runtime_executed": false
+    }
+  },
+  "not_verified": [
+    "legacy bound root cloud ID or credentials imported into OpenHarmony",
+    "legacy SDK App child control and complete rollback",
+    "all legacy 001-008 product categories",
+    "current aarch64 Linux runtime and real HA config flow takeover",
+    "physical fan/timer or production installation"
+  ],
+  "app_CCT": {
+    "writes": [
+      {
+        "key": "legacy-light",
+        "sid": "cct",
+        "write_confirmed": true
+      }
+    ],
+    "actual_CCT": {
+      "colorTemperature": 6491
+    },
+    "discovery_relay_running": false,
+    "App_displayed_actual_CCT": 6491,
+    "UI_matches_virtual_HA_readback": true
+  },
+  "cleanup": {
+    "all_test_containers_stopped": true,
+    "paired_ARM_VM_started": false,
+    "MatePad_screen_timeout_restored": true,
+    "discovery_relay_stopped": true,
+    "x86_test_VM_stopped": true,
+    "paired_ARM_VM_still_stopped": true
+  },
+  "mutual_exclusion": {
+    "second_owner_rejected_while_OpenHarmony_running": true,
+    "legacy_library_not_loaded_by_rejected_owner": true
+  },
+  "evaluation_source_sha256": {
+    "single_engine_fixture.py": "74cfc7177e978ba186cc606a53608b3a96e2de6cf817c7809c4cdee17e124283",
+    "single_engine_owner.py": "5a92d828fcf6585f297f69534ff0271279fe31e68c6bf8bfc5d152ca9048c94d",
+    "single_engine_native_check.py": "92c6655f98911e1a4d57b61da2a7df8b56cfe064708e48f5f0cfca9477f4a8a5",
+    "single_engine_control_check.py": "b79ff54f2b41bf406122855ac825384be0600bad1e4fda8f889ecb9fd0dc5275",
+    "single_engine_identity_check.py": "e1299beb703f11ed7b5379b43f1cf3fea3c3ca0581e79e3dee3f306954fd5db5",
+    "identity_state_probe.c": "7494a2acc0b210e11d4906ce9e40147f472740b08c58cdb2f17a82b94a201e49"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "model": "jev-1.13.0",
+  "answers": {
+    "crash": {
+      "type": "choice",
+      "choice": "native_debug",
+      "confidence": 1.0,
+      "probabilities": {
+        "native_debug": 1.0,
+        "offline_decode": 0.0,
+        "acceptance_gap": 0.0
+      }
+    },
+    "identity": {
+      "type": "choice",
+      "choice": "offline_decode",
+      "confidence": 0.94,
+      "probabilities": {
+        "native_debug": 0.0,
+        "offline_decode": 0.96,
+        "acceptance_gap": 0.04
+      }
+    },
+    "online": {
+      "type": "choice",
+      "choice": "acceptance_gap",
+      "confidence": 0.91,
+      "probabilities": {
+        "native_debug": 0.02,
+        "offline_decode": 0.04,
+        "acceptance_gap": 0.94
+      }
+    }
+  },
+  "usage": {
+    "input_tokens": 660,
+    "output_tokens": 129
+  }
+}

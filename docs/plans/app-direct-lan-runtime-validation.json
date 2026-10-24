@@ -1,0 +1,113 @@
+{
+  "version": 1,
+  "dates": [
+    "2026-10-21",
+    "2026-10-22"
+  ],
+  "scope": "physical MatePad, independent bridged ARM Linux, actual HA Core, virtual entities only",
+  "production_access": false,
+  "app_LAN_discovery_verified": true,
+  "app_direct_lan_verified": false,
+  "empty_scene_first_control_verified": false,
+  "app_LAN_restart_verified": false,
+  "native_x86_verified": false,
+  "identity": {
+    "active_group": "B",
+    "retired_offline_group": "A",
+    "root_SN_exact_match": true,
+    "effects_2_SN_exact_match": true,
+    "App_root_online": true,
+    "children_in_App": 15,
+    "single_parent_gateway": true
+  },
+  "network": {
+    "privileged_temporary_bridge_runtime_verified": true,
+    "direct_LAN_interface": true,
+    "Mac_application_proxy_or_SSH_UDP_relay_used": false,
+    "discovery_UDP_port": 5683,
+    "local_control_UDP_port": 5686,
+    "capture_scope": "tablet IPv4 UDP on ports 5683, 5686, 15686; no payload stored",
+    "discovery_requests": 24,
+    "discovery_responses": 24,
+    "request_ports_with_responses": 4,
+    "includes_retransmissions": true,
+    "captured_local_auth_or_control_packets": 0
+  },
+  "cold_first_LAN_attempt": {
+    "App_clicks": 1,
+    "SDK_WAN_blocked": true,
+    "HA_calls": 0,
+    "C_confirmations": 0,
+    "virtual_state_unchanged": true,
+    "passed": false,
+    "failure_preserved": true
+  },
+  "later_cloud_comparator": {
+    "App_clicks": 1,
+    "HA_calls": 1,
+    "service": "light.turn_on",
+    "effect": "空场景",
+    "C_confirmations": 1,
+    "C_reason": "accepted",
+    "C_elapsed_ms": 1041,
+    "only_target_virtual_entity_changed": true,
+    "first_LAN_success_claimed": false
+  },
+  "actual_HA_restart_cloud": {
+    "new_HA_process": true,
+    "same_entry": true,
+    "paired_files_unchanged": true,
+    "states_preserved": true,
+    "one_native_owner": true,
+    "App_empty_scene_enabled_readback": true,
+    "first_post_restart_App_clicks": 1,
+    "first_post_restart_service": "light.turn_off",
+    "HA_calls": 1,
+    "C_confirmations": 1,
+    "C_reason": "accepted",
+    "C_elapsed_ms": 1065,
+    "LAN_restart_success_claimed": false
+  },
+  "tablet_restricted_network_attempt": {
+    "App_clicks": 1,
+    "tablet_IP_preserved": true,
+    "IPv4_gateway_changed_to_non_forwarding_lab": true,
+    "LAN_probe_succeeded": true,
+    "IPv4_WAN_probe_failed": true,
+    "IPv6_default_route_present": true,
+    "IPv6_WAN_probe_succeeded": true,
+    "complete_tablet_WAN_isolation_verified": false,
+    "SDK_WAN_blocked": true,
+    "HA_calls": 0,
+    "C_confirmations": 0,
+    "passed": false
+  },
+  "after_network_restoration": {
+    "late_HA_calls": 0,
+    "late_C_confirmations": 0
+  },
+  "cleanup": {
+    "tablet_original_DHCP_restored_and_readback": true,
+    "tablet_IPv4_internet_recovered": true,
+    "tablet_screen_timeout_restored": true,
+    "temporary_Linux_IPv4_and_IPv6_firewall_chains_removed": true,
+    "independent_HA_and_native_owners_stopped": true,
+    "original_runtime_deployment_restored": true,
+    "original_VM_yaml_restored_by_hash": true,
+    "VM_initial_stopped_state_restored": true,
+    "root_bridge_helper_user_Ctrl_C_pending": true
+  },
+  "Jev_evidence_classification": {
+    "model": "jev-1.13.0",
+    "choices": {
+      "discovery": "discovery_only",
+      "blocked_first": "not_dispatched",
+      "cloud_compare": "app_control_cloud_comparator"
+    },
+    "execution_identity_and_pass_checks": "deterministic; no AI runtime dependency"
+  },
+  "raw_evidence": "private local lab only",
+  "production_adoption_ready": false,
+  "production_deployment_performed": false,
+  "installation_package_rebuilt": false
+}

@@ -1,0 +1,461 @@
+{
+  "products": [
+    {
+      "pid": "28BF",
+      "name": "无线续航自然风风扇",
+      "cloud": {
+        "devType": "029",
+        "manu": "3af",
+        "model": "FL-12138DRR(WF)-1W",
+        "protType": 1,
+        "profile_url": "https://smarthome-drcn.dbankcdn.com/device/guide/28BF/28BF.json",
+        "profile_sha256": "96511bea00b8cadcfd95de219335b48fa4ab392ce7580ea53a1438b04d3c739c"
+      },
+      "services": {
+        "switch": {
+          "service_type": "switch",
+          "char_name": "on",
+          "characteristics": {
+            "on": {
+              "type": "bool",
+              "method": "RW",
+              "values": [
+                1,
+                0
+              ]
+            }
+          }
+        },
+        "fan": {
+          "service_type": "fan",
+          "char_name": "speed",
+          "characteristics": {
+            "angle": {
+              "type": "enum",
+              "method": "RW",
+              "values": [
+                0,
+                30,
+                60,
+                90,
+                120
+              ]
+            },
+            "speed": {
+              "type": "int",
+              "method": "RW",
+              "min": 1,
+              "max": 8
+            }
+          }
+        },
+        "mode": {
+          "service_type": "mode",
+          "char_name": "mode",
+          "characteristics": {
+            "mode": {
+              "type": "enum",
+              "method": "RW",
+              "values": [
+                0,
+                1,
+                2
+              ]
+            }
+          }
+        },
+        "endTime": {
+          "service_type": "time",
+          "char_name": "time",
+          "characteristics": {
+            "time": {
+              "type": "int",
+              "method": "RW",
+              "min": 0,
+              "max": 720
+            }
+          }
+        }
+      }
+    },
+    {
+      "pid": "2KJ0",
+      "name": "KAMAI灯",
+      "cloud": {
+        "devType": "112",
+        "manu": "gw2",
+        "model": "KM032-F03A",
+        "protType": 1,
+        "profile_url": "https://smarthome-drcn.dbankcdn.com/device/guide/2KJ0/2KJ0.json",
+        "profile_sha256": "6df85557cd919babd77cc6a0695666877b758bb0360fc85eb32b7cec3a7c8e92"
+      },
+      "services": {
+        "switch": {
+          "service_type": "switch",
+          "char_name": "on",
+          "characteristics": {
+            "on": {
+              "type": "bool",
+              "method": "RW",
+              "values": [
+                1,
+                0
+              ]
+            }
+          }
+        },
+        "brightness": {
+          "service_type": "brightness",
+          "char_name": "brightness",
+          "characteristics": {
+            "brightness": {
+              "type": "int",
+              "method": "RW",
+              "min": 1,
+              "max": 100
+            }
+          }
+        },
+        "cct": {
+          "service_type": "cct",
+          "char_name": "colorTemperature",
+          "characteristics": {
+            "colorTemperature": {
+              "type": "int",
+              "method": "RW",
+              "min": 2700,
+              "max": 6500
+            }
+          }
+        },
+        "delay": {
+          "service_type": "timer",
+          "char_name": null,
+          "characteristics": {
+            "action": {
+              "type": "enum",
+              "method": "RW",
+              "values": [
+                0,
+                1,
+                2
+              ]
+            },
+            "num": {
+              "type": "int",
+              "method": "RW",
+              "min": 0,
+              "max": 1
+            },
+            "timer": {
+              "type": "array[object]",
+              "method": "RW"
+            }
+          }
+        }
+      }
+    },
+    {
+      "pid": "20UC",
+      "name": "领普双键墙壁开关",
+      "cloud": {
+        "devType": "005",
+        "manu": "372",
+        "model": "Q3D-HW-W2",
+        "protType": 1,
+        "profile_url": "https://smarthome-drcn.dbankcdn.com/device/guide/20UC/20UC.json",
+        "profile_sha256": "cc771a8b876483ceaec5c9f81c3b2f8ca179fb1ff56b85ab8d192330ca5c4d53"
+      },
+      "services": {
+        "switch": {
+          "service_type": "switch",
+          "char_name": "on",
+          "characteristics": {
+            "on": {
+              "type": "bool",
+              "method": "RW",
+              "values": [
+                1,
+                0
+              ]
+            }
+          }
+        },
+        "switch1": {
+          "service_type": "switch",
+          "char_name": "on",
+          "characteristics": {
+            "on": {
+              "type": "bool",
+              "method": "RW",
+              "values": [
+                1,
+                0
+              ]
+            },
+            "name": {
+              "type": "string",
+              "method": "RW",
+              "max_length": 16
+            }
+          },
+          "cloud_service_type": "switch1"
+        },
+        "switch2": {
+          "service_type": "switch",
+          "char_name": "on",
+          "characteristics": {
+            "on": {
+              "type": "bool",
+              "method": "RW",
+              "values": [
+                1,
+                0
+              ]
+            },
+            "name": {
+              "type": "string",
+              "method": "RW",
+              "max_length": 16
+            }
+          },
+          "cloud_service_type": "switch2"
+        }
+      }
+    },
+    {
+      "pid": "2151",
+      "name": "圆和四路智能开关",
+      "cloud": {
+        "devType": "005",
+        "manu": "9cf",
+        "model": "X9ZK4",
+        "protType": 1,
+        "profile_url": "https://smarthome-drcn.dbankcdn.com/device/guide/2151/2151.json",
+        "profile_sha256": "d0e5083dadbe9499922ab855cea7405783f06bc24614e917f77dcc4894ed6039"
+      },
+      "services": {
+        "switch": {
+          "service_type": "switch",
+          "char_name": "on",
+          "characteristics": {
+            "on": {
+              "type": "bool",
+              "method": "RW",
+              "values": [
+                1,
+                0
+              ]
+            }
+          }
+        },
+        "switch1": {
+          "service_type": "switch",
+          "char_name": "on",
+          "characteristics": {
+            "on": {
+              "type": "bool",
+              "method": "RW",
+              "values": [
+                1,
+                0
+              ]
+            },
+            "name": {
+              "type": "string",
+              "method": "RW",
+              "max_length": 20
+            }
+          },
+          "cloud_service_type": "switch1"
+        },
+        "switch2": {
+          "service_type": "switch",
+          "char_name": "on",
+          "characteristics": {
+            "on": {
+              "type": "bool",
+              "method": "RW",
+              "values": [
+                1,
+                0
+              ]
+            },
+            "name": {
+              "type": "string",
+              "method": "RW",
+              "max_length": 20
+            }
+          },
+          "cloud_service_type": "switch2"
+        },
+        "switch3": {
+          "service_type": "switch",
+          "char_name": "on",
+          "characteristics": {
+            "on": {
+              "type": "bool",
+              "method": "RW",
+              "values": [
+                1,
+                0
+              ]
+            },
+            "name": {
+              "type": "string",
+              "method": "RW",
+              "max_length": 20
+            }
+          },
+          "cloud_service_type": "switch3"
+        },
+        "switch4": {
+          "service_type": "switch",
+          "char_name": "on",
+          "characteristics": {
+            "on": {
+              "type": "bool",
+              "method": "RW",
+              "values": [
+                1,
+                0
+              ]
+            },
+            "name": {
+              "type": "string",
+              "method": "RW",
+              "max_length": 20
+            }
+          },
+          "cloud_service_type": "switch4"
+        }
+      }
+    },
+    {
+      "pid": "2NAL",
+      "name": "eachone一起玩智能风扇灯",
+      "cloud": {
+        "devType": "114",
+        "manu": "hdo",
+        "model": "HJ-HM-FSD-001",
+        "protType": 1,
+        "profile_url": "https://smarthome-drcn.dbankcdn.com/device/guide/2NAL/2NAL.json",
+        "profile_sha256": "083e14106554fdc677474b22db3d2b397f4b7c805030cdce24204a5f7f86032d"
+      },
+      "services": {
+        "switch": {
+          "service_type": "switch",
+          "char_name": "on",
+          "characteristics": {
+            "on": {
+              "type": "bool",
+              "method": "RW",
+              "values": [
+                1,
+                0
+              ]
+            }
+          }
+        },
+        "switchFan": {
+          "service_type": "switch",
+          "char_name": "on",
+          "characteristics": {
+            "on": {
+              "type": "bool",
+              "method": "RW",
+              "values": [
+                1,
+                0
+              ]
+            }
+          }
+        },
+        "fan": {
+          "service_type": "fan",
+          "char_name": "gear",
+          "characteristics": {
+            "gear": {
+              "type": "enum",
+              "method": "RW",
+              "values": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+              ]
+            }
+          }
+        },
+        "fanMode": {
+          "service_type": "mode",
+          "char_name": "mode",
+          "characteristics": {
+            "mode": {
+              "type": "enum",
+              "method": "RW",
+              "values": [
+                0,
+                1,
+                2,
+                100
+              ]
+            }
+          }
+        },
+        "verticalswing": {
+          "service_type": "verticalswing",
+          "char_name": "verticalswing",
+          "characteristics": {
+            "verticalswing": {
+              "type": "bool",
+              "method": "RW",
+              "values": [
+                1,
+                0
+              ]
+            }
+          }
+        },
+        "countdownht": {
+          "service_type": "countdownht",
+          "char_name": null,
+          "characteristics": {
+            "Equipmentname": {
+              "type": "enum",
+              "method": "RW",
+              "values": [
+                0,
+                1,
+                2
+              ]
+            },
+            "countdownht": {
+              "type": "bool",
+              "method": "RW",
+              "values": [
+                1,
+                0
+              ]
+            },
+            "remainder": {
+              "type": "int",
+              "method": "R",
+              "min": 0,
+              "max": 1440
+            },
+            "timeing": {
+              "type": "int",
+              "method": "RW",
+              "min": 1,
+              "max": 1440
+            }
+          }
+        }
+      }
+    }
+  ]
+}

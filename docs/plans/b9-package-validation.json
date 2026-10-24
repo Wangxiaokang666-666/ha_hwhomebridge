@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "date": "2026-10-22",
+  "status": "HA package validation passed; physical App acceptance pending device and bridged network",
+  "production_access": false,
+  "release": {
+    "version": "1.1.0b9",
+    "archive_sha256": "f288fdf0868f2321834ae2469d70935cc839faf6cc1a6c3f71750f96598536b0",
+    "source_baseline": "2c6a3ae7103bf484ff46ad8a9573934d8677a608",
+    "payload_files": 60,
+    "kind": "hwhomebridge-preserving-upgrade",
+    "preserved_assets_shipped": false
+  },
+  "environment": {
+    "HA": "2026.10.1",
+    "Linux_architecture": "aarch64",
+    "container_network": "none",
+    "selected_backend": "disabled"
+  },
+  "checks": {
+    "framework_tests": 96,
+    "tools_tests": 125,
+    "configuration_validation": true,
+    "both_native_payloads_match_build": true,
+    "package_management_modules_match_checkout": true,
+    "b8_baseline_HA_loaded": true,
+    "b8_to_b9_installed_and_HA_loaded": true,
+    "failed_file_switch_restored_component_and_entry": true,
+    "original_configs_libraries_profiles_and_entries_preserved": true,
+    "installed_package_management_flow_and_service_read_write": true,
+    "installed_package_cold_HA_restart_and_stable_SNs": true,
+    "b9_reinstall_and_HA_loaded": true,
+    "reinstall_backup_restored": true,
+    "b8_component_and_entry_restored_and_HA_loaded": true,
+    "one_entry_and_gateway_identity": true
+  },
+  "fresh_App_fixture": {
+    "new_unpaired_identity": true,
+    "production_credentials_or_pairing_copied": false,
+    "native_HA_loaded": true,
+    "catalog_and_profiles_validated": true,
+    "declared_HA_four_key_cards": 2,
+    "built_in_virtual_probe_enabled": true,
+    "backend": "disabled",
+    "native_owners": 0,
+    "cloud_devices_created": 0,
+    "App_discovery_performed": false,
+    "App_pairing_performed": false,
+    "App_eight_buttons_verified": false,
+    "App_restart_control_verified": false,
+    "cloud_cleanup_required": false
+  },
+  "pending": [
+    "MatePad current debugging address and unlocked Smart Life foreground",
+    "local administrator starts temporary socket_vmnet helper",
+    "new identity discovery and pairing",
+    "physical App eight-key controls and restart readback",
+    "exact-identity cleanup after the App run"
+  ],
+  "native_x86_hardware_verified": false,
+  "Jev": {
+    "model": "jev-1.13.0",
+    "use": "classified file installation, physical App control and identity-cleanup evidence; no identity or acceptance decision"
+  }
+}

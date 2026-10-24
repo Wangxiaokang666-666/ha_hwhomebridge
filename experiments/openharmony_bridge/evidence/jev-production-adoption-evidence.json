@@ -1,0 +1,63 @@
+{
+  "request": {
+    "model": "jev-latest",
+    "state": {
+      "replay": "Matching replay picks different entities with reversed order.",
+      "resident": "Read-only diagnostic returns the currently resident router bindings without native calls.",
+      "cold": "Stopped-owner export verifies paired identity bytes; imported engine never started."
+    },
+    "questions": {
+      "binding_source": {
+        "type": "choice",
+        "instructions": "Which evidence identifies the current runtime binding? Classify evidence only.",
+        "criteria": {
+          "resident": "Current router observation",
+          "replay": "Candidate matching replay",
+          "cold": "Offline identity snapshot",
+          "unknown": "Unknown"
+        }
+      },
+      "live_gap": {
+        "type": "choice",
+        "instructions": "Which evidence is missing for a claim of successful imported-engine adoption? Do not authorize actions.",
+        "criteria": {
+          "live": "Imported engine cloud online, App read/write and rollback",
+          "snapshot": "Source file list",
+          "matching": "Candidate matching replay",
+          "none": "None"
+        }
+      }
+    }
+  },
+  "response": {
+    "model": "jev-1.13.0",
+    "answers": {
+      "binding_source": {
+        "type": "choice",
+        "choice": "resident",
+        "confidence": 1.0,
+        "probabilities": {
+          "resident": 1.0,
+          "replay": 0.0,
+          "cold": 0.0,
+          "unknown": 0.0
+        }
+      },
+      "live_gap": {
+        "type": "choice",
+        "choice": "live",
+        "confidence": 0.88,
+        "probabilities": {
+          "live": 0.91,
+          "snapshot": 0.0,
+          "matching": 0.06,
+          "none": 0.03
+        }
+      }
+    },
+    "usage": {
+      "input_tokens": 499,
+      "output_tokens": 90
+    }
+  }
+}

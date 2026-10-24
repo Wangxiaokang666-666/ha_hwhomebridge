@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "date": "2026-10-22",
+  "scope": "isolated ARM Linux, HA Core 2026.10.1, virtual sources only",
+  "production_access": false,
+  "new_cloud_devices_created": false,
+  "single_entry_and_parent": true,
+  "HA_selected_backend": "disabled",
+  "container_network": "none",
+  "tests": {
+    "macOS_framework": 96,
+    "ARM_Linux_framework": 96,
+    "macOS_tools": 125,
+    "configuration_validation": true,
+    "git_diff_check": true
+  },
+  "actual_HA": {
+    "native_HA_forms": true,
+    "foreign_role_rejected": true,
+    "explicit_layout_and_cards_saved": true,
+    "real_HA_service_and_readback": true,
+    "new_standard_light_same_parent": true,
+    "concurrent_stale_form_rejected": true,
+    "disabled_zero_writes": true,
+    "shared_original_KV": true,
+    "template_limits_shown": true,
+    "one_entry_and_parent": true,
+    "frozen_identity_unchanged": true,
+    "network_isolated": true
+  },
+  "cold_restart": {
+    "cold_restart_same_entry_options_and_child_sns": true,
+    "no_sdk_process": true,
+    "native_shared_KV_guard_passed_before_network_refusal": true,
+    "one_entry_and_parent": true,
+    "frozen_identity_unchanged": true,
+    "network_isolated": true
+  },
+  "browser": {
+    "native_frontend_clicked": true,
+    "device_list_with_model": true,
+    "layout_and_cards": true,
+    "role_entity_selectors": 9,
+    "confirmation_preview": true,
+    "saved_production_options": false,
+    "screenshots": "private evidence outside repository"
+  },
+  "native": {
+    "ARM_Linux_shared_KV_guard": true,
+    "sdk_network_started": false,
+    "ARM_CoAP_TLS_regression": true,
+    "ARM_SPEKE_self_handshake": true,
+    "builds": {
+      "arm64": {
+        "cross_compiled": true,
+        "bridge_sha256": "82c5f69df0019d64daa26109ecd1fde670f835a508b275f9a59a05cddf8f2a40"
+      },
+      "x86_64": {
+        "cross_compiled": true,
+        "bridge_sha256": "89074cb00a4e071556c976794fd6c351327caef9f6933d64a610a59323640ee3"
+      }
+    },
+    "native_x86_hardware_verified": false
+  },
+  "remaining": {
+    "new_layout_Smart_Life_App_acceptance": true,
+    "full_timer_vendor_page_extra_controls": true,
+    "production_handover": true,
+    "current_release_package_rebuild": true
+  },
+  "Jev": {
+    "model": "jev-1.13.0",
+    "usage": "classification of replaceable layouts, fixed vendor limits and native HA forms; no credentials provided; implementation and acceptance determined by code and actual checks"
+  }
+}

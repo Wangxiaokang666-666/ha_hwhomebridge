@@ -1,0 +1,89 @@
+{
+  "passed": true,
+  "SDK_SHA256": "0579e6f3cee0320d1533e5a96cc6d72a065a43050eff4edcb7afd6a9a52c7b58",
+  "method": "pinned file initializer then GetGatewaySN; qemu user x86_64 in isolated ARM Linux mount/network namespaces",
+  "production_identity_loaded": false,
+  "SDK_main_called": false,
+  "SDK_unbind_called": false,
+  "cases": {
+    "LF16": {
+      "native_matches_expected": true,
+      "raw_source_unchanged": true,
+      "network_syscalls": 0,
+      "native_length": 16,
+      "adoption_format_accepted": true
+    },
+    "NUL16": {
+      "native_matches_expected": true,
+      "raw_source_unchanged": true,
+      "network_syscalls": 0,
+      "native_length": 16,
+      "adoption_format_accepted": true
+    },
+    "LF_short": {
+      "native_matches_expected": false,
+      "raw_source_unchanged": false,
+      "network_syscalls": 0,
+      "native_length": 16,
+      "adoption_format_accepted": false
+    },
+    "NUL_short": {
+      "native_matches_expected": false,
+      "raw_source_unchanged": false,
+      "network_syscalls": 0,
+      "native_length": 16,
+      "adoption_format_accepted": false
+    },
+    "long_truncates": {
+      "native_matches_expected": true,
+      "raw_source_unchanged": true,
+      "network_syscalls": 0,
+      "native_length": 16,
+      "adoption_format_accepted": false
+    }
+  },
+  "production_offline_import": {
+    "passed": true,
+    "original_parent_identity_and_all_account_fields_loaded_by_native_reader": true,
+    "preserved_old_child_identities": 32,
+    "original_SN_raw_bytes_preserved": true,
+    "network_namespace_isolated": true,
+    "network_syscalls": 0,
+    "SDK_main_started": false,
+    "production_HA_written": false,
+    "adoption_ready": false,
+    "imported_native_state_unchanged_by_probe": true
+  },
+  "binding_freeze": {
+    "old_devices": 32,
+    "target_old_light_services_bound_to_main": true,
+    "unavailable_entities_retained": 1,
+    "source_HA_written": false,
+    "two_pass_live_registries_match_cold_export": true
+  },
+  "production_engine_changed": false,
+  "adoption_ready": false,
+  "current_unavailable_entity_count": 1,
+  "validation": {
+    "local_public_tests": 69,
+    "local_tool_tests": 116,
+    "independent_ARM_public_tests": 69,
+    "independent_ARM_tool_tests": 116,
+    "configuration_valid": true
+  },
+  "production_baseline": {
+    "version": "1.1.0b6",
+    "active_backend": "legacy",
+    "devices": 32,
+    "protected_static_files_unchanged": 22,
+    "restarts_this_turn": 0,
+    "installs_this_turn": 0,
+    "HA_service_calls_this_turn": 0
+  },
+  "endpoint_observation": {
+    "original_Core_container_matched": true,
+    "owned_resolved_cloud_connections": 1,
+    "port": 5683,
+    "remote_writes": 0
+  }
+}

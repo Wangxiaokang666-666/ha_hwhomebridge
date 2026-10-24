@@ -3,12 +3,35 @@
     "step": {
       "user": {
         "title": "HuaweiHome Bridge",
-        "description": "欢迎使用HuaweiHome Bridge！\n\n此集成帮您将Home Assistant设备接入到华为智慧生活，让您可以通过华为智慧生活APP或语音助手控制设备。\n\n**功能说明：**\n- 将HA设备接入到华为智慧生活\n- 支持远程控制、语音控制\n- 支持多种设备类型\n- 在集成页面显示已接入的设备\n- 支持禁用/启用单个设备的桥接\n\n**使用步骤：**\n\n1.完成此配置后，网关将自动启动\n\n2.点击\"配置\"按钮获取PIN码\n\n3.在华为智慧生活APP中输入PIN码完成绑定\n\n4.绑定成功后，已匹配的设备将自动接入华为智慧生活\n\n5.在集成页面可查看已接入的设备，点击设备齿轮图标可禁用/启用\n\n---\n\n点击下方\"提交\"按钮完成集成配置",
-        "data": {}
+        "description": "已有集成请点原条目的“配置 → 接管当前网关”，不会新建网关。此处用于首次创建 HiLink 网关，或从已校验资料恢复已有配对网关。",
+        "data": {
+          "backend": "桥接后端"
+        }
+      },
+      "openharmony": {
+        "title": "OpenHarmony 独立后端",
+        "description": "填写 HA 配置目录下的独立目录，不填 token。目录须包含已校验程序、产品资料、实体映射及独立配对文件。此步骤只检查，不会启动或改写配对。",
+        "data": {
+          "openharmony_directory": "独立目录"
+        }
+      },
+      "existing_gateway": {
+        "title": "沿用当前网关：启停与后端切换",
+        "description": "从已校验的私有资料恢复一个已有配对网关。已有配置条目时请使用原条目的配置页；恢复资料不会新建云端父身份。",
+        "data": {
+          "gateway_directory": "现有网关资料目录",
+          "backend": "桥接引擎"
+        }
       }
     },
     "abort": {
-      "single_instance_allowed": "此集成仅支持配置一个实例"
+      "single_instance_allowed": "此集成仅支持配置一个实例",
+      "invalid_backend": "未知后端，请重新选择。",
+      "already_configured": "该后端网关已配置。"
+    },
+    "error": {
+      "invalid_openharmony_directory": "请检查独立目录、权限、程序与 profile 哈希、重复网关/目录及端口。",
+      "invalid_gateway_directory": "检查原条目、网关身份、子设备目录、权限及原生程序；不会创建新身份。"
     }
   },
   "options": {
@@ -29,6 +52,82 @@
         "data": {
           "devices": "已接入设备"
         }
+      },
+      "backend": {
+        "title": "当前桥接实例 / 启停",
+        "description": "当前运行：{active_backend}；保存选择：{selected_backend}。\n写入策略：{write_policy}。\n\n停用 OpenHarmony 只停止本实例并保留配对；现有 HiLink 和其他实例继续运行。旧 SDK 常驻时停用旧条目需要重启 HA。更换后端类型请新增独立条目，设置失败不会自动启动另一后端。",
+        "data": {
+          "backend": "桥接后端"
+        }
+      },
+      "openharmony": {
+        "title": "OpenHarmony 独立后端",
+        "description": "填写 HA 配置目录下的独立目录，不填 token。目录须包含已校验程序、产品资料、实体映射及独立配对文件。此步骤只检查，不会启动或改写配对。",
+        "data": {
+          "openharmony_directory": "独立目录"
+        }
+      },
+      "gateway_lifecycle": {
+        "title": "沿用当前网关：启停与后端切换",
+        "description": "当前运行：{active_backend}；保存选择：{selected_backend}；失败引擎：{failed_backend}。\n\n沿用当前配置条目和已配对身份。目录需先离线准备并通过身份校验。切换失败会退回同一身份的已验证引擎；旧库已驻留时需重启 HA。删除或停用此配置不会解绑。",
+        "data": {
+          "gateway_directory": "现有网关资料目录",
+          "backend": "桥接引擎"
+        }
+      },
+      "managed_devices": {
+        "title": "设备管理",
+        "description": "从当前 HA 设备中选择要桥接的设备，共 {device_count} 个候选。\n\n取消勾选会停用桥接并保留已配对子卡，不关闭家里的实体。新增设备需继续绑定角色。所有设备共用原来的一个网关。",
+        "data": {
+          "devices": "启用桥接的设备"
+        }
+      },
+      "managed_role_device": {
+        "title": "角色绑定与功能卡片",
+        "description": "选择要调整的设备。原主灯的身份和绑定保持不变；尚未添加的设备请先进入设备管理。",
+        "data": {
+          "device": "设备"
+        }
+      },
+      "managed_layout": {
+        "title": "选择风扇卡片布局",
+        "description": "六档开关卡用两张四键卡显示六档、自然风和电源，避免原风扇模板的七／八档、摇头按钮。切换布局不会创建新网关；已经配对的旧卡会停用保留，可在智慧生活手动删除。",
+        "data": {
+          "layout": "风扇布局"
+        }
+      },
+      "managed_cards": {
+        "title": "选择需要的功能卡片",
+        "description": "只选择需要的功能。原主灯继续保留。完整定时卡能调节原生定时，但它的厂商页面仍有未映射入口；取消选择会停用相应能力。",
+        "data": {
+          "cards": "功能卡片"
+        }
+      },
+      "managed_roles": {
+        "title": "绑定 HA 实体",
+        "description": "每个角色选择同一 HA 设备下的一个实体。不能重复使用实体或跨设备绑定，原主灯绑定不可替换。这里保存绑定，不会试开灯或试转风扇。",
+        "data": {
+          "fan": "风扇",
+          "main": "主灯",
+          "ambient": "氛围灯",
+          "flex": "凌动开关",
+          "sleep": "助眠模式",
+          "wake": "唤醒模式",
+          "default_on": "默认上电状态",
+          "fan_timer_enable": "风扇定时开关",
+          "fan_timer_duration": "风扇定时时长",
+          "fan_timer_remaining": "风扇定时剩余时间",
+          "light_timer_enable": "灯光定时开关",
+          "light_timer_duration": "灯光定时时长",
+          "light_timer_remaining": "灯光定时剩余时间"
+        }
+      },
+      "managed_confirm": {
+        "title": "确认设备管理配置",
+        "description": "启用 {device_count} 个来源设备，原网关共管理 {card_count} 张活动或保留子卡。\n\n{notes}\n\n停用保留身份和智慧生活卡片；保存会重载当前集成并沿用当前引擎选择和网关身份，不改变家中设备的开关状态。",
+        "data": {
+          "confirm": "确认保存并应用"
+        }
       }
     },
     "progress": {
@@ -37,7 +136,23 @@
     "abort": {
       "pin_expired": "PIN码已过期，请重新配置",
       "internal_error": "内部错误，请重试",
-      "integration_not_init": "集成正在启动中，请稍后再试"
+      "integration_not_init": "集成正在启动中，请稍后再试",
+      "invalid_backend": "未知后端，请重新选择。",
+      "legacy_only": "此功能仅适用于旧 HiLink 后端。",
+      "no_managed_roles": "没有可编辑角色的新增设备，请先进入设备管理。",
+      "invalid_managed_device": "设备选择无效，请重新打开配置。",
+      "managed_source_unavailable": "来源设备已删除或禁用，请先恢复来源或在设备管理中停用。",
+      "managed_update_required": "请先使用当前原生构建重新准备网关目录，再启用设备管理；原配置和引擎保持不变。"
+    },
+    "error": {
+      "invalid_openharmony_directory": "请检查独立目录、权限、程序与 profile 哈希、重复网关/目录及端口。",
+      "invalid_gateway_directory": "检查原条目、网关身份、子设备目录、权限及原生程序；不会创建新身份。",
+      "invalid_managed_devices": "请选择列表中的设备。",
+      "invalid_managed_cards": "请至少选择一张已支持的功能卡。",
+      "invalid_managed_roles": "请选择同一设备下不同的实体，不能替换原主灯。标准灯需支持亮度和色温，风扇需回报所选能力的状态，灯效需在设备支持列表中。",
+      "managed_role_missing": "当前设备缺少所需角色的实体；请返回减少功能卡片，或先修复 HA 设备实体。",
+      "managed_confirm_required": "请勾选确认后再保存。",
+      "invalid_managed_plan": "配置未保存。请检查角色、已安装产品资料及原主灯绑定；若其他页面已更新配置，请重新打开设备管理。"
     }
   },
   "notify": {

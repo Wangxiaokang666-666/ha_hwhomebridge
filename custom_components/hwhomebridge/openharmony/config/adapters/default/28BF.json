@@ -1,0 +1,68 @@
+{
+  "pid": "28BF",
+  "services": {
+    "switch": {
+      "role": "fan",
+      "domain": "fan",
+      "action": "turn_on_off",
+      "value_attr": "state",
+      "options": {}
+    },
+    "fan": {
+      "role": "fan",
+      "domain": "fan",
+      "action": "set_speed",
+      "value_attr": "percentage",
+      "options": {
+        "requires_on": true,
+        "constants": {
+          "angle": 0
+        }
+      },
+      "value_mapping": {
+        "type": "enum_to_number",
+        "mapping": {
+          "1": 12,
+          "2": 25,
+          "3": 37,
+          "4": 50,
+          "5": 62,
+          "6": 75,
+          "7": 87,
+          "8": 100
+        }
+      }
+    },
+    "mode": {
+      "role": "fan",
+      "domain": "fan",
+      "action": "set_fan_mode",
+      "value_attr": "percentage",
+      "options": {
+        "unmapped": 0,
+        "requires_on": true
+      },
+      "value_mapping": {
+        "type": "enum_to_number",
+        "mapping": {
+          "2": 100
+        }
+      }
+    },
+    "endTime": {
+      "role": "fan_timer_duration",
+      "domain": "number",
+      "action": "native_timer",
+      "value_attr": "state",
+      "options": {
+        "timer": {
+          "enable": "fan_timer_enable",
+          "duration": "fan_timer_duration",
+          "remaining": "fan_timer_remaining",
+          "maximum": 720
+        },
+        "tolerance": 1
+      }
+    }
+  }
+}

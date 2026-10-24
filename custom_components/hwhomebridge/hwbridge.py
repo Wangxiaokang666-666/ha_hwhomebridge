@@ -35,7 +35,7 @@ from homeassistant.const import (
 from .service_router import ServiceRouter
 from .pin_manager import PINManager
 from .virtual_device import SNManager
-from .const import SKIP_PLATFORMS, DOMAIN
+from .const import SKIP_PLATFORMS, DOMAIN, legacy_entry_id
 from .native_async import drain_native, submit_callback
 
 _LOGGER = logging.getLogger(__name__)
@@ -708,8 +708,7 @@ def OnGetRoomInfoCB(sn_ptr, roomName_ptr, devName_ptr):
             try:
                 dev_reg = dr.async_get(ghass)
                 area_reg = ar.async_get(ghass)
-                entries = ghass.config_entries.async_entries(DOMAIN)
-                entry_id = entries[0].entry_id if entries else None
+                entry_id = legacy_entry_id(ghass)
 
                 # 优先：桥接设备条目的 name_by_user 和 area_id
                 bridge_entry = None
@@ -1059,8 +1058,7 @@ def handle_device_registry_updated(event):
         dev_reg = dr.async_get(ghass)
         dev_entry = dev_reg.devices.get(device_id)
         if dev_entry is not None:
-            entries = ghass.config_entries.async_entries(DOMAIN)
-            entry_id = entries[0].entry_id if entries else None
+            entry_id = legacy_entry_id(ghass)
             if entry_id and entry_id in dev_entry.config_entries:
                 for ident in dev_entry.identifiers:
                     if len(ident) == 3 and ident[0] == DOMAIN and ident[1] == entry_id:
@@ -1204,8 +1202,7 @@ def _create_bridge_device_entry_async(vd, name: str, model: str, manufacturer: s
         dev_reg = dr.async_get(ghass)
 
         # 查找当前 config entry
-        entries = ghass.config_entries.async_entries(DOMAIN)
-        entry_id = entries[0].entry_id if entries else None
+        entry_id = legacy_entry_id(ghass)
         if entry_id is None:
             _LOGGER.warning("_create_bridge_device_entry_async: no config entry found")
             return
@@ -1269,8 +1266,7 @@ def _remove_bridge_device_entry_async(sn: str):
         dev_reg = dr.async_get(ghass)
 
         # 通过 identifiers 查找设备
-        entries = ghass.config_entries.async_entries(DOMAIN)
-        entry_id = entries[0].entry_id if entries else None
+        entry_id = legacy_entry_id(ghass)
         if entry_id is None:
             return
 
@@ -1323,8 +1319,7 @@ def _on_device_registry_updated(event):
         return
 
     # 从 identifiers 中提取 SN
-    entries = ghass.config_entries.async_entries(DOMAIN)
-    entry_id = entries[0].entry_id if entries else None
+    entry_id = legacy_entry_id(ghass)
     if entry_id is None:
         return
 
@@ -1377,8 +1372,7 @@ def _cleanup_all_device_entries_async():
         return
 
     dev_reg = dr.async_get(ghass)
-    entries = ghass.config_entries.async_entries(DOMAIN)
-    entry_id = entries[0].entry_id if entries else None
+    entry_id = legacy_entry_id(ghass)
     if entry_id is None:
         return
 

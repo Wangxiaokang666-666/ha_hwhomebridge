@@ -1,0 +1,100 @@
+{
+  "request": {
+    "model": "jev-latest",
+    "state": {
+      "platform": "Real ARM64 Home Assistant and OpenHarmony C ran in an independent ARM Linux VM. amd64 Home Assistant and the rebuilt C also ran under qemu-user. No independent native x86 host is available.",
+      "network": "A manual AES-GCM client verified discovery, authenticated writes and actual virtual HA service audit/readback. Mac LAN-IP unicast used a private SSH/UDP relay. No external physical peer or Smart Life App LAN path was verified.",
+      "bug": "The old C rejected a complete HTTP response when the server kept its connection open. The rebuilt C completed the same case without waiting for EOF and rejected truncated frames. The historical App failure had no transport reason recorded.",
+      "contribution": "A separate branch contains public fan mappings, roles, device-native timers, composition and offline isolation; 52 tests and isolated HA Core checks pass. It excludes native engine integration and has not been pushed."
+    },
+    "questions": {
+      "platform_scope": {
+        "type": "choice",
+        "instructions": "Classify the platform evidence scope only.",
+        "criteria": {
+          "arm_native_x86_emulated": "Native ARM execution and emulated x86 userspace",
+          "native_x86_verified": "Native x86 hardware acceptance",
+          "unknown": "Insufficient evidence"
+        }
+      },
+      "network_scope": {
+        "type": "choice",
+        "instructions": "Classify the network evidence scope only.",
+        "criteria": {
+          "protocol_and_relay": "Authenticated local protocol and relay tested; direct physical/App path unverified",
+          "production_app_lan": "Production gateway directly controlled from App over LAN",
+          "discovery_only": "Discovery without authenticated writes",
+          "unknown": "Unknown"
+        }
+      },
+      "bug_scope": {
+        "type": "choice",
+        "instructions": "What does the bug evidence establish? Do not infer the historical root cause.",
+        "criteria": {
+          "reproduced_defect": "Reproducible EOF framing defect fixed; historical failure not fully attributed",
+          "historical_root_proven": "The historical App failure is conclusively attributed to this defect",
+          "unknown": "Unknown"
+        }
+      },
+      "contribution_scope": {
+        "type": "choice",
+        "instructions": "Classify what the contribution evidence covers; do not authorize publication.",
+        "criteria": {
+          "public_framework": "Locally validated public framework only",
+          "complete_native_product": "Complete native product and production deployment accepted",
+          "unknown": "Unknown"
+        }
+      }
+    }
+  },
+  "response": {
+    "model": "jev-1.13.0",
+    "answers": {
+      "platform_scope": {
+        "type": "choice",
+        "choice": "arm_native_x86_emulated",
+        "confidence": 1.0,
+        "probabilities": {
+          "arm_native_x86_emulated": 1.0,
+          "native_x86_verified": 0.0,
+          "unknown": 0.0
+        }
+      },
+      "network_scope": {
+        "type": "choice",
+        "choice": "protocol_and_relay",
+        "confidence": 1.0,
+        "probabilities": {
+          "protocol_and_relay": 1.0,
+          "production_app_lan": 0.0,
+          "discovery_only": 0.0,
+          "unknown": 0.0
+        }
+      },
+      "bug_scope": {
+        "type": "choice",
+        "choice": "reproduced_defect",
+        "confidence": 1.0,
+        "probabilities": {
+          "reproduced_defect": 1.0,
+          "historical_root_proven": 0.0,
+          "unknown": 0.0
+        }
+      },
+      "contribution_scope": {
+        "type": "choice",
+        "choice": "public_framework",
+        "confidence": 0.88,
+        "probabilities": {
+          "public_framework": 0.92,
+          "complete_native_product": 0.0,
+          "unknown": 0.08
+        }
+      }
+    },
+    "usage": {
+      "input_tokens": 844,
+      "output_tokens": 201
+    }
+  }
+}

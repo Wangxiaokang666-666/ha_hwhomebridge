@@ -1,11 +1,14 @@
 {
   "domain": "hwhomebridge",
   "name": "HuaweiHome Bridge",
-  "version": "1.0.0",
+  "version": "1.1.0b11",
   "config_flow": true,
   "documentation": "https://github.com/Wangxiaokang666-666/ha_hwhomebridge",
   "issue_tracker": "https://github.com/Wangxiaokang666-666/ha_hwhomebridge/issues",
-  "requirements": ["psutil", "aiofiles"],
+  "requirements": [
+    "psutil",
+    "aiofiles"
+  ],
   "iot_class": "cloud_polling",
   "ssdp": [],
   "zeroconf": [],

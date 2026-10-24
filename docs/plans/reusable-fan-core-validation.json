@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "contribution_branch": "codex/reusable-fan-core",
+  "contribution_commit": "ad89cef90e93e8c80605a411b4562c382079d317",
+  "contribution_base": "9033ac073157f05dc9f3387b56efcb07aad4aaaf",
+  "scope": "Shared Python fan mapping only; no native product activation or second gateway entry",
+  "tests": {
+    "mac_public_core": {
+      "passed": 18
+    },
+    "linux_public_core": {
+      "os": "Linux",
+      "architecture": "x86_64",
+      "python": "3.14.6",
+      "tests_run": 18,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "configuration_valid": true,
+      "image": "ghcr.io/home-assistant/home-assistant:2026.10.1",
+      "image_id": "f649ee2bf13aede5f822273c3dea95c63d98d6d3651d7394c1620b7034238aaf",
+      "network": "none",
+      "root_filesystem": "read_only",
+      "source_bind": "read_only",
+      "source_archive_sha256": "b43b5c3350cb5da0f99a59561a275a3576122dfe3589d47fb2a4a26bb8affa97",
+      "source_files": 29,
+      "source_file_hashes": {
+        "custom_components/hwhomebridge/config/adapters/default/001.json": "45ede6c32100bb69645d8e05877a69d960abeb0494a9346a36292183ced0c602",
+        "custom_components/hwhomebridge/config/adapters/default/002.json": "01d40484de3514fe7895d45b9ed6b5c0907734510e7cb191c89dcadb543f1ea7",
+        "custom_components/hwhomebridge/config/adapters/default/003.json": "193d6d1269164703e6c5241c82fcb6498137b7c5014cfa100de1db2edbe3d0c4",
+        "custom_components/hwhomebridge/config/adapters/default/004.json": "7e40a2d2befab3bbcb183d0b0c6ae397f4c10e0c7ba82be9db53bdf7bea86ec9",
+        "custom_components/hwhomebridge/config/adapters/default/005.json": "302bba70ef7aa24f8412dd980df2b215da6823b9c56eef60538f2bff925becce",
+        "custom_components/hwhomebridge/config/adapters/default/006.json": "1b1bb675d282d76fa173f67e2d51599945e3ddb9c3220c56f6090a64a41b0f94",
+        "custom_components/hwhomebridge/config/adapters/default/007.json": "13300a7c511ce5a611c112767534d3dfcf5c97be481b6fa9a9d39f4b0589a399",
+        "custom_components/hwhomebridge/config/adapters/default/008.json": "ff685f43e1adc8b9366a67a886e34b61b11d035b7d38fcb9a7200e367200605c",
+        "custom_components/hwhomebridge/config/adapters/midea/cooker.json": "b9b0d02eb7db9951b223defffb9baf7f41ca6954acd494b0b638ee075483bfba",
+        "custom_components/hwhomebridge/config/adapters/xiaomi/bedside_lamp.json": "76a853bb0ee23254f421bba053d36d6adb0fe9b1ba8ed1160d12a907982973bb",
+        "custom_components/hwhomebridge/config/adapters/xiaomi/breaker.json": "875957fa44e0a4f7a973ddff9f763e5339e607271d0c8cebdbe30478d7c8428b",
+        "custom_components/hwhomebridge/config/adapters/xiaomi/bulb.json": "650efaed2950ae2780dc1c279a97e46780a594d8c8fe012368e3471bd1f1a6da",
+        "custom_components/hwhomebridge/config/adapters/xiaomi/cooker.json": "e24b6283b2b69dd2df7b492db9cd401a9b2f1dcc851bcfc45a59564a05367097",
+        "custom_components/hwhomebridge/config/adapters/xiaomi/kettle.json": "a52e7d9465eda67ce4931d3ee16ff839cdb941e51591b7bdbc99f69baacfa90a",
+        "custom_components/hwhomebridge/config/adapters/xiaomi/leishi_light.json": "d5efe4188119fec17a549d77035b621c01786059c802f49a29663a811c2eb46e",
+        "custom_components/hwhomebridge/config/adapters/xiaomi/mosquito_killer.json": "a09610cc745ba38df51a3a453b472d1c713592ec1de61ef72208a89349f2f9a1",
+        "custom_components/hwhomebridge/config/adapters/xiaomi/night_light.json": "cdd5892df57a50b3f202eebff7f1403df619c73c5d475e7fa169bb9884cde75b",
+        "custom_components/hwhomebridge/config/adapters/xiaomi/pressure_sensor.json": "c1c1d4714fb1cef4b005e6eed97c64bc8ee7c63f7d878e964e6d713524881093",
+        "custom_components/hwhomebridge/config/product_registry.json": "80b4c411cc1b15b406f1a7c6e5dc050f66201e81d071f7257bd6332d5b818868",
+        "custom_components/hwhomebridge/fan_mapping.py": "9cba3ae8d5854d7c80aff7ed5d7cc3392399951c0a546a154196f13dfa9e12c0",
+        "custom_components/hwhomebridge/native_async.py": "197d0743d34bbe57c89f7273f1c4fecd9c3ea4a01f2e80c7f7fb17cf976aa5f9",
+        "custom_components/hwhomebridge/product_matcher.py": "395f20680a03761a474ddafb05514ab2dd3379c82d1e584fc3b5047b0299b02a",
+        "custom_components/hwhomebridge/product_registry.py": "946328ec0a1f7e769a61491144500e5403a205608eb750fed7c1902a80cc8010",
+        "custom_components/hwhomebridge/service_action.py": "c81322c692e85fcd2614c53347edd914bcbd8588eafdcd894840c4ced0f3ee6b",
+        "custom_components/hwhomebridge/service_router.py": "2a1b65dcab96df524dff9421f499e60bc782cd406b54c67cebcd892a8514a8a6",
+        "custom_components/hwhomebridge/validate_config.py": "18eb3f1492c82c620dedab68d49bed5dbb4c43ee6fdbe13687c0969b355bde59",
+        "custom_components/hwhomebridge/virtual_device.py": "b05702638b2406bf639b33174d5e06c419eaf7bf8ac74e25ae179f1dbb200b43",
+        "tests/framework_imports.py": "c56177fc21240bbf9af72c494477ecb5e10fb37fbfd29d090279952ac28b05de",
+        "tests/test_fan_capabilities.py": "a2f400b3c61f63491442572461887b65a4a7704ac720313aacbc653a9a4cd51c"
+      },
+      "native_library_loading": "blocked via ctypes.CDLL and ctypes.PyDLL",
+      "real_HA_device_or_SDK_calls": "not_run",
+      "single_gateway_registration_acceptance": "not_run"
+    },
+    "experimental_framework": {
+      "passed": 25
+    },
+    "existing_deployment_tools": {
+      "passed": 39
+    },
+    "legacy_native_static_audit": {
+      "passed": 3
+    }
+  },
+  "boundaries": {
+    "production_HA_install_restart_or_device_calls": "not_run",
+    "paired_experimental_gateway": "not_started_or_modified",
+    "old_product_config_and_SN_algorithm": "unchanged",
+    "legacy_native_libraries": "unchanged",
+    "original_configuration_flow_in_contribution_branch": "unchanged",
+    "native_single_gateway_new_product_acceptance": "not_run",
+    "b4_installer": "not_rebuilt",
+    "fork_push_or_PR": "not_run"
+  },
+  "native_extension_gate": "not_met",
+  "jev": {
+    "model": "jev-1.13.0",
+    "classifications": {
+      "native_readiness": "not_proven",
+      "share_scope": "shared_opt_in"
+    },
+    "role": "scope classification only; code and ABI analysis by Codex"
+  }
+}

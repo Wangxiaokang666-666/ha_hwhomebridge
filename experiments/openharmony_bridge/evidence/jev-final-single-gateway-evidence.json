@@ -1,0 +1,80 @@
+{
+  "request": {
+    "model": "jev-latest",
+    "state": {
+      "offline_bundle": "The original root identity and 32 existing child identities are preserved. Seven supplemental cards are planned. Engine startup is explicitly blocked; no SDK main or network connection has run for this production identity.",
+      "actual_sdk": "An amd64 Home Assistant process running under qemu-user loads the real closed-source shared library and reaches cloud online. Interface MAC matches the virtual paired test identity. This is not native x86 hardware.",
+      "wire_alias": "The canonical product profile declares switch1 with service type switch. A previously measured cloud compatibility rule sends service type switch1 on the wire; the canonical profile definition remains switch."
+    },
+    "questions": {
+      "bundle": {
+        "type": "choice",
+        "instructions": "Classify evidence scope for offline_bundle. Do not grant authorization or decide acceptance.",
+        "criteria": {
+          "offline_preparation": "Offline production configuration preparation only",
+          "live_cutover": "Production SDK adopted and controlled through App",
+          "unknown": "Insufficient information"
+        }
+      },
+      "sdk": {
+        "type": "choice",
+        "instructions": "Classify actual_sdk accurately.",
+        "criteria": {
+          "real_emulated": "Real SDK and HA running in emulated amd64 userspace",
+          "stub": "Native library calls replaced by test doubles",
+          "native_hardware": "Native x86 physical hardware",
+          "unknown": "Unknown"
+        }
+      },
+      "alias": {
+        "type": "choice",
+        "instructions": "Classify wire_alias.",
+        "criteria": {
+          "wire_compatibility": "Explicit wire compatibility rule separate from canonical product definitions",
+          "profile_rewrite": "Canonical Huawei profile changed",
+          "unknown": "Insufficient information"
+        }
+      }
+    }
+  },
+  "response": {
+    "model": "jev-1.13.0",
+    "answers": {
+      "bundle": {
+        "type": "choice",
+        "choice": "offline_preparation",
+        "confidence": 0.98,
+        "probabilities": {
+          "offline_preparation": 0.99,
+          "live_cutover": 0.0,
+          "unknown": 0.01
+        }
+      },
+      "sdk": {
+        "type": "choice",
+        "choice": "real_emulated",
+        "confidence": 1.0,
+        "probabilities": {
+          "real_emulated": 1.0,
+          "stub": 0.0,
+          "native_hardware": 0.0,
+          "unknown": 0.0
+        }
+      },
+      "alias": {
+        "type": "choice",
+        "choice": "wire_compatibility",
+        "confidence": 1.0,
+        "probabilities": {
+          "wire_compatibility": 1.0,
+          "profile_rewrite": 0.0,
+          "unknown": 0.0
+        }
+      }
+    },
+    "usage": {
+      "input_tokens": 667,
+      "output_tokens": 141
+    }
+  }
+}

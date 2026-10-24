@@ -1,0 +1,88 @@
+{
+  "purpose": "sanitized semantic classification only; implementation and acceptance by Codex",
+  "request": {
+    "model": "jev-latest",
+    "state": {
+      "task": "Classify compatibility work; no implementation or acceptance decisions",
+      "cases": {
+        "multiple_children": "Verified old store layout currently has one child only; extending identity import requires native generated multi-child persistence evidence.",
+        "old_008": "Legacy 008 has four framework fields mapped to the same native service electric.",
+        "arm_binary": "Cross compiled aarch64 ELF exists, but no independent ARM Linux execution evidence."
+      }
+    },
+    "questions": {
+      "multiple_children": {
+        "type": "choice",
+        "instructions": "Classify the next evidence or compatibility work for cases.multiple_children.",
+        "criteria": {
+          "native_fixture": "Collect native SDK generated fixture and compare persisted identities",
+          "service_aggregation": "Group shared service characteristics and validate routing",
+          "runtime_acceptance": "Run actual isolated ARM Linux and verify cold restart",
+          "none": "No relevant work"
+        }
+      },
+      "old_008": {
+        "type": "choice",
+        "instructions": "Classify the next evidence or compatibility work for cases.old_008.",
+        "criteria": {
+          "native_fixture": "Collect native SDK generated fixture and compare persisted identities",
+          "service_aggregation": "Group shared service characteristics and validate routing",
+          "runtime_acceptance": "Run actual isolated ARM Linux and verify cold restart",
+          "none": "No relevant work"
+        }
+      },
+      "arm_binary": {
+        "type": "choice",
+        "instructions": "Classify the next evidence or compatibility work for cases.arm_binary.",
+        "criteria": {
+          "native_fixture": "Collect native SDK generated fixture and compare persisted identities",
+          "service_aggregation": "Group shared service characteristics and validate routing",
+          "runtime_acceptance": "Run actual isolated ARM Linux and verify cold restart",
+          "none": "No relevant work"
+        }
+      }
+    }
+  },
+  "response": {
+    "model": "jev-1.13.0",
+    "answers": {
+      "multiple_children": {
+        "type": "choice",
+        "choice": "native_fixture",
+        "confidence": 1.0,
+        "probabilities": {
+          "native_fixture": 1.0,
+          "service_aggregation": 0.0,
+          "runtime_acceptance": 0.0,
+          "none": 0.0
+        }
+      },
+      "old_008": {
+        "type": "choice",
+        "choice": "service_aggregation",
+        "confidence": 0.89,
+        "probabilities": {
+          "native_fixture": 0.07,
+          "service_aggregation": 0.92,
+          "runtime_acceptance": 0.0,
+          "none": 0.01
+        }
+      },
+      "arm_binary": {
+        "type": "choice",
+        "choice": "runtime_acceptance",
+        "confidence": 1.0,
+        "probabilities": {
+          "native_fixture": 0.0,
+          "service_aggregation": 0.0,
+          "runtime_acceptance": 1.0,
+          "none": 0.0
+        }
+      }
+    },
+    "usage": {
+      "input_tokens": 701,
+      "output_tokens": 167
+    }
+  }
+}

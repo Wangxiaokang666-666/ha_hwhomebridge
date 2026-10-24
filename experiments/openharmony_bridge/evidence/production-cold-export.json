@@ -1,0 +1,96 @@
+{
+  "schema": 1,
+  "date": "2026-10-17",
+  "scope": {
+    "production_read_only": true,
+    "production_cold_export_performed": false,
+    "production_deployment": false,
+    "production_restart_requests": 0,
+    "production_HA_service_calls": 0,
+    "production_pairing_KV_read": false,
+    "production_addon_configuration_changes": 0,
+    "runtime_integration_source_changed": false
+  },
+  "regression": {
+    "public": 60,
+    "tools": 63,
+    "offline_identity": 8,
+    "framework": 25,
+    "total": 156,
+    "host_passed": true,
+    "Linux_new_tools_tests": 21,
+    "Linux_new_tools_tests_passed": true,
+    "config_validation_passed": true
+  },
+  "independent_Linux": {
+    "architecture": "x86_64",
+    "actual_container_engine": "Podman",
+    "export_UID": 0,
+    "fixture_credentials": "synthetic only",
+    "container_command": "sleep, no HA or SDK",
+    "actual_Docker_daemon_tested": false,
+    "results": {
+      "passed": true,
+      "synthetic_credentials_only": true,
+      "native_SDK_started": false,
+      "actual_running_owner_refused": true,
+      "actual_restart_policy_refused": true,
+      "actual_writable_alias_refused": true,
+      "actual_local_file_owner_refused": true,
+      "actual_stopped_owner_export_and_verify": true,
+      "isolated_raw_restore_preserves_entries_identity_and_permissions": true,
+      "tampered_export_refused": true,
+      "source_files_and_metadata_unchanged": true,
+      "legacy_library_not_loaded": true,
+      "all_owned_test_containers_removed": true
+    },
+    "permission_visibility_guard": {
+      "insufficient_host_process_visibility_refused": true,
+      "source_output_not_published": true
+    },
+    "cleanup": {
+      "rootless_test_containers_stopped": true,
+      "root_test_containers_stopped": true,
+      "all_bridge_lab_VMs_stopped": true
+    }
+  },
+  "production_readonly": {
+    "original_component_version": "1.0.0",
+    "static_component_files": 38,
+    "all_static_file_bytes_unchanged": true,
+    "original_owned_entry_records_unchanged": true,
+    "hwhomebridge_entries": 1,
+    "HA_read_commands": 12,
+    "old_devices": 32,
+    "study_role_entities": 13,
+    "composition_card_state_projections": 7,
+    "source_registry_complete": true,
+    "two_pass_registry_stable": true,
+    "entity_preflight_passed": false,
+    "migration_allowed": false,
+    "issue_counts": {
+      "entity_unavailable": 1,
+      "legacy_mapping_order_ambiguous": 1
+    },
+    "original_runtime_service_bindings_confirmed": false,
+    "parent_identity_verified": false,
+    "native_SDK_loaded": false
+  },
+  "source_tool_sha256": {
+    "ha_cold_export.py": "e2810e11293914c602e67b6effa859d6fb94abb687b03ce500dc7c7f6c97660c",
+    "ha_entity_preflight.py": "3c8ac6e1133397fe1af47034dd65cf75ce07716cda4be62c8b6e1d29d6cdc1cd",
+    "test_ha_cold_export.py": "1101181830da0926830c2086f9edebfbc9107cd434c0f30e29a10b32861b5bea"
+  },
+  "limits": [
+    "Actual production cold export requires independent host maintenance access and a stopped original owner; original HA stayed online.",
+    "Docker path has contract tests; actual HA OS Docker host validation is still required.",
+    "Owner checks cover the selected local container engine and visible same-UID processes, not distributed identity fencing.",
+    "A verified raw backup is not an activation bundle; offline conversion, original bindings and native parent-SN/catalog validation remain required.",
+    "Physical controls and Smart Life App were not retested this round."
+  ],
+  "Jev": {
+    "used_for": "Classify evidence boundaries only",
+    "private_device_data_sent": false,
+    "evidence": "jev-cold-export-routing.json"
+  }
+}

@@ -1,0 +1,246 @@
+{
+  "bundles": {
+    "xiaomi_sflt11": [
+      {
+        "key": "fan-wifi",
+        "pid": "28BF",
+        "services": {
+          "fan": {
+            "value_mapping": {
+              "type": "enum_to_number",
+              "mapping": {
+                "1": 25,
+                "2": 37,
+                "3": 50,
+                "4": 62,
+                "5": 75,
+                "6": 87
+              }
+            }
+          },
+          "switch": {
+            "options": {
+              "power_on": {
+                "attribute": "percentage",
+                "maximum": 12.5,
+                "values": {
+                  "percentage": 25
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        "key": "light",
+        "pid": "2KJ0",
+        "primary": true,
+        "primary_role": "main"
+      },
+      {
+        "key": "aux",
+        "pid": "20UC",
+        "services": {
+          "switch1": {
+            "role": "fan",
+            "domain": "fan",
+            "action": "set_direction",
+            "value_attr": "direction",
+            "options": {
+              "label": "风扇反转"
+            },
+            "value_mapping": {
+              "type": "enum_to_number",
+              "mapping": {
+                "0": "reverse",
+                "1": "forward"
+              }
+            }
+          },
+          "switch2": {
+            "role": "ambient",
+            "domain": "light",
+            "action": "turn_on_off",
+            "value_attr": "state",
+            "options": {
+              "label": "氛围灯"
+            }
+          }
+        }
+      },
+      {
+        "key": "light-options",
+        "pid": "2151",
+        "services": {
+          "switch1": {
+            "role": "flex",
+            "options": {
+              "label": "凌动开关"
+            }
+          },
+          "switch2": {
+            "role": "sleep",
+            "options": {
+              "label": "助眠模式"
+            }
+          },
+          "switch3": {
+            "role": "wake",
+            "options": {
+              "label": "唤醒模式"
+            }
+          },
+          "switch4": {
+            "role": "default_on",
+            "options": {
+              "label": "默认上电状态"
+            }
+          }
+        }
+      },
+      {
+        "key": "effects-0",
+        "pid": "2151",
+        "services": {
+          "switch1": {
+            "role": "main",
+            "domain": "light",
+            "action": "set_effect",
+            "value_attr": "effect",
+            "options": {
+              "effect": "日光模式",
+              "label": "日光模式"
+            }
+          },
+          "switch2": {
+            "role": "main",
+            "domain": "light",
+            "action": "set_effect",
+            "value_attr": "effect",
+            "options": {
+              "effect": "月光模式",
+              "label": "月光模式"
+            }
+          },
+          "switch3": {
+            "role": "main",
+            "domain": "light",
+            "action": "set_effect",
+            "value_attr": "effect",
+            "options": {
+              "effect": "温馨模式",
+              "label": "温馨模式"
+            }
+          },
+          "switch4": {
+            "role": "main",
+            "domain": "light",
+            "action": "set_effect",
+            "value_attr": "effect",
+            "options": {
+              "effect": "阅读模式",
+              "label": "阅读模式"
+            }
+          }
+        }
+      },
+      {
+        "key": "effects-1",
+        "pid": "2151",
+        "services": {
+          "switch1": {
+            "role": "main",
+            "domain": "light",
+            "action": "set_effect",
+            "value_attr": "effect",
+            "options": {
+              "effect": "影院模式",
+              "label": "影院模式"
+            }
+          },
+          "switch2": {
+            "role": "main",
+            "domain": "light",
+            "action": "set_effect",
+            "value_attr": "effect",
+            "options": {
+              "effect": "电脑模式",
+              "label": "电脑模式"
+            }
+          },
+          "switch3": {
+            "role": "main",
+            "domain": "light",
+            "action": "set_effect",
+            "value_attr": "effect",
+            "options": {
+              "effect": "会客模式",
+              "label": "会客模式"
+            }
+          },
+          "switch4": {
+            "role": "main",
+            "domain": "light",
+            "action": "set_effect",
+            "value_attr": "effect",
+            "options": {
+              "effect": "娱乐模式",
+              "label": "娱乐模式"
+            }
+          }
+        }
+      },
+      {
+        "key": "effects-2",
+        "pid": "2151",
+        "services": {
+          "switch1": {
+            "role": "main",
+            "domain": "light",
+            "action": "set_effect",
+            "value_attr": "effect",
+            "options": {
+              "effect": "儿童模式",
+              "label": "儿童模式"
+            }
+          },
+          "switch2": {
+            "role": "main",
+            "domain": "light",
+            "action": "set_effect",
+            "value_attr": "effect",
+            "options": {
+              "effect": "办公模式",
+              "label": "办公模式"
+            }
+          },
+          "switch3": {
+            "role": "main",
+            "domain": "light",
+            "action": "set_effect",
+            "value_attr": "effect",
+            "options": {
+              "effect": "护眼模式",
+              "label": "护眼模式"
+            }
+          },
+          "switch4": {
+            "role": "main",
+            "domain": "light",
+            "action": "set_effect",
+            "value_attr": "effect",
+            "options": {
+              "effect": "空场景",
+              "label": "空场景"
+            }
+          }
+        }
+      },
+      {
+        "key": "timer-controls",
+        "pid": "2NAL",
+        "share_when_primary_preserved": ["switch"]
+      }
+    ]
+  }
+}

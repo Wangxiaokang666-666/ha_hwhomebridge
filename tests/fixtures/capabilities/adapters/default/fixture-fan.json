@@ -1,0 +1,132 @@
+{
+  "pid": "fixture-fan",
+  "services": {
+    "switch": {
+      "role": "fan",
+      "domain": "fan",
+      "action": "turn_on_off",
+      "value_attr": "state",
+      "options": {}
+    },
+    "fan": {
+      "role": "fan",
+      "domain": "fan",
+      "action": "set_speed",
+      "value_attr": "percentage",
+      "options": {
+        "unmapped": 0
+      },
+      "value_mapping": {
+        "type": "enum_to_number",
+        "mapping": {
+          "1": 25,
+          "2": 37,
+          "3": 50,
+          "4": 62,
+          "5": 75,
+          "6": 87
+        }
+      }
+    },
+    "direction": {
+      "role": "fan",
+      "domain": "fan",
+      "action": "set_direction",
+      "value_attr": "direction",
+      "options": {},
+      "value_mapping": {
+        "type": "enum_to_number",
+        "mapping": {
+          "0": "forward",
+          "1": "reverse"
+        }
+      }
+    },
+    "mode": {
+      "role": "fan",
+      "domain": "fan",
+      "action": "set_fan_mode",
+      "value_attr": "percentage",
+      "options": {
+        "unmapped": 0
+      },
+      "value_mapping": {
+        "type": "enum_to_number",
+        "mapping": {
+          "2": 100
+        }
+      }
+    },
+    "minutes": {
+      "role": "fan_timer_duration",
+      "domain": "number",
+      "action": "native_timer",
+      "value_attr": "state",
+      "options": {
+        "timer": {
+          "enable": "fan_timer_enable",
+          "duration": "fan_timer_duration",
+          "remaining": "fan_timer_remaining",
+          "maximum": 720
+        }
+      }
+    },
+    "delay": {
+      "role": "fan_timer_duration",
+      "domain": "number",
+      "action": "timer_array",
+      "value_attr": "state",
+      "options": {
+        "timer": {
+          "enable": "fan_timer_enable",
+          "duration": "fan_timer_duration",
+          "remaining": "fan_timer_remaining",
+          "maximum": 720
+        },
+        "target_sid": "switch",
+        "target_field": "on"
+      }
+    },
+    "countdown": {
+      "role": "fan_timer_duration",
+      "domain": "number",
+      "action": "countdown",
+      "value_attr": "state",
+      "options": {
+        "fields": {
+          "target": "target",
+          "enabled": "enabled",
+          "minutes": "minutes",
+          "remaining": "remaining"
+        },
+        "timers": {
+          "light": {
+            "enable": "light_timer_enable",
+            "duration": "light_timer_duration",
+            "remaining": "light_timer_remaining",
+            "maximum": 720
+          },
+          "fan": {
+            "enable": "fan_timer_enable",
+            "duration": "fan_timer_duration",
+            "remaining": "fan_timer_remaining",
+            "maximum": 720
+          }
+        },
+        "targets": {
+          "0": [
+            "light",
+            "fan"
+          ],
+          "1": [
+            "light"
+          ],
+          "2": [
+            "fan"
+          ]
+        },
+        "combined_target": "0"
+      }
+    }
+  }
+}

@@ -1,0 +1,235 @@
+{
+  "date": "2026-10-16",
+  "scope": "M3 isolated installation and rollback; no paired identity handover",
+  "source_base_revision": "f107fbd",
+  "old_component_baseline": "8af2809; version 1.0.0",
+  "release": {
+    "format": 1,
+    "kind": "hwhomebridge-preserving-upgrade",
+    "version": "1.1.0b3",
+    "tested_ha": "2026.10.1",
+    "architectures": [
+      "aarch64",
+      "x86_64"
+    ],
+    "native_sources": {
+      "x86_64": "1d495be27470884c4e7f93c1fae463bc8327ed504aa69e700197897116f41a1f",
+      "aarch64": "1d495be27470884c4e7f93c1fae463bc8327ed504aa69e700197897116f41a1f"
+    },
+    "source_revision": "f107fbd7d762df6d6de101067bc15a24bd906fd1",
+    "preserve_prefixes": [
+      "config/",
+      "hilink_bridge/",
+      "profile/"
+    ],
+    "files": {
+      "__init__.py": "319552f33e0e707db6f709e0e78d2c289276977a29372e8d9271108fcdda5106",
+      "backend_entries.py": "fa576519bc4bec8b54cf5cd77218f9c9f010c3e31dcefeef3477e55cef6a44d3",
+      "brand/icon.png": "237c4d372905e66bb9ab6f7807c5a22fddf558a6cb22fac84ba8e8715407fbd4",
+      "brand/icon@2x.png": "afafca5fcb142929c6a5759a0eb86f33530e1178688120ad480a0b5fb6e5be62",
+      "config_flow.py": "0b1e96fa388e0fbd31ec44683758c7e43e44907a7dd2789eb88c22bd74d0eec9",
+      "const.py": "4f86980c3a5abd3df9c29a9c99c7418fd6b02541b7e65ffe8cf4844430d0978d",
+      "hwbridge.py": "d85f01935b029287f949f01a5022bfa1b3a296759488fecba7791a158214831d",
+      "manifest.json": "729c9c6ce0249e2d9eedca5595a7600b8e801dcf64f549d4cf710d91a682580d",
+      "native_async.py": "197d0743d34bbe57c89f7273f1c4fecd9c3ea4a01f2e80c7f7fb17cf976aa5f9",
+      "openharmony/__init__.py": "6662e479c35cc71a39dd47c17e1fea5c5ade26ba4acb313f89cb444faacdd3ae",
+      "openharmony/bin/aarch64/bridge_poc": "7ef3662e8f27525281dc9fe0550ed59fc5b46299a1b1970246614c4f8173cf5f",
+      "openharmony/bin/aarch64/build-info.json": "755b6e24060b57aea797bf6480b2d582053c9183fe29cc79c72f3f24c7a17119",
+      "openharmony/bin/x86_64/bridge_poc": "90417021c2511ddb4fde570bd722b1a17f8529b5d441b8079c29559a5894284f",
+      "openharmony/bin/x86_64/build-info.json": "451c712747a3f70e98e05b8a0abc7dae1fd9e16553ae2517f5e57ef876c7ae25",
+      "openharmony/config/adapters/default/20UC.json": "9bd7667f18982f1666bb0b8e673f98194b827ad5ad8dc5eecba954a1935b98f7",
+      "openharmony/config/adapters/default/2151.json": "2da9a6de341fd0afe1c22cc31dbcc3ff59f387ea028571c2c12f0a717c5b32c8",
+      "openharmony/config/adapters/default/28BF.json": "fd9df3aaf0b9bce61ed5ff3dc13e58dbb4e4f46d29a4643146e8e96cd200d4c5",
+      "openharmony/config/adapters/default/2KJ0.json": "9cca97c1e4794420fee8f9cbac0e6509b157872633ac4a9b0532d9bc992ac45f",
+      "openharmony/config/adapters/default/2NAL.json": "c4497fc7c5eb7d40a02607d2cd7a77c2dbf51e56fe3b371ef58a5fecf2eb9771",
+      "openharmony/config/adapters/xiaomi/sflt11.json": "91716ab6b21fa059b35775f98850f9d4d2c5e3f58be5679fa5e41aa19e302661",
+      "openharmony/config/compositions.json": "f9c64e54a242ea4ad7dfd83223aa276b9ecb1bff77ef4b38f6fc16b17c6a2548",
+      "openharmony/config/instances.example.json": "6971834e075e9f363ed4f7d2e6af71801b49088a9817bac8d67269541eec4513",
+      "openharmony/config/product_registry.json": "1120815b27be2d773b1351292d1ce37d5ce3450ee98f5f7434f644b01842ecef",
+      "openharmony/configuration.py": "20c7c6c15601c93cec2bbc8aa4d28bcfd02cd1e7587c821a5daadca3e973045e",
+      "openharmony/deployment.py": "b61ff5b02fc0735d64a1a3164247fda81154c7701666fa84f6a635bade3b473b",
+      "openharmony/ha_backend.py": "b7c27c8337579ac889f8753f5e5459afc517d60c8d059ed7887ee59e0a0b5375",
+      "openharmony/router.py": "3c90faf36b56c0ca7c01fa6556f7dec9abd44d3a592ee68c88c87c53daecfde5",
+      "openharmony/transport.py": "9f2e0dd60cc77330571345d40787b1639dab0c7f66ea8610b933791e40a9e0ae",
+      "pin_manager.py": "3baca926c46dc71f1d605d111fca99f202125659817827f704e503211b87fd75",
+      "product_matcher.py": "395f20680a03761a474ddafb05514ab2dd3379c82d1e584fc3b5047b0299b02a",
+      "product_registry.py": "13446d8b4836f5308bcf43456aa1a9d088a1c592ac060edeedcfe8993b9f2836",
+      "service_action.py": "3db1959ca0c8226c0eed2bc88cb470565c962dd307e4d6de502426cc07315c7d",
+      "service_router.py": "395d93ad086e678d40aa0d73d671b2dc8f614d0b58fd87dc812ea7e85d798e59",
+      "strings.json": "1122b24f6299a6d42898c2737a93e3305b37e8c26e853d4dbe0fe2b50638c77d",
+      "translations/en.json": "1122b24f6299a6d42898c2737a93e3305b37e8c26e853d4dbe0fe2b50638c77d",
+      "translations/zh-Hans.json": "192258800dda367197300f19e3d6b1ee3dc5bde33f099fe827581b5d68531aa3",
+      "validate_config.py": "584d336aaea8bd038fbb6a93ba01a0debec94481ac116bcdd57747b86b568ded",
+      "virtual_device.py": "b05702638b2406bf639b33174d5e06c419eaf7bf8ac74e25ae179f1dbb200b43"
+    },
+    "archive_sha256": "2f8a0d2052daabb9e0d4267e3a2ab8a0b12d46a1d9dda6171b4c982e3fa3789e"
+  },
+  "validation": {
+    "file_regressions_mac": 17,
+    "file_regressions_linux": 17,
+    "framework_regressions": 22,
+    "original_config_validator_passed": true,
+    "fixture_generator_smoke_passed": true,
+    "canonical_archive_paths_verified": true,
+    "unchanged_valid_package_rechecked_on_linux": true
+  },
+  "phases": {
+    "installed": {
+      "phase": "installed",
+      "passed": true,
+      "legacy_unbind_calls": 0,
+      "activation_preflight": {
+        "passed": true,
+        "profile_and_service_catalog_verified": true,
+        "private_paths_verified": true,
+        "interface_present": true,
+        "ports_free": true,
+        "bound_entities": 13,
+        "binary_sha256": "90417021c2511ddb4fde570bd722b1a17f8529b5d441b8079c29559a5894284f",
+        "write_policy": "fan_only",
+        "identity_handover_verified": false,
+        "C_started": false
+      },
+      "activation_failures_blocked": [
+        "28BF.json",
+        "ha-children.local.json",
+        "missing executable permission",
+        "missing interface",
+        "occupied LAN port"
+      ],
+      "instance_executable_matches_shipped_binary": true,
+      "missing_entity_blocks_activation": true,
+      "paired_identity_not_used": true,
+      "virtual_fan_write_readback_and_light_block": true,
+      "legacy_starts": 1,
+      "C_stopped_with_HA": true
+    },
+    "restarted": {
+      "phase": "restarted",
+      "passed": true,
+      "legacy_unbind_calls": 0,
+      "new_gateway_identity_restored_after_HA_restart": true,
+      "virtual_fan_write_readback_and_light_block": true,
+      "legacy_starts": 1,
+      "C_stopped_with_HA": true
+    },
+    "restored": {
+      "phase": "restored",
+      "passed": true,
+      "legacy_unbind_calls": 0,
+      "original_component_loaded_with_same_legacy_identity": true,
+      "legacy_starts": 1
+    }
+  },
+  "offline_preflight": {
+    "passed": true,
+    "scope": "offline file installation only",
+    "release": "1.1.0b3",
+    "package_sha256": "2f8a0d2052daabb9e0d4267e3a2ab8a0b12d46a1d9dda6171b4c982e3fa3789e",
+    "architecture": "x86_64",
+    "runtime": {
+      "ha_version": "2026.10.1",
+      "architecture": "x86_64",
+      "runtime_uid": 0,
+      "python_version": "3.14.6",
+      "owned_readable_config": true
+    },
+    "free_bytes": 18307182592,
+    "required_bytes": 181773746,
+    "integration_entries": 1,
+    "legacy_sdk_sha256": "0579e6f3cee0320d1533e5a96cc6d72a065a43050eff4edcb7afd6a9a52c7b58",
+    "activation_ready": false,
+    "activation_pending": [
+      "live interface and free ports",
+      "native deployment/profile/catalog and current entity checks",
+      "M4 exclusive identity handover"
+    ]
+  },
+  "install": {
+    "passed": true,
+    "release": "1.1.0b3",
+    "written_files": 38,
+    "entries_modified": false,
+    "runtime_modified": false,
+    "ha_started": false
+  },
+  "restore": {
+    "passed": true,
+    "component_exactly_restored": true,
+    "entries_restored": true,
+    "unrelated_entries_preserved": true,
+    "runtime_KV_restored": false,
+    "ha_started": false,
+    "default_entry_rollback_rejected": true,
+    "unrelated_added_entry_preserved": true,
+    "current_storage_metadata_preserved": true,
+    "latest_runtime_files_unchanged": true,
+    "exact_old_component_files_restored": 42
+  },
+  "guards": {
+    "running_HA": {
+      "passed": true,
+      "running_HA_blocks_backup_before_write": true
+    },
+    "shared_mount": {
+      "passed": true,
+      "shared_mount_blocks_maintenance": true
+    }
+  },
+  "backup_readable_and_verified": true,
+  "environment": {
+    "vm_kernel_arch": "x86_64",
+    "kernel_release": "6.8.0-142-generic",
+    "image_arch": "amd64",
+    "image_digest": "sha256:130241f28d01fa80dfa3b44f7d89781c188d8642ecab9024f079f19f9f82baa0",
+    "network_internal": true,
+    "full_system_emulation": "QEMU TCG x86_64; not physical x86 hardware"
+  },
+  "tools_sha256": {
+    "ha_upgrade.py": "12279ae7ac05c13185ad8a255628dcca7dda280f9f0c049387ffc0c881b85119",
+    "ha_runtime_preflight.py": "4dd0284e0638247368dd28c2c562472e500830baba761470a3b7f43adbbdac2d"
+  },
+  "boundary": {
+    "production_installed": false,
+    "production_restarted": false,
+    "real_device_service_calls": 0,
+    "production_files_read_via_OS": false,
+    "source_HA_entities_read_only": 13,
+    "source_states_and_attributes_unchanged": true,
+    "source_full_snapshots_unchanged": true,
+    "local_protected_legacy_files": 29,
+    "local_protected_legacy_files_modified": [],
+    "existing_paired_gateway_same_container_and_start_time": true,
+    "Mijia_automation_modified": false
+  },
+  "production_readiness": {
+    "ha_version_via_read_only_API": "2026.10.1",
+    "OS_file_channel_verified": false,
+    "production_cold_backup_completed": false,
+    "production_activation_preflight_completed": false,
+    "production_install_allowed": false,
+    "tool_adapter": "local Podman; HA OS Docker/file channel not verified"
+  },
+  "Jev": {
+    "model": "jev-1.13.0",
+    "use": "release content handling classification only",
+    "choices": {
+      "python": "ship",
+      "native": "ship",
+      "old_sdk": "preserve",
+      "adapters": "preserve",
+      "identity": "private",
+      "backup": "private",
+      "api": "blocker"
+    },
+    "runtime_dependency_added": false
+  },
+  "not_verified": [
+    "production OS deployment channel and cold backup",
+    "production ownership handover or deployment",
+    "Smart Life or cloud control in these unpaired test fixtures",
+    "physical x86 hardware performance",
+    "ARM64 HA installation and restore in this M3 run",
+    "long duration observation"
+  ]
+}

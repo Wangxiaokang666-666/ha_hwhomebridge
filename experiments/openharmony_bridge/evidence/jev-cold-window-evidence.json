@@ -1,0 +1,72 @@
+{
+  "request": {
+    "model": "jev-latest",
+    "state": {
+      "observations": [
+        {
+          "id": "replay",
+          "evidence": "Readonly registry and deployed JSON replay select main lamp; reversing entity order selects ambient lamp. No live binding query API exists."
+        },
+        {
+          "id": "logs",
+          "evidence": "Existing Core log has no matching bridge routes; no device control or logger change performed."
+        }
+      ],
+      "question_context": "Need label strength of evidence before preserving old light bindings."
+    },
+    "questions": {
+      "replay": {
+        "type": "choice",
+        "instructions": "Classify the evidence strength of observations with id replay. Do not authorize actions.",
+        "criteria": {
+          "configuration_replay": "Only demonstrates candidate selection using configuration and observed entity order, not actual in-process mapping.",
+          "historical_route": "An explicit historical route record identifies prior service and entity, not current mapping.",
+          "current_runtime": "Read-only direct query of current in-process binding, with exact current owner and service identity.",
+          "no_binding_evidence": "No relevant route or mapping observed."
+        }
+      },
+      "logs": {
+        "type": "choice",
+        "instructions": "Classify the evidence strength of observations with id logs. Do not authorize actions.",
+        "criteria": {
+          "configuration_replay": "Only demonstrates candidate selection using configuration and observed entity order, not actual in-process mapping.",
+          "historical_route": "An explicit historical route record identifies prior service and entity, not current mapping.",
+          "current_runtime": "Read-only direct query of current in-process binding, with exact current owner and service identity.",
+          "no_binding_evidence": "No relevant route or mapping observed."
+        }
+      }
+    }
+  },
+  "response": {
+    "model": "jev-1.13.0",
+    "answers": {
+      "replay": {
+        "type": "choice",
+        "choice": "configuration_replay",
+        "confidence": 1.0,
+        "probabilities": {
+          "configuration_replay": 1.0,
+          "historical_route": 0.0,
+          "current_runtime": 0.0,
+          "no_binding_evidence": 0.0
+        }
+      },
+      "logs": {
+        "type": "choice",
+        "choice": "no_binding_evidence",
+        "confidence": 0.99,
+        "probabilities": {
+          "configuration_replay": 0.01,
+          "historical_route": 0.0,
+          "current_runtime": 0.0,
+          "no_binding_evidence": 0.99
+        }
+      }
+    },
+    "usage": {
+      "input_tokens": 657,
+      "output_tokens": 114
+    }
+  },
+  "scope": "sanitized evidence classification only; no identities, credentials, permission or test pass decisions"
+}

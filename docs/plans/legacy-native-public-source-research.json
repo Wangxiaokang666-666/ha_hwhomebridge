@@ -1,0 +1,821 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-10-16T15:44:47.790182+00:00",
+  "scope": "Public source and ABI research; independent Linux symbol/header probes. No production HA access or physical-device control.",
+  "upstream": {
+    "url": "https://github.com/Wangxiaokang666-666/ha_hwhomebridge",
+    "main": "9033ac073157f05dc9f3387b56efcb07aad4aaaf",
+    "reachable_commits_checked": 24,
+    "native_source_paths_in_history": [],
+    "tags": [
+      "v1.0.0",
+      "v1.0.1"
+    ],
+    "release_assets": [],
+    "repository_and_fork_count": 19,
+    "branch_count": 24,
+    "complete_trees": true,
+    "current_branch_trees": [
+      {
+        "repo": "Wangxiaokang666-666/ha_hwhomebridge",
+        "branches": [
+          {
+            "name": "main",
+            "sha": "9033ac073157f05dc9f3387b56efcb07aad4aaaf",
+            "truncated": false,
+            "native_sources": [],
+            "libraries": [
+              {
+                "path": "custom_components/hwhomebridge/hilink_bridge/lib/aarch64/libhilink_bridge.so",
+                "blob": "b8fe653e16168b547770ff06f9f43b5b1837f569",
+                "size": 9866752
+              },
+              {
+                "path": "custom_components/hwhomebridge/hilink_bridge/lib/amd64/libhilink_bridge.so",
+                "blob": "50bcc4d5142a5ef2d5affa78b74870ecffa11474",
+                "size": 2383384
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "repo": "dante210402/ha_hwhomebridge",
+        "branches": [
+          {
+            "name": "main",
+            "sha": "9033ac073157f05dc9f3387b56efcb07aad4aaaf",
+            "truncated": false,
+            "native_sources": [],
+            "libraries": [
+              {
+                "path": "custom_components/hwhomebridge/hilink_bridge/lib/aarch64/libhilink_bridge.so",
+                "blob": "b8fe653e16168b547770ff06f9f43b5b1837f569",
+                "size": 9866752
+              },
+              {
+                "path": "custom_components/hwhomebridge/hilink_bridge/lib/amd64/libhilink_bridge.so",
+                "blob": "50bcc4d5142a5ef2d5affa78b74870ecffa11474",
+                "size": 2383384
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "repo": "zwlscx/ha_hwhomebridge",
+        "branches": [
+          {
+            "name": "main",
+            "sha": "9033ac073157f05dc9f3387b56efcb07aad4aaaf",
+            "truncated": false,
+            "native_sources": [],
+            "libraries": [
+              {
+                "path": "custom_components/hwhomebridge/hilink_bridge/lib/aarch64/libhilink_bridge.so",
+                "blob": "b8fe653e16168b547770ff06f9f43b5b1837f569",
+                "size": 9866752
+              },
+              {
+                "path": "custom_components/hwhomebridge/hilink_bridge/lib/amd64/libhilink_bridge.so",
+                "blob": "50bcc4d5142a5ef2d5affa78b74870ecffa11474",
+                "size": 2383384
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "repo": "aeromelo/ha_hwhomebridge",
+        "branches": [
+          {
+            "name": "main",
+            "sha": "9033ac073157f05dc9f3387b56efcb07aad4aaaf",
+            "truncated": false,
+            "native_sources": [],
+            "libraries": [
+              {
+                "path": "custom_components/hwhomebridge/hilink_bridge/lib/aarch64/libhilink_bridge.so",
+                "blob": "b8fe653e16168b547770ff06f9f43b5b1837f569",
+                "size": 9866752
+              },
+              {
+                "path": "custom_components/hwhomebridge/hilink_bridge/lib/amd64/libhilink_bridge.so",
+                "blob": "50bcc4d5142a5ef2d5affa78b74870ecffa11474",
+                "size": 2383384
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "repo": "zhaoxin-git/ha_hwhomebridge",
+        "branches": [
+          {
+            "name": "main",
+            "sha": "9033ac073157f05dc9f3387b56efcb07aad4aaaf",
+            "truncated": false,
+            "native_sources": [],
+            "libraries": [
+              {
+                "path": "custom_components/hwhomebridge/hilink_bridge/lib/aarch64/libhilink_bridge.so",
+                "blob": "b8fe653e16168b547770ff06f9f43b5b1837f569",
+                "size": 9866752
+              },
+              {
+                "path": "custom_components/hwhomebridge/hilink_bridge/lib/amd64/libhilink_bridge.so",
+                "blob": "50bcc4d5142a5ef2d5affa78b74870ecffa11474",
+                "size": 2383384
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "repo": "youridol/ha_hwhomebridge",
+        "branches": [
+          {
+            "name": "fix/adapters-real-devices",
+            "sha": "0f35fe1e2e409f4dcf7d324484cc443fcd51a1b5",
+            "truncated": false,
+            "native_sources": [],
+            "libraries": [
+              {
+                "path": "custom_components/hwhomebridge/hilink_bridge/lib/aarch64/libhilink_bridge.so",
+                "blob": "b8fe653e16168b547770ff06f9f43b5b1837f569",
+                "size": 9866752
+              },
+              {
+                "path": "custom_components/hwhomebridge/hilink_bridge/lib/amd64/libhilink_bridge.so",
+                "blob": "50bcc4d5142a5ef2d5affa78b74870ecffa11474",
+                "size": 2383384
+              }
+            ]
+          },
+          {
+            "name": "fix/event-loop-deadlock",
+            "sha": "53719aeccd1fe7a4b8f78830ab03a89fb019b477",
+            "truncated": false,
+            "native_sources": [],
+            "libraries": [
+              {
+                "path": "custom_components/hwhomebridge/hilink_bridge/lib/aarch64/libhilink_bridge.so",
+                "blob": "b8fe653e16168b547770ff06f9f43b5b1837f569",
+                "size": 9866752
+              },
+              {
+                "path": "custom_components/hwhomebridge/hilink_bridge/lib/amd64/libhilink_bridge.so",
+                "blob": "50bcc4d5142a5ef2d5affa78b74870ecffa11474",
+                "size": 2383384
+              }
+            ]
+          },
+          {
+            "name": "main",
+            "sha": "e03fb020f7adebcba0a62065d4cde78b6d3f698f",
+            "truncated": false,
+            "native_sources": [],
+            "libraries": [
+              {
+                "path": "custom_components/hwhomebridge/hilink_bridge/lib/aarch64/libhilink_bridge.so",
+                "blob": "b8fe653e16168b547770ff06f9f43b5b1837f569",
+                "size": 9866752
+              },
+              {
+                "path": "custom_components/hwhomebridge/hilink_bridge/lib/amd64/libhilink_bridge.so",
+                "blob": "50bcc4d5142a5ef2d5affa78b74870ecffa11474",
+                "size": 2383384
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "repo": "FancyangY/ha_hwhomebridge",
+        "branches": [
+          {
+            "name": "fix/leishi-light-and-sdk-config-lf",
+            "sha": "e33ef8ea048760d1372eadbb1b9e3079b7dd53e2",
+            "truncated": false,
+            "native_sources": [],
+            "libraries": [
+              {
+                "path": "custom_components/hwhomebridge/hilink_bridge/lib/aarch64/libhilink_bridge.so",
+                "blob": "b8fe653e16168b547770ff06f9f43b5b1837f569",
+                "size": 9866752
+              },
+              {
+                "path": "custom_components/hwhomebridge/hilink_bridge/lib/amd64/libhilink_bridge.so",
+                "blob": "50bcc4d5142a5ef2d5affa78b74870ecffa11474",
+                "size": 2383384
+              }
+            ]
+          },
+          {
+            "name": "main",
+            "sha": "48bc99d6c570ae16f5ed2ee784763cc8a96e53a3",
+            "truncated": false,
+            "native_sources": [],
+            "libraries": [
+              {
+                "path": "custom_components/hwhomebridge/hilink_bridge/lib/aarch64/libhilink_bridge.so",
+                "blob": "b8fe653e16168b547770ff06f9f43b5b1837f569",
+                "size": 9866752
+              },
+              {
+                "path": "custom_components/hwhomebridge/hilink_bridge/lib/amd64/libhilink_bridge.so",
+                "blob": "50bcc4d5142a5ef2d5affa78b74870ecffa11474",
+                "size": 2383384
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "repo": "DuanXDong/ha_hwhomebridge",
+        "branches": [
+          {
+            "name": "main",
+            "sha": "9033ac073157f05dc9f3387b56efcb07aad4aaaf",
+            "truncated": false,
+            "native_sources": [],
+            "libraries": [
+              {
+                "path": "custom_components/hwhomebridge/hilink_bridge/lib/aarch64/libhilink_bridge.so",
+                "blob": "b8fe653e16168b547770ff06f9f43b5b1837f569",
+                "size": 9866752
+              },
+              {
+                "path": "custom_components/hwhomebridge/hilink_bridge/lib/amd64/libhilink_bridge.so",
+                "blob": "50bcc4d5142a5ef2d5affa78b74870ecffa11474",
+                "size": 2383384
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "repo": "IT-AYang/ha_hwhomebridge",
+        "branches": [
+          {
+            "name": "main",
+            "sha": "df6d1a4bf7545289046999a0931ba8a17beafced",
+            "truncated": false,
+            "native_sources": [],
+            "libraries": [
+              {
+                "path": "custom_components/hwhomebridge/hilink_bridge/lib/aarch64/libhilink_bridge.so",
+                "blob": "b8fe653e16168b547770ff06f9f43b5b1837f569",
+                "size": 9866752
+              },
+              {
+                "path": "custom_components/hwhomebridge/hilink_bridge/lib/amd64/libhilink_bridge.so",
+                "blob": "50bcc4d5142a5ef2d5affa78b74870ecffa11474",
+                "size": 2383384
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "repo": "wuhuisheng/ha_hwhomebridge",
+        "branches": [
+          {
+            "name": "main",
+            "sha": "7d113e3637e191a3fbcc2aedf253ffc97b850f77",
+            "truncated": false,
+            "native_sources": [],
+            "libraries": [
+              {
+                "path": "custom_components/hwhomebridge/hilink_bridge/lib/aarch64/libhilink_bridge.so",
+                "blob": "b8fe653e16168b547770ff06f9f43b5b1837f569",
+                "size": 9866752
+              },
+              {
+                "path": "custom_components/hwhomebridge/hilink_bridge/lib/amd64/libhilink_bridge.so",
+                "blob": "50bcc4d5142a5ef2d5affa78b74870ecffa11474",
+                "size": 2383384
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "repo": "ibazzi/ha_hwhomebridge",
+        "branches": [
+          {
+            "name": "main",
+            "sha": "7d113e3637e191a3fbcc2aedf253ffc97b850f77",
+            "truncated": false,
+            "native_sources": [],
+            "libraries": [
+              {
+                "path": "custom_components/hwhomebridge/hilink_bridge/lib/aarch64/libhilink_bridge.so",
+                "blob": "b8fe653e16168b547770ff06f9f43b5b1837f569",
+                "size": 9866752
+              },
+              {
+                "path": "custom_components/hwhomebridge/hilink_bridge/lib/amd64/libhilink_bridge.so",
+                "blob": "50bcc4d5142a5ef2d5affa78b74870ecffa11474",
+                "size": 2383384
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "repo": "hxf14789/ha_hwhomebridge",
+        "branches": [
+          {
+            "name": "main",
+            "sha": "7d113e3637e191a3fbcc2aedf253ffc97b850f77",
+            "truncated": false,
+            "native_sources": [],
+            "libraries": [
+              {
+                "path": "custom_components/hwhomebridge/hilink_bridge/lib/aarch64/libhilink_bridge.so",
+                "blob": "b8fe653e16168b547770ff06f9f43b5b1837f569",
+                "size": 9866752
+              },
+              {
+                "path": "custom_components/hwhomebridge/hilink_bridge/lib/amd64/libhilink_bridge.so",
+                "blob": "50bcc4d5142a5ef2d5affa78b74870ecffa11474",
+                "size": 2383384
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "repo": "chaosl1996/ha_hwhomebridge",
+        "branches": [
+          {
+            "name": "main",
+            "sha": "7d113e3637e191a3fbcc2aedf253ffc97b850f77",
+            "truncated": false,
+            "native_sources": [],
+            "libraries": [
+              {
+                "path": "custom_components/hwhomebridge/hilink_bridge/lib/aarch64/libhilink_bridge.so",
+                "blob": "b8fe653e16168b547770ff06f9f43b5b1837f569",
+                "size": 9866752
+              },
+              {
+                "path": "custom_components/hwhomebridge/hilink_bridge/lib/amd64/libhilink_bridge.so",
+                "blob": "50bcc4d5142a5ef2d5affa78b74870ecffa11474",
+                "size": 2383384
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "repo": "yn-Lin/ha_hwhomebridge",
+        "branches": [
+          {
+            "name": "main",
+            "sha": "8341e9075dce5774d864dc24b326aca5c7f9f51a",
+            "truncated": false,
+            "native_sources": [],
+            "libraries": [
+              {
+                "path": "custom_components/hwhomebridge/hilink_bridge/libhilink_bridge.so",
+                "blob": "3ddc9fdc654d06a8a6bd427762e044854662ed46",
+                "size": 10837480
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "repo": "caideone/ha_hwhomebridge",
+        "branches": [
+          {
+            "name": "codex/haos-gcompat",
+            "sha": "92331102b695a2bf8d934e634ef71f041d1f16be",
+            "truncated": false,
+            "native_sources": [],
+            "libraries": [
+              {
+                "path": "custom_components/hwhomebridge/hilink_bridge/libhilink_bridge.so",
+                "blob": "45859ab88f417f5f9e8e2c6300a20ee98820d748",
+                "size": 10881025
+              }
+            ]
+          },
+          {
+            "name": "feat/ha",
+            "sha": "4fbfb223218e2256880f8ff86c7a0dd6df1585d2",
+            "truncated": false,
+            "native_sources": [],
+            "libraries": [
+              {
+                "path": "custom_components/hwhomebridge/hilink_bridge/libhilink_bridge.so",
+                "blob": "3ddc9fdc654d06a8a6bd427762e044854662ed46",
+                "size": 10837480
+              }
+            ]
+          },
+          {
+            "name": "main",
+            "sha": "8341e9075dce5774d864dc24b326aca5c7f9f51a",
+            "truncated": false,
+            "native_sources": [],
+            "libraries": [
+              {
+                "path": "custom_components/hwhomebridge/hilink_bridge/libhilink_bridge.so",
+                "blob": "3ddc9fdc654d06a8a6bd427762e044854662ed46",
+                "size": 10837480
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "repo": "ray5378/ha_hwhomebridge",
+        "branches": [
+          {
+            "name": "main",
+            "sha": "23dfd45b2930500c267b37b0603b615ad617ed17",
+            "truncated": false,
+            "native_sources": [],
+            "libraries": [
+              {
+                "path": "custom_components/hwhomebridge/hilink_bridge/libhilink_bridge.so",
+                "blob": "3ddc9fdc654d06a8a6bd427762e044854662ed46",
+                "size": 10837480
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "repo": "vanscer/ha_hwhomebridge",
+        "branches": [
+          {
+            "name": "main",
+            "sha": "23dfd45b2930500c267b37b0603b615ad617ed17",
+            "truncated": false,
+            "native_sources": [],
+            "libraries": [
+              {
+                "path": "custom_components/hwhomebridge/hilink_bridge/libhilink_bridge.so",
+                "blob": "3ddc9fdc654d06a8a6bd427762e044854662ed46",
+                "size": 10837480
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "repo": "jieqiuming/ha_hwhomebridge",
+        "branches": [
+          {
+            "name": "main",
+            "sha": "20acaf67affae0c31126163e43889536a253bf8f",
+            "truncated": false,
+            "native_sources": [],
+            "libraries": [
+              {
+                "path": "custom_components/hwhomebridge/hilink_bridge/libhilink_bridge.so",
+                "blob": "3ddc9fdc654d06a8a6bd427762e044854662ed46",
+                "size": 10837480
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "repo": "xiasi0/ha_hwhomebridge",
+        "branches": [
+          {
+            "name": "main",
+            "sha": "f057dfd36bffc2e36bdb05d363da10cb2927dc16",
+            "truncated": false,
+            "native_sources": [],
+            "libraries": [
+              {
+                "path": "custom_components/hwhomebridge/hilink_bridge/lib/aarch64/libhilink_bridge.so",
+                "blob": "b8fe653e16168b547770ff06f9f43b5b1837f569",
+                "size": 9866752
+              },
+              {
+                "path": "custom_components/hwhomebridge/hilink_bridge/lib/amd64/libhilink_bridge.so",
+                "blob": "50bcc4d5142a5ef2d5affa78b74870ecffa11474",
+                "size": 2383384
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "relevant_issues": [
+      30,
+      35
+    ]
+  },
+  "public_candidates": [
+    {
+      "repo": "ppq-ppq/honyar",
+      "commit": "8b5a4dfd2970d4de4a17229d4f41f663f7594a1c",
+      "role": "public adapter contract reference; not original HA adapter source",
+      "license_observation": "No repository license declared; inspected bridge files carry Huawei All rights reserved. No source, header, SDK or credentials copied into this repository.",
+      "files": {
+        "hilink2/adapter/profile_adapter/hilink_profile_bridge.c": "be0acfc577716c132a5ae3a520a96770873aeca2bc6f575988c25e2eccd20414",
+        "hilink2/adapter/profile_adapter/include/hilink_profile_bridge.h": "efac8bada1dbbd051de003a2e745d4a3c399efd37f72e2bb5897767415a3cf60",
+        "hilink2/makefile": "93c1eaad4f224499e68dc8a08b25702d985d515b989830be132ffc1d537a438f"
+      },
+      "sdk_imported_manufacturer_hooks": [
+        "HilinkGetBrgDevInfo",
+        "HilinkGetBrgSvcInfo",
+        "HilinkPutBrgDevCharState",
+        "HilinkGetBrgDevCharState"
+      ],
+      "archives": [
+        {
+          "path": "hilink2/lib/libhilinkdevicesdk.a",
+          "sha256": "7552c26d92e5e719bcd1ec0d26d6be2f2ce48f693389844571498070b3853e4f",
+          "elf_objects": 217,
+          "architectures": [
+            {
+              "class": 32,
+              "machine": "EM_ARM",
+              "count": 217
+            }
+          ]
+        },
+        {
+          "path": "hilink2/lib/libhilinkota.a",
+          "sha256": "e72227527babbecdf69ffa51b730c1d9c1026be6d498f91666f73c5bd865cb4d",
+          "elf_objects": 7,
+          "architectures": [
+            {
+              "class": 32,
+              "machine": "EM_ARM",
+              "count": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "repo": "xiasi0/ha-oneconnect-bridge",
+      "commit": "db23564189dc0d8cae8f097eb9e803ced40b76ef",
+      "license": "Apache-2.0",
+      "role": "reference for one-parent dynamic child protocol, not a verified drop-in legacy SDK replacement",
+      "observed_files": [
+        "custom_components/oneconnect_bridge/business/child_manager.py",
+        "custom_components/oneconnect_bridge/business/child_protocol.py",
+        "custom_components/oneconnect_bridge/config_flow.py",
+        "custom_components/oneconnect_bridge/storage.py"
+      ],
+      "legacy_pairing_migration": "not_found_in_inspected_snapshot"
+    },
+    {
+      "repo": "C3H3-AI/ha_hwhomebridge",
+      "commit": "798eb13021f5272558c91bc353006004c45ae138",
+      "role": "community observations and pointers; no rebuildable original HA C adapter found; architecture claims checked against ELF instead of assumed"
+    },
+    {
+      "repo": "openharmony/communication_iot_connect",
+      "commit": "d8c0aef305601770c912dbdedc58a3f1e6efd30c",
+      "role": "existing isolated open-engine reference; no new engine build/pairing acceptance in this investigation; old KV compatibility not verified"
+    }
+  ],
+  "additional_elf_checks": [
+    {
+      "sha256": "d90fd150481565c04fd6b40906555f7d73350a382cb5b79e9313320b4d9354b1",
+      "elfclass": 64,
+      "machine": "EM_AARCH64",
+      "has_static_symbols": false,
+      "export_count": 10,
+      "bridge_symbols": [
+        "HilinkSyncBrgDevStatus",
+        "RegHomeAssistantPyCB"
+      ],
+      "legacy_exports": [
+        "exit_brg",
+        "HILINK_SetAutoAc",
+        "GetGatewaySN",
+        "main",
+        "RegPINQueryCallback",
+        "HilinkSyncBrgDevStatus",
+        "HILINK_GetDevStatus",
+        "RegGetRoomInfoCallback",
+        "RegHomeAssistantPyCB",
+        "UpdateHAStatus"
+      ],
+      "source": "caideone/ha_hwhomebridge codex/haos-gcompat blob 45859ab88f417f5f9e8e2c6300a20ee98820d748"
+    },
+    {
+      "sha256": "a36059239c526f8b16fcdcc33d4f1b30721358ca1fd44332b185c95d6eb7e308",
+      "elfclass": 64,
+      "machine": "EM_AARCH64",
+      "has_static_symbols": false,
+      "export_count": 10,
+      "bridge_symbols": [
+        "HilinkSyncBrgDevStatus",
+        "RegHomeAssistantPyCB"
+      ],
+      "legacy_exports": [
+        "exit_brg",
+        "HILINK_SetAutoAc",
+        "GetGatewaySN",
+        "main",
+        "RegPINQueryCallback",
+        "HilinkSyncBrgDevStatus",
+        "HILINK_GetDevStatus",
+        "RegGetRoomInfoCallback",
+        "RegHomeAssistantPyCB",
+        "UpdateHAStatus"
+      ],
+      "source": "upstream git blob 3ddc9fdc654d06a8a6bd427762e044854662ed46"
+    },
+    {
+      "sha256": "1534e32aa87e5a61a723a4a70d0ae2d51b513c02f090c5b808926a536dd3451f",
+      "elfclass": 32,
+      "machine": "EM_ARM",
+      "has_static_symbols": false,
+      "export_count": 1341,
+      "bridge_symbols": [
+        "HilinkSyncBrgDevStatus",
+        "HilinkUploadBrgDevCharState"
+      ],
+      "legacy_exports": null,
+      "source": "ppq-ppq/honyar@8b5a4dfd2970d4de4a17229d4f41f663f7594a1c/hilink2/lib/libhilinkdevicesdk.so"
+    },
+    {
+      "sha256": "1534e32aa87e5a61a723a4a70d0ae2d51b513c02f090c5b808926a536dd3451f",
+      "elfclass": 32,
+      "machine": "EM_ARM",
+      "has_static_symbols": false,
+      "export_count": 1341,
+      "bridge_symbols": [
+        "HilinkSyncBrgDevStatus",
+        "HilinkUploadBrgDevCharState"
+      ],
+      "legacy_exports": null,
+      "source": "ppq-ppq/honyar@8b5a4dfd2970d4de4a17229d4f41f663f7594a1c/hilink/lib/libhilinkdevicesdk.so"
+    }
+  ],
+  "cross_link_checks": [
+    {
+      "target": "x86_64-linux-gnu",
+      "exit_code": 1,
+      "architecture_error_samples": [
+        "ld.lld: error: hilink2/lib/libhilinkdevicesdk.a(hilink_cjson_adapter.o) is incompatible with elf_x86_64",
+        "ld.lld: error: hilink2/lib/libhilinkdevicesdk.a(hilink_secfun.o) is incompatible with elf_x86_64"
+      ],
+      "executable_run": false,
+      "execution_host": "macOS cross-link with Zig 0.15.1, not a Linux-hosted SDK build",
+      "probe_source_sha256": "f4a9c23fc97ada2cb068206b1057a7d6b8101a18229fdd674789a57c8bbbb78c"
+    },
+    {
+      "target": "aarch64-linux-gnu",
+      "exit_code": 1,
+      "architecture_error_samples": [
+        "ld.lld: error: hilink2/lib/libhilinkdevicesdk.a(hilink_cjson_adapter.o) is incompatible with aarch64linux",
+        "ld.lld: error: hilink2/lib/libhilinkdevicesdk.a(hilink_secfun.o) is incompatible with aarch64linux"
+      ],
+      "executable_run": false,
+      "execution_host": "macOS cross-link with Zig 0.15.1, not a Linux-hosted SDK build",
+      "probe_source_sha256": "f4a9c23fc97ada2cb068206b1057a7d6b8101a18229fdd674789a57c8bbbb78c"
+    }
+  ],
+  "independent_linux": {
+    "symbols": {
+      "schema_version": 1,
+      "method": "dlopen and symbol lookup only; no SDK entry point called",
+      "os": "Linux",
+      "architecture": "x86_64",
+      "python": "3.14.6",
+      "library_sha256": "0579e6f3cee0320d1533e5a96cc6d72a065a43050eff4edcb7afd6a9a52c7b58",
+      "symbols": {
+        "GetGatewaySN": true,
+        "HILINK_GetDevStatus": true,
+        "HILINK_SetAutoAc": true,
+        "HILINK_SetPreferredIface": true,
+        "HilinkGetBrgDevCharState": false,
+        "HilinkGetBrgDevInfo": false,
+        "HilinkGetBrgSvcInfo": false,
+        "HilinkPutBrgDevCharState": false,
+        "HilinkSyncBrgDevStatus": true,
+        "RegGetRoomInfoCallback": true,
+        "RegHomeAssistantPyCB": true,
+        "RegPINQueryCallback": true,
+        "UpdateHAStatus": true,
+        "exit_brg": true,
+        "main": true
+      },
+      "single_gateway_new_fan_acceptance": "not_run",
+      "release_gate": "not_met",
+      "limitation": "Symbol lookup does not test registration, pairing, cloud connectivity or identity migration."
+    },
+    "public_header_layout": {
+      "BrgDevInfo_size": 348,
+      "prodId_offset": 40,
+      "protType_offset": 344,
+      "BrgDevSvcInfo_size": 1920,
+      "service_limit": 20
+    },
+    "image": "ghcr.io/home-assistant/home-assistant:2026.10.1",
+    "image_id": "f649ee2bf13aede5f822273c3dea95c63d98d6d3651d7394c1620b7034238aaf",
+    "network": "none",
+    "root_filesystem": "read_only",
+    "source_mount": "read_only",
+    "capabilities": "all_dropped",
+    "no_new_privileges": true,
+    "sdk_entry_points_called": false,
+    "paired_runtime_or_HA_configuration_mounted": false,
+    "source_file_sha256": {
+      "audit_legacy_native.py": "4d23b4f8e0b2ae38e46e4436ffbe98feadf60b0b273782eb53898a3c69453a12",
+      "header-layout": "0cc517dd7a2cc378f693fb2f7250ddbdaca0a3d4f57f46f7ad40a9ea639b3c9a",
+      "header-layout.c": "a4a26ecb83006e84f1f7c82edd24a45a4af96c4346aaa4f00f39d0aa4906e8ca",
+      "legacy.so": "0579e6f3cee0320d1533e5a96cc6d72a065a43050eff4edcb7afd6a9a52c7b58",
+      "probe_legacy_native_symbols.py": "16ad28b9e015da5a26dbaa19d05d7b7c09b517a2fbfca98c07f5d595f0b808ea"
+    },
+    "physical_control_or_cloud_acceptance": "not_run"
+  },
+  "jev": {
+    "purpose": "public candidate role screening only; technical conclusions reviewed by Codex",
+    "result": {
+      "model": "jev-1.13.0",
+      "answers": {
+        "original": {
+          "type": "choice",
+          "choice": "reference_only",
+          "confidence": 0.72,
+          "probabilities": {
+            "original": 0.21,
+            "reference_only": 0.79,
+            "replacement_research": 0.0,
+            "unrelated": 0.0
+          }
+        },
+        "honyar": {
+          "type": "choice",
+          "choice": "reference_only",
+          "confidence": 0.77,
+          "probabilities": {
+            "original": 0.04,
+            "reference_only": 0.83,
+            "replacement_research": 0.13,
+            "unrelated": 0.0
+          }
+        },
+        "oneconnect": {
+          "type": "choice",
+          "choice": "reference_only",
+          "confidence": 0.39,
+          "probabilities": {
+            "original": 0.0,
+            "reference_only": 0.54,
+            "replacement_research": 0.4,
+            "unrelated": 0.06
+          }
+        },
+        "openharmony": {
+          "type": "choice",
+          "choice": "replacement_research",
+          "confidence": 0.65,
+          "probabilities": {
+            "original": 0.0,
+            "reference_only": 0.25,
+            "replacement_research": 0.74,
+            "unrelated": 0.01
+          }
+        }
+      },
+      "usage": {
+        "input_tokens": 1059,
+        "output_tokens": 207
+      }
+    },
+    "low_confidence_handling": "No automated architecture choice or release decision; inspect source and ELF directly"
+  },
+  "release_gate": "not_met",
+  "single_original_gateway_old_light_and_new_fan_registration": "not_run",
+  "remaining_requirements": [
+    "Original bridge adapter source/header/build inputs or reviewed extension ABI",
+    "Matching x86_64 and aarch64 vendor SDK and distribution terms",
+    "Verified identity/KV compatibility and same-parent old/new device registration, control, readback and restart"
+  ],
+  "production_actions": [],
+  "paired_experimental_vm_started": false,
+  "x86_vm_restored_to_stopped": true,
+  "additional_public_leads": [
+    {
+      "repo": "HUAWEI-HiLink/DeviceSDK",
+      "tree": "02ad41d077b712a6017d2e587139eec95c577869",
+      "files": [
+        "README.md"
+      ],
+      "sdk_assets_found": false
+    },
+    {
+      "repo": "xushoucai/esp8266-hilink",
+      "tree": "dd7fa3bdd05b6949fd44e160b3de637135aeb6dd",
+      "role": "ESP8266 device example; no Linux bridge adapter hook found in inspected file tree"
+    }
+  ]
+}

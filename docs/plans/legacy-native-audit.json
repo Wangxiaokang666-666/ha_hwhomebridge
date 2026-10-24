@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "method": "ELF static inspection; no library load or SDK execution",
+  "libraries": [
+    {
+      "architecture": "amd64",
+      "machine": "EM_X86_64",
+      "sha256": "0579e6f3cee0320d1533e5a96cc6d72a065a43050eff4edcb7afd6a9a52c7b58",
+      "size_bytes": 2383384,
+      "has_static_symbol_table": false,
+      "exports": [
+        "GetGatewaySN",
+        "HILINK_GetDevStatus",
+        "HILINK_SetAutoAc",
+        "HILINK_SetPreferredIface",
+        "HilinkSyncBrgDevStatus",
+        "RegGetRoomInfoCallback",
+        "RegHomeAssistantPyCB",
+        "RegPINQueryCallback",
+        "UpdateHAStatus",
+        "exit_brg",
+        "main"
+      ],
+      "missing_legacy_exports": [],
+      "unreviewed_exports": [],
+      "sdk_adapter_hooks": {
+        "HilinkGetBrgDevInfo": "absent_from_dynsym",
+        "HilinkGetBrgSvcInfo": "absent_from_dynsym",
+        "HilinkPutBrgDevCharState": "absent_from_dynsym",
+        "HilinkGetBrgDevCharState": "absent_from_dynsym"
+      },
+      "abi_classification": "legacy_callbacks_only"
+    },
+    {
+      "architecture": "aarch64",
+      "machine": "EM_AARCH64",
+      "sha256": "85ba2875c46bfa610e263d92952f8ec3f23b9765a70b6b106fecc157de9ec1e0",
+      "size_bytes": 9866752,
+      "has_static_symbol_table": false,
+      "exports": [
+        "GetGatewaySN",
+        "HILINK_GetDevStatus",
+        "HILINK_SetAutoAc",
+        "HILINK_SetPreferredIface",
+        "HilinkSyncBrgDevStatus",
+        "RegGetRoomInfoCallback",
+        "RegHomeAssistantPyCB",
+        "RegPINQueryCallback",
+        "UpdateHAStatus",
+        "exit_brg",
+        "main"
+      ],
+      "missing_legacy_exports": [],
+      "unreviewed_exports": [],
+      "sdk_adapter_hooks": {
+        "HilinkGetBrgDevInfo": "absent_from_dynsym",
+        "HilinkGetBrgSvcInfo": "absent_from_dynsym",
+        "HilinkPutBrgDevCharState": "absent_from_dynsym",
+        "HilinkGetBrgDevCharState": "absent_from_dynsym"
+      },
+      "abi_classification": "legacy_callbacks_only"
+    }
+  ],
+  "bridge_sources": [],
+  "dynamic_product_registration": "not_verified",
+  "single_gateway_new_fan_acceptance": "not_run",
+  "release_gate": "not_met",
+  "limitation": "Export names cannot prove internal behavior or an undocumented ABI. Source/headers or a reviewed extension ABI and isolated registration evidence are still required."
+}

@@ -1,0 +1,80 @@
+{
+  "request": {
+    "model": "jev-latest",
+    "state": {
+      "cases": {
+        "unavailable": "A registered light entity exists but HA reports unavailable. Other device states are readable.",
+        "bad_mapping": "Product profile changed and a required characteristic cannot be mapped.",
+        "offline_probe": "An imported parent identity was read by a C probe with zero network syscalls. No cloud or App control occurred."
+      }
+    },
+    "questions": {
+      "outage": {
+        "type": "choice",
+        "instructions": "Classify cases.unavailable for an availability isolation test. Do not authorize actions.",
+        "criteria": {
+          "source_outage": "Temporary unavailable source affecting one child",
+          "config_error": "Invalid configuration",
+          "unknown": "Insufficient information"
+        }
+      },
+      "mapping": {
+        "type": "choice",
+        "instructions": "Classify cases.bad_mapping.",
+        "criteria": {
+          "source_outage": "Temporary source outage",
+          "config_error": "Invalid configuration requiring rejection",
+          "unknown": "Insufficient information"
+        }
+      },
+      "acceptance": {
+        "type": "choice",
+        "instructions": "Which acceptance claim is supported by cases.offline_probe?",
+        "criteria": {
+          "offline_only": "Offline identity decoding only; cloud/App acceptance remains unproven",
+          "production_success": "Production adoption and App write success",
+          "unknown": "Insufficient information"
+        }
+      }
+    }
+  },
+  "response": {
+    "model": "jev-1.13.0",
+    "answers": {
+      "outage": {
+        "type": "choice",
+        "choice": "source_outage",
+        "confidence": 0.92,
+        "probabilities": {
+          "source_outage": 0.95,
+          "config_error": 0.0,
+          "unknown": 0.05
+        }
+      },
+      "mapping": {
+        "type": "choice",
+        "choice": "config_error",
+        "confidence": 0.83,
+        "probabilities": {
+          "source_outage": 0.0,
+          "config_error": 0.89,
+          "unknown": 0.11
+        }
+      },
+      "acceptance": {
+        "type": "choice",
+        "choice": "offline_only",
+        "confidence": 1.0,
+        "probabilities": {
+          "offline_only": 1.0,
+          "production_success": 0.0,
+          "unknown": 0.0
+        }
+      }
+    },
+    "usage": {
+      "input_tokens": 585,
+      "output_tokens": 126
+    }
+  }
+}

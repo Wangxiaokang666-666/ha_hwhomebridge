@@ -66,7 +66,7 @@ class ProductMatcher:
         product, _ = self.match_with_detail(device_info)
         return product
 
-    def match_with_detail(self, device_info: DeviceInfo) -> tuple:
+    def match_with_detail(self, device_info: DeviceInfo, *, include_compositions=False) -> tuple:
         """匹配并返回详细信息
 
         Returns:
@@ -78,7 +78,7 @@ class ProductMatcher:
 
         # Phase 1: 适配器 match_rules 匹配（按规则类型优先级）
         # 1a. model_exact
-        result = self._match_adapters_by_rule_type(device_info, ModelExactMatch)
+        result = self._match_adapters_by_rule_type(device_info, ModelExactMatch, include_compositions)
         if result is not None:
             product, strategy = result
             _LOGGER.info(f"Device {device_info.device_id} matched by model_exact: "
@@ -86,7 +86,7 @@ class ProductMatcher:
             return product, strategy
 
         # 1b. model_keyword
-        result = self._match_adapters_by_rule_type(device_info, ModelKeywordMatch)
+        result = self._match_adapters_by_rule_type(device_info, ModelKeywordMatch, include_compositions)
         if result is not None:
             product, strategy = result
             _LOGGER.info(f"Device {device_info.device_id} matched by model_keyword: "
@@ -94,7 +94,7 @@ class ProductMatcher:
             return product, strategy
 
         # 1c. name_keyword
-        result = self._match_adapters_by_rule_type(device_info, NameKeywordMatch)
+        result = self._match_adapters_by_rule_type(device_info, NameKeywordMatch, include_compositions)
         if result is not None:
             product, strategy = result
             _LOGGER.info(f"Device {device_info.device_id} matched by name_keyword: "
@@ -102,7 +102,7 @@ class ProductMatcher:
             return product, strategy
 
         # 1d. entity_composition
-        result = self._match_adapters_by_rule_type(device_info, EntityCompositionMatch)
+        result = self._match_adapters_by_rule_type(device_info, EntityCompositionMatch, include_compositions)
         if result is not None:
             product, strategy = result
             _LOGGER.info(f"Device {device_info.device_id} matched by entity_composition: "
@@ -110,7 +110,7 @@ class ProductMatcher:
             return product, strategy
 
         # Phase 2: 框架 auto_match 兜底
-        result = self._match_auto(device_info)
+        result = self._match_auto(device_info, include_compositions)
         if result is not None:
             product, strategy = result
             _LOGGER.info(f"Device {device_info.device_id} matched by auto_match: "
@@ -122,7 +122,7 @@ class ProductMatcher:
         return None, None
 
     def _match_adapters_by_rule_type(self, device_info: DeviceInfo,
-                                      rule_type: type) -> Optional[tuple]:
+                                      rule_type: type, include_compositions=False) -> Optional[tuple]:
         """遍历所有适配器，尝试指定规则类型的匹配
 
         Args:
@@ -133,6 +133,8 @@ class ProductMatcher:
             (merged ProductDef, strategy_str) 或 None
         """
         for adapter in self.registry.get_all_adapters():
+            if adapter.composition and not include_compositions:
+                continue
             for rule in adapter.match_rules:
                 if not isinstance(rule, rule_type):
                     continue
@@ -142,6 +144,8 @@ class ProductMatcher:
                         _LOGGER.warning(f"Adapter PID '{adapter.pid}' not found in framework")
                         continue
                     merged = self.registry.merge(product, adapter)
+                    if merged.composition and not include_compositions:
+                        continue
                     return merged, rule.rule_type
         return None
 
@@ -206,7 +210,7 @@ class ProductMatcher:
 
         return True
 
-    def _match_auto(self, device_info: DeviceInfo) -> Optional[tuple]:
+    def _match_auto(self, device_info: DeviceInfo, include_compositions=False) -> Optional[tuple]:
         """框架 auto_match 兜底匹配
 
         检查每个有 auto_match 的框架产品：
@@ -246,6 +250,8 @@ class ProductMatcher:
             _LOGGER.debug(f"AutoMatch: {product.pid} matched for device {device_info.device_id}")
             # 合并框架 + 默认适配器（无厂家适配器，用标准 ha_mapping）
             merged = self.registry.merge(product, None)
+            if merged.composition and not include_compositions:
+                continue
             return merged, "auto_match"
 
         return None

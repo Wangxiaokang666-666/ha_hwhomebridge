@@ -1,0 +1,31 @@
+vmType: vz
+arch: aarch64
+images:
+  - location: https://cloud-images.ubuntu.com/releases/noble/release-20260926/ubuntu-24.04-server-cloudimg-arm64.img
+    arch: aarch64
+    digest: sha256:1d6bffe64b848468ac97f821d369a4846d983de1800ccf6b5ec8853e85cefc55
+cpus: 4
+memory: 4GiB
+disk: 24GiB
+mounts: []
+ssh:
+  loadDotSSHPubKeys: false
+containerd:
+  system: false
+  user: false
+portForwards:
+  - guestIP: 0.0.0.0
+    proto: any
+    guestPortRange: [1, 65535]
+    ignore: true
+provision:
+  - mode: system
+    script: |
+      #!/bin/sh
+      set -eu
+      # 这个索引仅供交互式“命令不存在”提示，完整 CPU 仿真下不需要生成。
+      if [ -f /etc/apt/apt.conf.d/50command-not-found ]; then
+        mv /etc/apt/apt.conf.d/50command-not-found /etc/apt/50command-not-found.m2-disabled
+      fi
+      apt-get update
+      DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends podman uidmap slirp4netns fuse-overlayfs netavark aardvark-dns python3 binutils curl ca-certificates iproute2

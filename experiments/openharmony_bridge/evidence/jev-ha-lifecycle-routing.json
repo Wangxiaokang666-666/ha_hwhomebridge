@@ -1,0 +1,111 @@
+{
+  "purpose": "Classify lifecycle validation gaps only; identity and implementation reviewed by Codex",
+  "private_identity_or_credentials_sent": false,
+  "request": {
+    "model": "jev-latest",
+    "state": {
+      "task": "One existing HA config entry, paired identity, explicit switch between supervised legacy SDK process and OpenHarmony, independent HA validation only.",
+      "gaps": {
+        "entry": "Current entry type is immutable and OpenHarmony means a second independent entry.",
+        "shutdown": "Current legacy SDK is loaded in HA process and cannot hot unload.",
+        "failure": "Process startup confirmation alone does not validate identity or safe rollback.",
+        "packaging": "Current package upgrade preserves config and native files, but managed lifecycle is absent."
+      }
+    },
+    "questions": {
+      "entry": {
+        "type": "choice",
+        "instructions": "Classify gap entry into its next validation area. Do not design or approve migration.",
+        "criteria": {
+          "configuration_lifecycle": "Config flow, original entry and identity persistence",
+          "process_ownership": "Supervised process stop, lock, and resident SDK restart barrier",
+          "rollback_acceptance": "Validate same identity then restart/failure rollback with real engines",
+          "installation_acceptance": "Independent install, upgrade, restore validation"
+        }
+      },
+      "shutdown": {
+        "type": "choice",
+        "instructions": "Classify gap shutdown into its next validation area. Do not design or approve migration.",
+        "criteria": {
+          "configuration_lifecycle": "Config flow, original entry and identity persistence",
+          "process_ownership": "Supervised process stop, lock, and resident SDK restart barrier",
+          "rollback_acceptance": "Validate same identity then restart/failure rollback with real engines",
+          "installation_acceptance": "Independent install, upgrade, restore validation"
+        }
+      },
+      "failure": {
+        "type": "choice",
+        "instructions": "Classify gap failure into its next validation area. Do not design or approve migration.",
+        "criteria": {
+          "configuration_lifecycle": "Config flow, original entry and identity persistence",
+          "process_ownership": "Supervised process stop, lock, and resident SDK restart barrier",
+          "rollback_acceptance": "Validate same identity then restart/failure rollback with real engines",
+          "installation_acceptance": "Independent install, upgrade, restore validation"
+        }
+      },
+      "packaging": {
+        "type": "choice",
+        "instructions": "Classify gap packaging into its next validation area. Do not design or approve migration.",
+        "criteria": {
+          "configuration_lifecycle": "Config flow, original entry and identity persistence",
+          "process_ownership": "Supervised process stop, lock, and resident SDK restart barrier",
+          "rollback_acceptance": "Validate same identity then restart/failure rollback with real engines",
+          "installation_acceptance": "Independent install, upgrade, restore validation"
+        }
+      }
+    }
+  },
+  "response": {
+    "model": "jev-1.13.0",
+    "answers": {
+      "entry": {
+        "type": "choice",
+        "choice": "configuration_lifecycle",
+        "confidence": 0.55,
+        "probabilities": {
+          "configuration_lifecycle": 0.66,
+          "process_ownership": 0.2,
+          "rollback_acceptance": 0.12,
+          "installation_acceptance": 0.02
+        }
+      },
+      "shutdown": {
+        "type": "choice",
+        "choice": "process_ownership",
+        "confidence": 0.99,
+        "probabilities": {
+          "configuration_lifecycle": 0.01,
+          "process_ownership": 0.99,
+          "rollback_acceptance": 0.0,
+          "installation_acceptance": 0.0
+        }
+      },
+      "failure": {
+        "type": "choice",
+        "choice": "rollback_acceptance",
+        "confidence": 0.99,
+        "probabilities": {
+          "configuration_lifecycle": 0.0,
+          "process_ownership": 0.01,
+          "rollback_acceptance": 0.99,
+          "installation_acceptance": 0.0
+        }
+      },
+      "packaging": {
+        "type": "choice",
+        "choice": "installation_acceptance",
+        "confidence": 0.8,
+        "probabilities": {
+          "configuration_lifecycle": 0.12,
+          "process_ownership": 0.03,
+          "rollback_acceptance": 0.0,
+          "installation_acceptance": 0.85
+        }
+      }
+    },
+    "usage": {
+      "input_tokens": 922,
+      "output_tokens": 242
+    }
+  }
+}

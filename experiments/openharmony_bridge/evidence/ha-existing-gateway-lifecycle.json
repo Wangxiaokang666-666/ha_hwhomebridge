@@ -1,0 +1,163 @@
+{
+  "schema": 1,
+  "date": "2026-10-17",
+  "scope": {
+    "production_access": false,
+    "production_deployment": false,
+    "virtual_entities_only": true,
+    "gateway_parents": 1,
+    "existing_children": 8,
+    "supplementary_cards": 7,
+    "HA_core": "2026.10.1",
+    "runtime_architecture": "x86_64",
+    "real_legacy_SDK": true,
+    "real_OpenHarmony_engine": true,
+    "Mac_or_SSH_control_proxy": false,
+    "Smart_Life_App_retested_this_round": false
+  },
+  "regression_tests": {
+    "public": 60,
+    "tools": 42,
+    "offline_identity_import": 8,
+    "experimental_framework": 25,
+    "total": 135,
+    "passed": true,
+    "configuration_validation_passed": true
+  },
+  "package": {
+    "version": "1.1.0b5",
+    "kind": "preserving_upgrade_only",
+    "sha256": "e2492d1a9d73579b75e1fa21b455a69dd768fdc9f89dadc9db127184e6df6962",
+    "payload_files": 54,
+    "base_git_revision": "8ece241b6c0641323995b559fc00b19051078587",
+    "component_source_matches_current_checkout": true,
+    "native_architectures": [
+      "aarch64",
+      "x86_64"
+    ],
+    "static_ELF_and_build_provenance_verified": true,
+    "private_profiles_or_pairing_credentials_shipped": false
+  },
+  "results": {
+    "HA_phases": {
+      "baseline": {
+        "passed": true,
+        "original_disabled_entry_loaded": true,
+        "existing_identity_files_retained": true,
+        "entry_id_and_unique_id_unchanged": true,
+        "one_config_entry": true,
+        "paired_files_unchanged": true,
+        "legacy_library_not_loaded_into_HA_process": true,
+        "all_owned_workers_stopped_with_HA": true
+      },
+      "exercise": {
+        "passed": true,
+        "adding_a_second_original_gateway_refused": true,
+        "wrong_bound_identity_refused_before_SDK_start": true,
+        "changed_mapping_refused_before_native_start": true,
+        "resident_restart_guard_with_injected_marker": true,
+        "activate_legacy": true,
+        "existing_legacy_bridge_registry_ids_preserved": true,
+        "switch_stops_old_owner_before_new": true,
+        "real_HA_service_write_readback": true,
+        "disable_preserves_identity": true,
+        "reload_preserves_HA_device_ids": true,
+        "HA_native_disable_enable_preserves_identity": true,
+        "killed_startup_candidate_rolls_back_same_identity": true,
+        "unexpected_native_exit_rolls_back": true,
+        "entry_id_and_unique_id_unchanged": true,
+        "one_config_entry": true,
+        "paired_files_unchanged": true,
+        "legacy_library_not_loaded_into_HA_process": true,
+        "all_owned_workers_stopped_with_HA": true
+      },
+      "restart": {
+        "passed": true,
+        "failed_choice_stays_rolled_back_after_HA_restart": true,
+        "explicit_retry_same_entry_succeeds": true,
+        "entry_id_and_unique_id_unchanged": true,
+        "one_config_entry": true,
+        "paired_files_unchanged": true,
+        "legacy_library_not_loaded_into_HA_process": true,
+        "all_owned_workers_stopped_with_HA": true
+      },
+      "pre-crash": {
+        "passed": true,
+        "native_selected_engine_restored_after_HA_restart": true,
+        "real_HA_fan_write_readback": true,
+        "entry_id_and_unique_id_unchanged": true,
+        "paired_files_unchanged": true,
+        "one_config_entry": true,
+        "legacy_library_not_loaded_into_HA_process": true
+      },
+      "restart_openharmony": {
+        "passed": true,
+        "native_selected_engine_restored_after_HA_restart": true,
+        "entry_id_and_unique_id_unchanged": true,
+        "one_config_entry": true,
+        "paired_files_unchanged": true,
+        "legacy_library_not_loaded_into_HA_process": true,
+        "all_owned_workers_stopped_with_HA": true
+      },
+      "restored": {
+        "passed": true,
+        "original_component_and_entry_restored": true,
+        "entry_id_and_unique_id_unchanged": true,
+        "one_config_entry": true,
+        "paired_files_unchanged": true,
+        "legacy_library_not_loaded_into_HA_process": true,
+        "all_owned_workers_stopped_with_HA": true
+      }
+    },
+    "hard_crash": {
+      "passed": true,
+      "actual_HA_process_SIGKILL": true,
+      "native_owner_not_running": true,
+      "shutdown_hook_not_executed": true
+    },
+    "installation": {
+      "injected_install_failure_restores_original_files_and_entry": true,
+      "all_original_configs_libraries_profiles_and_entries_preserved": true,
+      "passed": true,
+      "backup_passed": true,
+      "preflight_passed": true,
+      "installed": {
+        "passed": true,
+        "entries_modified": false,
+        "runtime_modified": false,
+        "ha_started": false
+      }
+    },
+    "restore": {
+      "passed": true,
+      "component_exactly_restored": true,
+      "entries_restored": true,
+      "unrelated_entries_preserved": true,
+      "runtime_KV_restored": false,
+      "ha_started": false
+    },
+    "integrity_and_cleanup": {
+      "passed": true,
+      "original_cold_source_files_unchanged": true,
+      "native_root_and_five_account_fields_unchanged": true,
+      "all_old_and_new_child_identity_files_unchanged": true,
+      "restore_preserves_current_runtime_identity": true,
+      "restored_original_disabled_entry_booted": true,
+      "test_container_stopped": true
+    },
+    "all_test_containers_stopped": true,
+    "all_bridge_lab_VMs_stopped": true
+  },
+  "limits": [
+    "Existing configured independent HA upgraded from b4 to b5; not a fresh empty-HA full installer or HACS UI acceptance.",
+    "Current formal HA cross-engine lifecycle acceptance is amd64; ARM legacy rollback is refused for an unverified SDK.",
+    "Production cold-export tooling and exact real-entity review remain required before production adoption.",
+    "The owner lock is local to one directory, not distributed fencing across hosts.",
+    "Smart Life App and physical household controls were not repeated this round."
+  ],
+  "Jev": {
+    "purpose": "Classify entry, process, rollback and install validation gaps only",
+    "evidence": "jev-ha-lifecycle-routing.json",
+    "identity_and_implementation_review": "Codex"
+  }
+}

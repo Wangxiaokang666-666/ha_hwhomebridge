@@ -1,0 +1,100 @@
+{
+  "version": 1,
+  "date": "2026-10-20",
+  "scope": "isolated virtual HA devices; production read-only",
+  "regression": {
+    "macOS": {
+      "public": 77,
+      "tools": 116,
+      "configuration": "passed"
+    },
+    "aarch64_linux": {
+      "public": 77,
+      "tools": 116,
+      "configuration": "passed"
+    }
+  },
+  "native": {
+    "aarch64_static_build": true,
+    "x86_64_static_build": true,
+    "aarch64_native_state_machine": true,
+    "x86_64_qemu_user_state_machine": true,
+    "mock_cloud_only_for_state_machine_harness": true
+  },
+  "independent_HA": {
+    "core_version": "2026.10.1",
+    "architecture": "aarch64",
+    "gateways": 1,
+    "old_children": 8,
+    "supplement_children": 7,
+    "exercise": {
+      "phase": "exercise",
+      "passed": true,
+      "virtual_only": true,
+      "real_native_cloud_acknowledges_child_offline": true,
+      "runtime_drop_and_identical_state_recovery": true,
+      "same_gateway_real_HA_fan_write_readback": true,
+      "unverified_ARM_legacy_stays_disabled": true,
+      "real_legacy_engine_verified": false,
+      "original_entry_preserved": true,
+      "paired_identity_files_unchanged": true,
+      "one_native_owner": true,
+      "real_cloud_verified": true,
+      "real_App_verified": false,
+      "workers_stopped_with_HA": true
+    },
+    "source_restart": {
+      "phase": "restart",
+      "passed": true,
+      "virtual_only": true,
+      "HA_restart_retains_engine_with_offline_child": true,
+      "recovered_old_light_write_readback": true,
+      "original_entry_preserved": true,
+      "paired_identity_files_unchanged": true,
+      "one_native_owner": true,
+      "real_cloud_verified": true,
+      "real_App_verified": false,
+      "workers_stopped_with_HA": true
+    },
+    "installed_restart": {
+      "phase": "restart",
+      "passed": true,
+      "virtual_only": true,
+      "HA_restart_retains_engine_with_offline_child": true,
+      "recovered_old_light_write_readback": true,
+      "original_entry_preserved": true,
+      "paired_identity_files_unchanged": true,
+      "one_native_owner": true,
+      "real_cloud_verified": true,
+      "real_App_verified": false,
+      "workers_stopped_with_HA": true
+    },
+    "installation": {
+      "passed": true,
+      "baseline": "1.1.0b6",
+      "candidate": "1.1.0b7",
+      "install_restore_reinstall": true,
+      "all_package_files_verified": 56,
+      "entry_bytes_unchanged": true,
+      "paired_directory_unchanged": true,
+      "original_configuration_library_profiles_unchanged": true,
+      "HA_started_by_installer": false
+    }
+  },
+  "production_read_only": {
+    "passed": true,
+    "protected_static_files_unchanged": 22,
+    "original_entry_options_and_identity_unchanged": true,
+    "legacy_sdk_reports_online": true,
+    "registered_device_count": 32
+  },
+  "production_changed": false,
+  "production_installed_version": "1.1.0b6",
+  "release_candidate": "1.1.0b7",
+  "outstanding": [
+    "current x86 HA real legacy SDK failback",
+    "final frozen production catalog and composition bundle",
+    "Smart Life App acceptance"
+  ],
+  "production_adoption_ready": false
+}

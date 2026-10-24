@@ -1,0 +1,49 @@
+{
+  "request": {
+    "model": "jev-latest",
+    "state": {
+      "requirements": [
+        "HA OS host has no Python command; do not install host packages",
+        "existing exporter must see real host systemd PID1, process descriptors and local Docker",
+        "do not alter production or run a production backup now"
+      ],
+      "candidates": {
+        "portable_folder": "Unpack pinned relocatable CPython and hashed native wheels with trusted cold tools; execute on the actual host; test offline in independent exact HA OS userspace",
+        "ordinary_container": "Run Python in an ordinary addon/container with private PID/filesystem views",
+        "Mac_API_export": "Copy files through Core-dependent File editor while Core remains running"
+      }
+    },
+    "questions": {
+      "select_runtime": {
+        "type": "choice",
+        "instructions": "Select the candidate that meets the stated host visibility and no-install requirements, based on descriptions only. Codex must verify ABI and implementation separately.",
+        "criteria": {
+          "portable_folder": "Unpack pinned relocatable CPython and hashed native wheels with trusted cold tools; execute on the actual host; test offline in independent exact HA OS userspace",
+          "ordinary_container": "Run Python in an ordinary addon/container with private PID/filesystem views",
+          "Mac_API_export": "Copy files through Core-dependent File editor while Core remains running",
+          "none": "No candidate meets the requirements"
+        }
+      }
+    }
+  },
+  "response": {
+    "model": "jev-1.13.0",
+    "answers": {
+      "select_runtime": {
+        "type": "choice",
+        "choice": "portable_folder",
+        "confidence": 0.73,
+        "probabilities": {
+          "portable_folder": 0.8,
+          "ordinary_container": 0.01,
+          "Mac_API_export": 0.01,
+          "none": 0.18
+        }
+      }
+    },
+    "usage": {
+      "input_tokens": 562,
+      "output_tokens": 53
+    }
+  }
+}

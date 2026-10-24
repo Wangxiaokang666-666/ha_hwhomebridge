@@ -1,0 +1,41 @@
+{
+  "request": {
+    "model": "jev-latest",
+    "state": {
+      "operation": "User explicitly authorized adding one specified public SSH key, preserving all existing host authorized keys, and then read-only Docker checks. The official installed Supervisor exposes GET returning keys and POST which adds one key; DELETE clears all keys.",
+      "candidate": "POST one validated public key via dedicated OS authorized_keys endpoint, compare GET before/after, never DELETE, do not change addons or HA lifecycle."
+    },
+    "questions": {
+      "route": {
+        "type": "choice",
+        "instructions": "Classify the proposed candidate relative to the requested operation. This classification is evidence organization, not an authorization gate.",
+        "criteria": {
+          "append_only_host_key": "Adds only the specified public key while preserving existing keys",
+          "replace_or_clear_keys": "Replaces or deletes existing keys",
+          "HA_deployment_or_restart": "Installs integration or changes HA lifecycle",
+          "insufficient_evidence": "Candidate does not state what it changes"
+        }
+      }
+    }
+  },
+  "response": {
+    "model": "jev-1.13.0",
+    "answers": {
+      "route": {
+        "type": "choice",
+        "choice": "append_only_host_key",
+        "confidence": 1.0,
+        "probabilities": {
+          "append_only_host_key": 1.0,
+          "replace_or_clear_keys": 0.0,
+          "HA_deployment_or_restart": 0.0,
+          "insufficient_evidence": 0.0
+        }
+      }
+    },
+    "usage": {
+      "input_tokens": 478,
+      "output_tokens": 65
+    }
+  }
+}

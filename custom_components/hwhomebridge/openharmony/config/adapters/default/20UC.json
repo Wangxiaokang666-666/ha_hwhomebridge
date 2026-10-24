@@ -1,0 +1,32 @@
+{
+  "pid": "20UC",
+  "services": {
+    "switch": {
+      "role": "",
+      "domain": "",
+      "action": "aggregate",
+      "value_attr": "state",
+      "options": {
+        "members": [
+          "switch1",
+          "switch2"
+        ],
+        "field": "on"
+      }
+    },
+    "switch1": {
+      "role": "channel1",
+      "domain": "switch",
+      "action": "turn_on_off",
+      "value_attr": "state",
+      "options": {}
+    },
+    "switch2": {
+      "role": "channel2",
+      "domain": "switch",
+      "action": "turn_on_off",
+      "value_attr": "state",
+      "options": {}
+    }
+  }
+}

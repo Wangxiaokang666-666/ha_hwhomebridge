@@ -1,0 +1,23 @@
+{
+  "iot_connect": {
+    "url": "https://codeload.github.com/openharmony/communication_iot_connect/tar.gz/d8c0aef305601770c912dbdedc58a3f1e6efd30c",
+    "sha256": "2981abd8656d7e8498e94ab12a3452f29ebf965ae1dbb37b94f6db517abfe0b0"
+  },
+  "securec": {
+    "url": "https://codeload.github.com/openharmony/third_party_bounds_checking_function/tar.gz/61baa7a3eb9347efca58397d1d0504faa96d79f0",
+    "sha256": "f0e1539c13812672d52144427eb7ddb0c7db03661aa274b473bdbae44a356dd3"
+  },
+  "mbedtls": {
+    "url": "https://codeload.github.com/Mbed-TLS/mbedtls/tar.gz/v2.28.9",
+    "sha256": "e4dbcf86a4fb31506482888560f02b161e0ecfb82fee0643abcfc86abee5817e"
+  },
+  "cjson": {
+    "url": "https://codeload.github.com/DaveGamble/cJSON/tar.gz/v1.7.19",
+    "sha256": "7fa616e3046edfa7a28a32d5f9eacfd23f92900fe1f8ccd988c1662f30454562"
+  },
+  "tls_codec": {
+    "kind": "file",
+    "url": "https://raw.githubusercontent.com/openharmony/communication_iot_connect/8218f000767f00df35bdebd93057b6a082580253/core/wifi/infrastructure/transport/coap/codec/coap_codec_tcp_v1.c",
+    "sha256": "bca1800f1af643787d9148b543bea21933859f5770c3459f406623f1f3198d12"
+  }
+}

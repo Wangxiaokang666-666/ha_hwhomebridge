@@ -1,0 +1,100 @@
+{
+  "purpose": "Classify evidence only; no permission or identity decision",
+  "private_device_data_sent": false,
+  "request": {
+    "model": "jev-latest",
+    "state": {
+      "online_component_copy": "File editor downloads with original HA running; no runtime KV copied.",
+      "live_registry": "Two read-only registry/capability snapshots; no service calls or KV reads.",
+      "stopped_linux_export": "Local engine inspection: stopped exact config owner, restart disabled, no active writable shared mounts; two identical file/metadata passes.",
+      "original_HA_today": "Stopping/restarting original HA is forbidden; independent maintenance channel still unavailable."
+    },
+    "questions": {
+      "online_component_copy": {
+        "type": "choice",
+        "instructions": "Classify evidence boundary of `online_component_copy`; this grants no permission.",
+        "criteria": {
+          "cold_export_candidate": "Candidate stopped-owner export requiring deterministic identity validation",
+          "online_reference_only": "Online inventory or reference; not a cold pairing snapshot",
+          "maintenance_required": "Production cold export must wait for independent access and stopped owner"
+        }
+      },
+      "live_registry": {
+        "type": "choice",
+        "instructions": "Classify evidence boundary of `live_registry`; this grants no permission.",
+        "criteria": {
+          "cold_export_candidate": "Candidate stopped-owner export requiring deterministic identity validation",
+          "online_reference_only": "Online inventory or reference; not a cold pairing snapshot",
+          "maintenance_required": "Production cold export must wait for independent access and stopped owner"
+        }
+      },
+      "stopped_linux_export": {
+        "type": "choice",
+        "instructions": "Classify evidence boundary of `stopped_linux_export`; this grants no permission.",
+        "criteria": {
+          "cold_export_candidate": "Candidate stopped-owner export requiring deterministic identity validation",
+          "online_reference_only": "Online inventory or reference; not a cold pairing snapshot",
+          "maintenance_required": "Production cold export must wait for independent access and stopped owner"
+        }
+      },
+      "original_HA_today": {
+        "type": "choice",
+        "instructions": "Classify evidence boundary of `original_HA_today`; this grants no permission.",
+        "criteria": {
+          "cold_export_candidate": "Candidate stopped-owner export requiring deterministic identity validation",
+          "online_reference_only": "Online inventory or reference; not a cold pairing snapshot",
+          "maintenance_required": "Production cold export must wait for independent access and stopped owner"
+        }
+      }
+    }
+  },
+  "response": {
+    "model": "jev-1.13.0",
+    "answers": {
+      "online_component_copy": {
+        "type": "choice",
+        "choice": "online_reference_only",
+        "confidence": 0.53,
+        "probabilities": {
+          "cold_export_candidate": 0.08,
+          "online_reference_only": 0.69,
+          "maintenance_required": 0.23
+        }
+      },
+      "live_registry": {
+        "type": "choice",
+        "choice": "online_reference_only",
+        "confidence": 0.74,
+        "probabilities": {
+          "cold_export_candidate": 0.06,
+          "online_reference_only": 0.83,
+          "maintenance_required": 0.11
+        }
+      },
+      "stopped_linux_export": {
+        "type": "choice",
+        "choice": "cold_export_candidate",
+        "confidence": 0.73,
+        "probabilities": {
+          "cold_export_candidate": 0.8200000000000001,
+          "online_reference_only": 0.0,
+          "maintenance_required": 0.18
+        }
+      },
+      "original_HA_today": {
+        "type": "choice",
+        "choice": "maintenance_required",
+        "confidence": 0.85,
+        "probabilities": {
+          "cold_export_candidate": 0.02,
+          "online_reference_only": 0.08,
+          "maintenance_required": 0.9
+        }
+      }
+    },
+    "usage": {
+      "input_tokens": 768,
+      "output_tokens": 180
+    }
+  }
+}

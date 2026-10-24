@@ -1,0 +1,125 @@
+{
+  "date": "2026-10-16",
+  "scope": "M0 and M1 only; isolated virtual entities",
+  "environment": {
+    "ha_core": "2026.10.1",
+    "python": "3.14.6",
+    "linux_arch": "aarch64",
+    "podman_network_internal": true
+  },
+  "baseline": {
+    "source_commit": "09155a9",
+    "git_archive_rebuild": true,
+    "binary_sha256": "ab9bf9fc9637c04ab50e0ca66e729ff0303fcab3c8c878eef905b9116764362e"
+  },
+  "phases": {
+    "oh-first-restore": {
+      "legacy_SDK": "call recorder; actual legacy Python/ctypes routing",
+      "OpenHarmony_C": "real Linux ARM64 process",
+      "real_devices_accessed": false,
+      "HA_process_restart_restores_both_entries_and_identity": true,
+      "legacy_starts": 1,
+      "legacy_unbind_calls": 0,
+      "virtual_service_call_count": 2,
+      "passed": true
+    },
+    "oh-first": {
+      "legacy_SDK": "call recorder; actual legacy Python/ctypes routing",
+      "OpenHarmony_C": "real Linux ARM64 process",
+      "real_devices_accessed": false,
+      "prototype_DOMAIN_identity_migrates_before_legacy_creation": true,
+      "both_creation_orders_supported": "OH first",
+      "legacy_resident_does_not_block_real_C": true,
+      "prototype_OH_entry_migrates_without_new_cloud_identity": true,
+      "old_entry_without_backend_keeps_legacy_singleton": true,
+      "duplicate_legacy_rejected": true,
+      "legacy_disable_requires_restart_without_affecting_OH": true,
+      "entry_backend_type_cannot_replace_other_backend": true,
+      "duplicate_directory_and_root_identity_rejected": true,
+      "native_HA_fan_service_write_and_readback": true,
+      "light_settings_and_combined_timer_rejected_before_any_write": true,
+      "native_transport_also_enforces_write_policy": true,
+      "fan_only_timer_keeps_light_timer_untouched": true,
+      "OH_disable_reenable_preserves_legacy_and_identity": true,
+      "C_crash_recovers_only_its_own_entry": true,
+      "failed_setup_can_be_disabled_and_repaired_without_legacy_fallback": true,
+      "active_port_and_writable_entity_conflicts_rejected": true,
+      "second_read_only_OH_instance_is_independent": true,
+      "OH_remove_keeps_other_C_and_legacy_callbacks_devices": true,
+      "same_gateway_readded_with_same_saved_identity": true,
+      "busy_LAN_port_does_not_touch_existing_backends": true,
+      "legacy_starts": 1,
+      "legacy_unbind_calls": 0,
+      "virtual_service_call_count": 21,
+      "passed": true
+    },
+    "legacy-first-restore": {
+      "legacy_SDK": "call recorder; actual legacy Python/ctypes routing",
+      "OpenHarmony_C": "real Linux ARM64 process",
+      "real_devices_accessed": false,
+      "HA_process_restart_restores_both_entries_and_identity": true,
+      "legacy_starts": 1,
+      "legacy_unbind_calls": 0,
+      "virtual_service_call_count": 2,
+      "passed": true
+    },
+    "legacy-first": {
+      "legacy_SDK": "call recorder; actual legacy Python/ctypes routing",
+      "OpenHarmony_C": "real Linux ARM64 process",
+      "real_devices_accessed": false,
+      "both_creation_orders_supported": "legacy first",
+      "legacy_resident_does_not_block_real_C": true,
+      "prototype_OH_entry_migrates_without_new_cloud_identity": true,
+      "old_entry_without_backend_keeps_legacy_singleton": true,
+      "duplicate_legacy_rejected": true,
+      "legacy_disable_requires_restart_without_affecting_OH": true,
+      "entry_backend_type_cannot_replace_other_backend": true,
+      "duplicate_directory_and_root_identity_rejected": true,
+      "native_HA_fan_service_write_and_readback": true,
+      "light_settings_and_combined_timer_rejected_before_any_write": true,
+      "native_transport_also_enforces_write_policy": true,
+      "fan_only_timer_keeps_light_timer_untouched": true,
+      "OH_disable_reenable_preserves_legacy_and_identity": true,
+      "C_crash_recovers_only_its_own_entry": true,
+      "failed_setup_can_be_disabled_and_repaired_without_legacy_fallback": true,
+      "active_port_and_writable_entity_conflicts_rejected": true,
+      "second_read_only_OH_instance_is_independent": true,
+      "OH_remove_keeps_other_C_and_legacy_callbacks_devices": true,
+      "same_gateway_readded_with_same_saved_identity": true,
+      "busy_LAN_port_does_not_touch_existing_backends": true,
+      "legacy_starts": 1,
+      "legacy_unbind_calls": 0,
+      "virtual_service_call_count": 21,
+      "passed": true
+    }
+  },
+  "framework_tests": {
+    "count": 22,
+    "passed": true
+  },
+  "original_product_config_validation": true,
+  "production_boundary": {
+    "read_only_source_entities": 13,
+    "source_entities_unchanged": true,
+    "source_changed_entity_count": 0,
+    "protected_files": 29,
+    "protected_modified_files": [
+      "custom_components/hwhomebridge/hwbridge.py"
+    ]
+  },
+  "existing_paired_gateway_running": true,
+  "not_verified": [
+    "real closed-source legacy SDK coexistence",
+    "x86_64 Linux runtime",
+    "production deployment or pairing identity handoff",
+    "new real-device Smart Life App control acceptance"
+  ],
+  "C_regressions": {
+    "clean_archive_binaries": true,
+    "coap_alignment_test": "passed",
+    "ha_child_smoke": "passed",
+    "virtual_child_smoke": "passed",
+    "platform": "real Linux aarch64",
+    "real_ha_accessed": false
+  }
+}

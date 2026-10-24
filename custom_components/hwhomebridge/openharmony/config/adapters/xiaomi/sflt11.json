@@ -1,0 +1,59 @@
+{
+  "pid": "2NAL",
+  "match_rules": [
+    {
+      "type": "model_exact",
+      "model": "shhf.light.sflt11"
+    }
+  ],
+  "services": {
+    "verticalswing": {
+      "value_mapping": {
+        "type": "enum_to_number",
+        "mapping": {
+          "0": "reverse",
+          "1": "forward"
+        }
+      }
+    },
+    "fan": {
+      "value_mapping": {
+        "type": "enum_to_number",
+        "mapping": {
+          "1": 25,
+          "2": 37,
+          "3": 50,
+          "4": 62,
+          "5": 75,
+          "6": 87
+        }
+      }
+    },
+    "fanMode": {
+      "value_attr": "percentage",
+      "options": {
+        "ha_service": "set_percentage",
+        "unmapped": 0,
+        "requires_on": true
+      },
+      "value_mapping": {
+        "type": "enum_to_number",
+        "mapping": {
+          "2": 100
+        }
+      }
+    },
+    "switchFan": {
+      "options": {
+        "power_on": {
+          "attribute": "percentage",
+          "maximum": 12.5,
+          "values": {
+            "percentage": 25
+          }
+        }
+      }
+    }
+  },
+  "composition": "xiaomi_sflt11"
+}

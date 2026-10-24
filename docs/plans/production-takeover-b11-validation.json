@@ -1,0 +1,162 @@
+{
+  "date": "2026-10-24",
+  "overall_acceptance": "partial",
+  "deployment": {
+    "version": "1.1.0b11",
+    "ha_version": "2026.10.2",
+    "architecture": "x86_64",
+    "active_backend": "openharmony",
+    "package_sha256": "c4e08ba680ecf784110b020c561f4acf358e66abea39500aa64935a71d009bef",
+    "payload": {
+      "payload_count": 60,
+      "payload_matches": true,
+      "version": "1.1.0b11"
+    },
+    "source_baseline": "29bf386",
+    "includes_uncommitted_changes": true,
+    "hacs_fresh_install": false
+  },
+  "identity": {
+    "old_binding_file_exact_match": true,
+    "old_binding_count": 32,
+    "original_root_identity_fields_unchanged": true
+  },
+  "cloud": {
+    "catalog_count": 40,
+    "old_bindings": 32,
+    "additional_cards": 8,
+    "app_original_gateway_online": true,
+    "app_device_count": 40,
+    "original_root_sn_matches_app": true,
+    "known_preexisting_unavailable_lights": 1
+  },
+  "infrastructure": {
+    "all_five_running_same_images": true,
+    "core_same_container": true,
+    "watchdog_restored": true,
+    "boot_unchanged": true,
+    "automation_files_unchanged": true,
+    "supervisor_unit_restored": true,
+    "temporary_override_removed": true
+  },
+  "rollback": {
+    "production_engine_sequence": [
+      "openharmony",
+      "legacy",
+      "openharmony"
+    ],
+    "legacy_app_light_on": true,
+    "legacy_app_light_off": true,
+    "ha_restart_recovered_40_cards": true,
+    "b6_full_production_downgrade_after_takeover": false,
+    "b6_offline_restore_verified": true,
+    "independent_b11_backup_copy_verified": true,
+    "post_return_app_smoke": {
+      "final-oh-app-light-on": true,
+      "final-oh-app-light-off": true,
+      "final-oh-app-fan-off": true,
+      "final-oh-app-fan-on": true
+    }
+  },
+  "controls": {
+    "app_main_power": "passed",
+    "app_main_brightness_45": "passed_b11",
+    "ha_to_app_brightness_readback": "passed_after_12_seconds",
+    "app_main_color_temperature": "passed",
+    "fan_gears_passed": [
+      1,
+      3,
+      5,
+      6
+    ],
+    "fan_gears_failed": [
+      2,
+      4
+    ],
+    "fan_natural_wind": "passed",
+    "fan_power": "passed",
+    "fan_direction": "passed",
+    "ambient_power": "passed",
+    "native_countdown_app_start_both": "passed",
+    "native_countdown_light_expiry_ha_readback": "passed",
+    "native_countdown_fan_expiry_ha_readback": "failed",
+    "countdown_cancel_from_app": "not_tested",
+    "all_effects_and_light_options": "not_tested"
+  },
+  "physical_observer": {
+    "confirmed": [
+      "main_power",
+      "main_color_temperature",
+      "fan_gear_1",
+      "fan_gear_3",
+      "fan_gear_5",
+      "fan_gear_6",
+      "fan_natural_wind",
+      "fan_direction"
+    ],
+    "not_confirmed": [
+      "fan_gear_2",
+      "fan_gear_4",
+      "native_timer_expiry",
+      "brightness_45",
+      "ambient"
+    ]
+  },
+  "known_issues": [
+    {
+      "id": "fan_gears_2_4_revert",
+      "reproduced_without_bridge": true,
+      "user_confirmed_panel_bidirectional_sync": true,
+      "automation_changed": false
+    },
+    {
+      "id": "fan_native_timer_expires_but_fan_reports_on",
+      "reproduced_without_bridge": true,
+      "physical_expiry_observation": "pending",
+      "cause": "not_established"
+    }
+  ],
+  "tests": {
+    "public_local_passed": 97,
+    "tools_local_passed": 125,
+    "public_actual_ha_image_passed": 97,
+    "config_validation": "passed",
+    "native_x86_coap": "passed",
+    "native_x86_speke": "passed",
+    "native_x86_confirmation": "passed"
+  },
+  "scope": {
+    "mijia_automation_edits": false,
+    "new_pairing": false,
+    "upstream_pr": "deferred",
+    "hacs_new_install": "deferred",
+    "app_direct_lan": "not_accepted"
+  },
+  "jev_used_for": [
+    "preflight_classification"
+  ],
+  "private_evidence_files": [
+    "b11-installed-payload-check.json",
+    "final-infrastructure-check.json",
+    "final-binding-identity-check.json",
+    "final-root-identity-check.json",
+    "rollback-legacy-app-on.private.json",
+    "rollback-legacy-app-off.private.json",
+    "final-openharmony-openharmony.private.log",
+    "b11-main-brightness-mid.private.json",
+    "b11-brightness-confirmed-openharmony.private.log",
+    "b11-timer-expiry.private.json",
+    "fan-direct-native-timer.private.json",
+    "fan-direct-native-timer-events.private.json",
+    "physical-observer-feedback.json",
+    "final-owner-check.private.json",
+    "final-restored-states.private.json",
+    "final-diagnostics.private.json",
+    "final-controls-openharmony.private.log"
+  ],
+  "runtime": {
+    "sdk_owner_count": 1,
+    "sdk_owner_backend": "openharmony",
+    "final_baseline_restored": true
+  }
+}

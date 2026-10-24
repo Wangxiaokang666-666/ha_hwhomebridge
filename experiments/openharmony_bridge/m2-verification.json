@@ -1,0 +1,389 @@
+{
+  "date": "2026-10-16",
+  "scope": "M2; isolated virtual entities and new unpaired identities",
+  "source_parent_commit": "07e9012",
+  "environment": {
+    "vm_kernel_arch": "x86_64",
+    "kernel_release": "6.8.0-142-generic",
+    "image_arch": "amd64",
+    "image_digest": "sha256:130241f28d01fa80dfa3b44f7d89781c188d8642ecab9024f079f19f9f82baa0",
+    "network_internal": true,
+    "full_system_emulation": "QEMU TCG; x86_64 kernel and userland"
+  },
+  "builds": {
+    "x86_64": {
+      "version": 1,
+      "target": "x86_64-linux-musl",
+      "source_revision": "source-archive",
+      "source_files_sha256": {
+        "CMakeLists.txt": "21944e9ffb5913f5f759d599c374a8f35bc62b6b15fa449a796a8e7b26fcdc50",
+        "bootstrap.py": "4f09fbd41ede8b7557830ef098368c4c907f767f1b7e8a119f906593067dc084",
+        "sources.lock.json": "6276aa37bd689ed53722ef48b15561b03bc9cba28a0419a1f1254aad6bd22aa3",
+        "build-ha-static.sh": "922a18a4548a7a4a59614b736f272563f6a9f30365ebb7c7797e22f2b7eba182",
+        "zig-cc.sh": "7bc70cfd7cfaecc4f7da8395340f01bcf3a47e664b560f4fbf9b8b4b138da0dc",
+        "build_manifest.py": "518262f7bdea8b667de00b163b3a6c80d459f4e4584c14d1908f28c06a9f2af2",
+        "main.c": "95a8b1485d372623c51d85a51d126735f33c856b9eef24e13e4cd5f2cc83f498",
+        "linux_network.c": "1a7580a181a2995449052267811a0e04e1c4de78730c39cfb132cc2f2e74ae87",
+        "poc_network.h": "4a5d681993e10e0b46646450e9c54dc3237aa38bdc16d698163c33b6025526da",
+        "ha_children.c": "71d0feafd88113b5350f25bb27c0a2d78c30f7ad473d7e182ae769745d32e18f",
+        "ha_children.h": "17355004d96d1d14ab642440c727a2043d6f015876e351c2856c9628a329b2cd",
+        "virtual_child.c": "71dbc97dc03fe43d2dada98183e2e0db50f5b92150d5d875388c4f579298bc72",
+        "virtual_child.h": "24deae6be26271d7c8629342709b78dbe3f7aa744a25b178ac3239be4a3b63f5",
+        "coap_alignment_test.c": "354b227b14d1ff652a5862efc31615c7248dba2d5fafd24c240df31db9f152b2",
+        "ha_child_state_test.c": "fdd4f096ea5003d474bd95ea9d6ca0e0c2bbdcb1b72a144f7b55a3e925c689ee",
+        "virtual_child_state_test.c": "debecbcbfa9e40d2c96cb8c262378ee541eee91320581902cd455fffdbb320a7",
+        "speke_vectors.c": "2a3ba33d26e82c713da6107779f94fbc7d6b0aac21102f9e5a728d7d7c313275"
+      },
+      "source_tree_sha256": "1d495be27470884c4e7f93c1fae463bc8327ed504aa69e700197897116f41a1f",
+      "dependencies": {
+        "iot_connect": {
+          "url": "https://codeload.github.com/openharmony/communication_iot_connect/tar.gz/d8c0aef305601770c912dbdedc58a3f1e6efd30c",
+          "sha256": "2981abd8656d7e8498e94ab12a3452f29ebf965ae1dbb37b94f6db517abfe0b0"
+        },
+        "securec": {
+          "url": "https://codeload.github.com/openharmony/third_party_bounds_checking_function/tar.gz/61baa7a3eb9347efca58397d1d0504faa96d79f0",
+          "sha256": "f0e1539c13812672d52144427eb7ddb0c7db03661aa274b473bdbae44a356dd3"
+        },
+        "mbedtls": {
+          "url": "https://codeload.github.com/Mbed-TLS/mbedtls/tar.gz/v2.28.9",
+          "sha256": "e4dbcf86a4fb31506482888560f02b161e0ecfb82fee0643abcfc86abee5817e"
+        },
+        "cjson": {
+          "url": "https://codeload.github.com/DaveGamble/cJSON/tar.gz/v1.7.19",
+          "sha256": "7fa616e3046edfa7a28a32d5f9eacfd23f92900fe1f8ccd988c1662f30454562"
+        },
+        "tls_codec": {
+          "kind": "file",
+          "url": "https://raw.githubusercontent.com/openharmony/communication_iot_connect/8218f000767f00df35bdebd93057b6a082580253/core/wifi/infrastructure/transport/coap/codec/coap_codec_tcp_v1.c",
+          "sha256": "bca1800f1af643787d9148b543bea21933859f5770c3459f406623f1f3198d12"
+        }
+      },
+      "zig_version": "0.15.1",
+      "cmake_version": "cmake version 3.31.2",
+      "artifacts": {
+        "bridge_poc": {
+          "architecture": "x86_64",
+          "static": true,
+          "sha256": "90417021c2511ddb4fde570bd722b1a17f8529b5d441b8079c29559a5894284f"
+        },
+        "coap_alignment_test": {
+          "architecture": "x86_64",
+          "static": true,
+          "sha256": "cec46a008248521e6101d03c24e92eb495f94003b28883a2d3a25553dec26ae9"
+        },
+        "ha_child_state_test": {
+          "architecture": "x86_64",
+          "static": true,
+          "sha256": "d6e6a00a1468cbab80eda8d83cf026df63ac88bbd30f335ac7f13d3014643968"
+        },
+        "virtual_child_state_test": {
+          "architecture": "x86_64",
+          "static": true,
+          "sha256": "99066badc2c92e0f0c6ce7f4a9018daee4003a3fc45c92b5cf1922b5780cb360"
+        },
+        "speke_vectors": {
+          "architecture": "x86_64",
+          "static": true,
+          "sha256": "ebb524291b4d6db63f554219a9c8770c84680efeeaf532c4bef52b5c53d81294"
+        }
+      },
+      "linux_runtime_verified": false
+    },
+    "aarch64": {
+      "version": 1,
+      "target": "aarch64-linux-musl",
+      "source_revision": "source-archive",
+      "source_files_sha256": {
+        "CMakeLists.txt": "21944e9ffb5913f5f759d599c374a8f35bc62b6b15fa449a796a8e7b26fcdc50",
+        "bootstrap.py": "4f09fbd41ede8b7557830ef098368c4c907f767f1b7e8a119f906593067dc084",
+        "sources.lock.json": "6276aa37bd689ed53722ef48b15561b03bc9cba28a0419a1f1254aad6bd22aa3",
+        "build-ha-static.sh": "922a18a4548a7a4a59614b736f272563f6a9f30365ebb7c7797e22f2b7eba182",
+        "zig-cc.sh": "7bc70cfd7cfaecc4f7da8395340f01bcf3a47e664b560f4fbf9b8b4b138da0dc",
+        "build_manifest.py": "518262f7bdea8b667de00b163b3a6c80d459f4e4584c14d1908f28c06a9f2af2",
+        "main.c": "95a8b1485d372623c51d85a51d126735f33c856b9eef24e13e4cd5f2cc83f498",
+        "linux_network.c": "1a7580a181a2995449052267811a0e04e1c4de78730c39cfb132cc2f2e74ae87",
+        "poc_network.h": "4a5d681993e10e0b46646450e9c54dc3237aa38bdc16d698163c33b6025526da",
+        "ha_children.c": "71d0feafd88113b5350f25bb27c0a2d78c30f7ad473d7e182ae769745d32e18f",
+        "ha_children.h": "17355004d96d1d14ab642440c727a2043d6f015876e351c2856c9628a329b2cd",
+        "virtual_child.c": "71dbc97dc03fe43d2dada98183e2e0db50f5b92150d5d875388c4f579298bc72",
+        "virtual_child.h": "24deae6be26271d7c8629342709b78dbe3f7aa744a25b178ac3239be4a3b63f5",
+        "coap_alignment_test.c": "354b227b14d1ff652a5862efc31615c7248dba2d5fafd24c240df31db9f152b2",
+        "ha_child_state_test.c": "fdd4f096ea5003d474bd95ea9d6ca0e0c2bbdcb1b72a144f7b55a3e925c689ee",
+        "virtual_child_state_test.c": "debecbcbfa9e40d2c96cb8c262378ee541eee91320581902cd455fffdbb320a7",
+        "speke_vectors.c": "2a3ba33d26e82c713da6107779f94fbc7d6b0aac21102f9e5a728d7d7c313275"
+      },
+      "source_tree_sha256": "1d495be27470884c4e7f93c1fae463bc8327ed504aa69e700197897116f41a1f",
+      "dependencies": {
+        "iot_connect": {
+          "url": "https://codeload.github.com/openharmony/communication_iot_connect/tar.gz/d8c0aef305601770c912dbdedc58a3f1e6efd30c",
+          "sha256": "2981abd8656d7e8498e94ab12a3452f29ebf965ae1dbb37b94f6db517abfe0b0"
+        },
+        "securec": {
+          "url": "https://codeload.github.com/openharmony/third_party_bounds_checking_function/tar.gz/61baa7a3eb9347efca58397d1d0504faa96d79f0",
+          "sha256": "f0e1539c13812672d52144427eb7ddb0c7db03661aa274b473bdbae44a356dd3"
+        },
+        "mbedtls": {
+          "url": "https://codeload.github.com/Mbed-TLS/mbedtls/tar.gz/v2.28.9",
+          "sha256": "e4dbcf86a4fb31506482888560f02b161e0ecfb82fee0643abcfc86abee5817e"
+        },
+        "cjson": {
+          "url": "https://codeload.github.com/DaveGamble/cJSON/tar.gz/v1.7.19",
+          "sha256": "7fa616e3046edfa7a28a32d5f9eacfd23f92900fe1f8ccd988c1662f30454562"
+        },
+        "tls_codec": {
+          "kind": "file",
+          "url": "https://raw.githubusercontent.com/openharmony/communication_iot_connect/8218f000767f00df35bdebd93057b6a082580253/core/wifi/infrastructure/transport/coap/codec/coap_codec_tcp_v1.c",
+          "sha256": "bca1800f1af643787d9148b543bea21933859f5770c3459f406623f1f3198d12"
+        }
+      },
+      "zig_version": "0.15.1",
+      "cmake_version": "cmake version 3.31.2",
+      "artifacts": {
+        "bridge_poc": {
+          "architecture": "aarch64",
+          "static": true,
+          "sha256": "7ef3662e8f27525281dc9fe0550ed59fc5b46299a1b1970246614c4f8173cf5f"
+        },
+        "coap_alignment_test": {
+          "architecture": "aarch64",
+          "static": true,
+          "sha256": "924100d39d6a027291325aecd3e64baacdf7d477b98a3faedacb7379c02c37fc"
+        },
+        "ha_child_state_test": {
+          "architecture": "aarch64",
+          "static": true,
+          "sha256": "762c8626e45dd49165ddd64a03117b27254e73bb70c2de7e2148876783f8afc1"
+        },
+        "virtual_child_state_test": {
+          "architecture": "aarch64",
+          "static": true,
+          "sha256": "b4622ca772aa3d073d1ab7e36cda93db56f528936f5c54cc7d975493a9831fd0"
+        },
+        "speke_vectors": {
+          "architecture": "aarch64",
+          "static": true,
+          "sha256": "25b369a0d30b10e904dbaee8d15a000257704821a85ec770c17bc7307b11d969"
+        }
+      },
+      "linux_runtime_verified": false
+    }
+  },
+  "phases": {
+    "legacy-first": {
+      "OpenHarmony_C": "real Linux x86_64 process",
+      "real_devices_accessed": false,
+      "legacy_SDK": "real libhilink_bridge.so; ctypes errcheck observation only; unpaired/offline",
+      "both_creation_orders_supported": "legacy first",
+      "legacy_resident_does_not_block_real_C": true,
+      "prototype_OH_entry_migrates_without_new_cloud_identity": true,
+      "old_entry_without_backend_keeps_legacy_singleton": true,
+      "duplicate_legacy_rejected": true,
+      "legacy_disable_requires_restart_without_affecting_OH": true,
+      "entry_backend_type_cannot_replace_other_backend": true,
+      "duplicate_directory_and_root_identity_rejected": true,
+      "native_HA_fan_service_write_and_readback": true,
+      "light_settings_and_combined_timer_rejected_before_any_write": true,
+      "native_transport_also_enforces_write_policy": true,
+      "fan_only_timer_keeps_light_timer_untouched": true,
+      "OH_disable_reenable_preserves_legacy_and_identity": true,
+      "C_crash_recovers_only_its_own_entry": true,
+      "failed_setup_can_be_disabled_and_repaired_without_legacy_fallback": true,
+      "active_port_and_writable_entity_conflicts_rejected": true,
+      "second_read_only_OH_instance_is_independent": true,
+      "OH_remove_keeps_other_C_and_legacy_callbacks_devices": true,
+      "same_gateway_readded_with_same_saved_identity": true,
+      "busy_LAN_port_does_not_touch_existing_backends": true,
+      "legacy_starts": 1,
+      "legacy_unbind_calls": 0,
+      "virtual_service_call_count": 21,
+      "passed": true,
+      "legacy_udp_ports": [
+        5683
+      ],
+      "real_legacy_main_returned_zero": true,
+      "homeassistant_version": "2026.10.1",
+      "python_version": "3.14.6",
+      "legacy_so_sha256": "0579e6f3cee0320d1533e5a96cc6d72a065a43050eff4edcb7afd6a9a52c7b58",
+      "OpenHarmony_binary_sha256": "90417021c2511ddb4fde570bd722b1a17f8529b5d441b8079c29559a5894284f",
+      "real_legacy_library_loaded": true,
+      "legacy_remained_unpaired": true,
+      "legacy_registered_callbacks_invoked_locally": true,
+      "legacy_report_entry_called_directly": false,
+      "legacy_cloud_control_verified": false,
+      "legacy_automatic_reporting_paused_while_unpaired": true,
+      "x86_kernel_cpuinfo_verified": true
+    },
+    "legacy-disabled-boot": {
+      "legacy_SDK": "real libhilink_bridge.so; ctypes errcheck observation only; unpaired/offline",
+      "OpenHarmony_C": "real Linux x86_64 process",
+      "real_devices_accessed": false,
+      "saved_legacy_disable_prevents_library_load_in_new_HA_process": true,
+      "reenabling_legacy_starts_real_SDK_once_without_restarting_OH": true,
+      "legacy_starts": 1,
+      "legacy_unbind_calls": 0,
+      "passed": true,
+      "legacy_udp_ports": [
+        5683
+      ],
+      "real_legacy_main_returned_zero": true,
+      "homeassistant_version": "2026.10.1",
+      "python_version": "3.14.6",
+      "legacy_so_sha256": "0579e6f3cee0320d1533e5a96cc6d72a065a43050eff4edcb7afd6a9a52c7b58",
+      "OpenHarmony_binary_sha256": "90417021c2511ddb4fde570bd722b1a17f8529b5d441b8079c29559a5894284f",
+      "real_legacy_library_loaded": true,
+      "legacy_remained_unpaired": true,
+      "legacy_registered_callbacks_invoked_locally": true,
+      "legacy_report_entry_called_directly": false,
+      "legacy_cloud_control_verified": false,
+      "legacy_automatic_reporting_paused_while_unpaired": true,
+      "x86_kernel_cpuinfo_verified": true
+    },
+    "legacy-first-restore-retry": {
+      "OpenHarmony_C": "real Linux x86_64 process",
+      "real_devices_accessed": false,
+      "legacy_SDK": "real libhilink_bridge.so; ctypes errcheck observation only; unpaired/offline",
+      "HA_process_restart_restores_both_entries_and_identity": true,
+      "legacy_starts": 1,
+      "legacy_unbind_calls": 0,
+      "virtual_service_call_count": 2,
+      "passed": true,
+      "legacy_udp_ports": [
+        5683
+      ],
+      "real_legacy_main_returned_zero": true,
+      "homeassistant_version": "2026.10.1",
+      "python_version": "3.14.6",
+      "legacy_so_sha256": "0579e6f3cee0320d1533e5a96cc6d72a065a43050eff4edcb7afd6a9a52c7b58",
+      "OpenHarmony_binary_sha256": "90417021c2511ddb4fde570bd722b1a17f8529b5d441b8079c29559a5894284f",
+      "real_legacy_library_loaded": true,
+      "legacy_remained_unpaired": true,
+      "legacy_registered_callbacks_invoked_locally": true,
+      "legacy_report_entry_called_directly": false,
+      "legacy_cloud_control_verified": false,
+      "legacy_automatic_reporting_paused_while_unpaired": true,
+      "x86_kernel_cpuinfo_verified": true
+    },
+    "legacy-save-disabled": {
+      "legacy_SDK": "real libhilink_bridge.so; ctypes errcheck observation only; unpaired/offline",
+      "OpenHarmony_C": "real Linux x86_64 process",
+      "real_devices_accessed": false,
+      "legacy_disable_saved_without_hot_unloading_real_SDK": true,
+      "legacy_starts": 1,
+      "legacy_unbind_calls": 0,
+      "passed": true,
+      "legacy_udp_ports": [
+        5683
+      ],
+      "real_legacy_main_returned_zero": true,
+      "homeassistant_version": "2026.10.1",
+      "python_version": "3.14.6",
+      "legacy_so_sha256": "0579e6f3cee0320d1533e5a96cc6d72a065a43050eff4edcb7afd6a9a52c7b58",
+      "OpenHarmony_binary_sha256": "90417021c2511ddb4fde570bd722b1a17f8529b5d441b8079c29559a5894284f",
+      "real_legacy_library_loaded": true,
+      "legacy_remained_unpaired": true,
+      "legacy_registered_callbacks_invoked_locally": true,
+      "legacy_report_entry_called_directly": false,
+      "legacy_cloud_control_verified": false,
+      "legacy_automatic_reporting_paused_while_unpaired": true,
+      "x86_kernel_cpuinfo_verified": true
+    },
+    "oh-first": {
+      "OpenHarmony_C": "real Linux x86_64 process",
+      "real_devices_accessed": false,
+      "legacy_SDK": "real libhilink_bridge.so; ctypes errcheck observation only; unpaired/offline",
+      "prototype_DOMAIN_identity_migrates_before_legacy_creation": true,
+      "both_creation_orders_supported": "OH first",
+      "legacy_resident_does_not_block_real_C": true,
+      "prototype_OH_entry_migrates_without_new_cloud_identity": true,
+      "old_entry_without_backend_keeps_legacy_singleton": true,
+      "duplicate_legacy_rejected": true,
+      "legacy_disable_requires_restart_without_affecting_OH": true,
+      "entry_backend_type_cannot_replace_other_backend": true,
+      "duplicate_directory_and_root_identity_rejected": true,
+      "native_HA_fan_service_write_and_readback": true,
+      "light_settings_and_combined_timer_rejected_before_any_write": true,
+      "native_transport_also_enforces_write_policy": true,
+      "fan_only_timer_keeps_light_timer_untouched": true,
+      "OH_disable_reenable_preserves_legacy_and_identity": true,
+      "C_crash_recovers_only_its_own_entry": true,
+      "failed_setup_can_be_disabled_and_repaired_without_legacy_fallback": true,
+      "active_port_and_writable_entity_conflicts_rejected": true,
+      "second_read_only_OH_instance_is_independent": true,
+      "OH_remove_keeps_other_C_and_legacy_callbacks_devices": true,
+      "same_gateway_readded_with_same_saved_identity": true,
+      "busy_LAN_port_does_not_touch_existing_backends": true,
+      "legacy_starts": 1,
+      "legacy_unbind_calls": 0,
+      "virtual_service_call_count": 21,
+      "passed": true,
+      "legacy_udp_ports": [
+        5683
+      ],
+      "real_legacy_main_returned_zero": true,
+      "homeassistant_version": "2026.10.1",
+      "python_version": "3.14.6",
+      "legacy_so_sha256": "0579e6f3cee0320d1533e5a96cc6d72a065a43050eff4edcb7afd6a9a52c7b58",
+      "OpenHarmony_binary_sha256": "90417021c2511ddb4fde570bd722b1a17f8529b5d441b8079c29559a5894284f",
+      "real_legacy_library_loaded": true,
+      "legacy_remained_unpaired": true,
+      "legacy_registered_callbacks_invoked_locally": true,
+      "legacy_report_entry_called_directly": false,
+      "legacy_cloud_control_verified": false,
+      "legacy_automatic_reporting_paused_while_unpaired": true,
+      "x86_kernel_cpuinfo_verified": true
+    },
+    "oh-first-restore": {
+      "OpenHarmony_C": "real Linux x86_64 process",
+      "real_devices_accessed": false,
+      "legacy_SDK": "real libhilink_bridge.so; ctypes errcheck observation only; unpaired/offline",
+      "HA_process_restart_restores_both_entries_and_identity": true,
+      "legacy_starts": 1,
+      "legacy_unbind_calls": 0,
+      "virtual_service_call_count": 2,
+      "passed": true,
+      "legacy_udp_ports": [
+        5683
+      ],
+      "real_legacy_main_returned_zero": true,
+      "homeassistant_version": "2026.10.1",
+      "python_version": "3.14.6",
+      "legacy_so_sha256": "0579e6f3cee0320d1533e5a96cc6d72a065a43050eff4edcb7afd6a9a52c7b58",
+      "OpenHarmony_binary_sha256": "90417021c2511ddb4fde570bd722b1a17f8529b5d441b8079c29559a5894284f",
+      "real_legacy_library_loaded": true,
+      "legacy_remained_unpaired": true,
+      "legacy_registered_callbacks_invoked_locally": true,
+      "legacy_report_entry_called_directly": false,
+      "legacy_cloud_control_verified": false,
+      "legacy_automatic_reporting_paused_while_unpaired": true,
+      "x86_kernel_cpuinfo_verified": true
+    }
+  },
+  "C_regressions": {
+    "kernel_arch": "x86_64",
+    "cpuinfo_x86": true,
+    "coap_alignment": "passed",
+    "ha_child_smoke": "passed",
+    "virtual_child_smoke": "passed"
+  },
+  "independent_legacy_identities_and_AC": true,
+  "framework_regressions": {
+    "passed": true,
+    "count": 22
+  },
+  "original_product_config_validation": true,
+  "boundary": {
+    "source_HA_entities_read_only": 13,
+    "source_entity_state_and_attributes_unchanged": true,
+    "source_entity_full_snapshots_unchanged": true,
+    "protected_files": 29,
+    "protected_files_modified": [],
+    "existing_paired_gateway_same_container_and_start_time": true,
+    "production_deployed": false,
+    "real_device_service_calls": 0
+  },
+  "not_verified": [
+    "physical x86 hardware performance",
+    "cloud pairing or online with these new unpaired identities",
+    "production migration or real-device App control"
+  ]
+}

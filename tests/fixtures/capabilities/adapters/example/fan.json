@@ -1,0 +1,10 @@
+{
+  "pid": "fixture-fan",
+  "composition": "fan_light",
+  "match_rules": [
+    {
+      "type": "model_exact",
+      "model": "fixture.fan.six"
+    }
+  ]
+}

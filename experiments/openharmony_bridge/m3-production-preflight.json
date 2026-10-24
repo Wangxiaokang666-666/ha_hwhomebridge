@@ -1,0 +1,180 @@
+{
+  "date_utc": "2026-10-16T12:23:02.175870+00:00",
+  "scope": "production read-only preflight",
+  "host": {
+    "operating_system": "Home Assistant OS 18.3",
+    "kernel": "6.18.52-haos",
+    "disk_total": 294.0,
+    "disk_used": 16.3,
+    "disk_free": 265.7
+  },
+  "core": {
+    "version": "2026.10.1",
+    "arch": "amd64",
+    "machine": "generic-x86-64",
+    "port": 80
+  },
+  "network": [
+    {
+      "interface": "enp2s1",
+      "enabled": true,
+      "primary": true
+    }
+  ],
+  "file_channel": {
+    "addon": "core_configurator",
+    "version": "6.0.0",
+    "running": true,
+    "read_verified": true,
+    "write_tested": false,
+    "editor_path": "/homeassistant/custom_components/hwhomebridge",
+    "HA_path": "/config/custom_components/hwhomebridge",
+    "OS_shell_verified": false
+  },
+  "deployed_component": {
+    "version": "1.0.0",
+    "files_read": 38,
+    "bytes_read_per_pass": 14252164,
+    "inventory_files": 38,
+    "inventory_files_not_copied": 0,
+    "two_pass_stable": true,
+    "hwhomebridge_entry_count": 1,
+    "amd64_SDK_sha256": "0579e6f3cee0320d1533e5a96cc6d72a065a43050eff4edcb7afd6a9a52c7b58"
+  },
+  "online_copy": {
+    "saved_locally": true,
+    "local_files_read_back_verified": true,
+    "cold_backup": false,
+    "original_UID_modes_symlinks_verified": false,
+    "SDK_runtime_KV_included": false,
+    "all_HA_entries_saved": false,
+    "FileEditor_visible_files_only": true
+  },
+  "addons": [
+    {
+      "slug": "core_samba",
+      "name": "Samba share",
+      "state": "stopped"
+    },
+    {
+      "slug": "core_configurator",
+      "name": "File editor",
+      "state": "started"
+    },
+    {
+      "slug": "fb59d657_ssh",
+      "name": "Advanced SSH & Web Terminal",
+      "state": "error"
+    },
+    {
+      "slug": "a0d7b954_ssh",
+      "name": "Advanced SSH & Web Terminal",
+      "state": "error"
+    }
+  ],
+  "existing_backups": [
+    {
+      "date": "2025-04-12T13:43:20.487386+00:00",
+      "type": "partial",
+      "contains_HA": false,
+      "protected": false
+    },
+    {
+      "date": "2025-04-13T21:43:20.522995+00:00",
+      "type": "partial",
+      "contains_HA": false,
+      "protected": false
+    },
+    {
+      "date": "2025-05-11T22:38:53.308927+00:00",
+      "type": "partial",
+      "contains_HA": false,
+      "protected": false
+    }
+  ],
+  "audit": {
+    "Supervisor_GET_requests": 11,
+    "ingress_auth_sessions_created": 1,
+    "FileEditor_GET_requests": 104,
+    "remote_file_write_requests": 0,
+    "remote_exec_requests": 0,
+    "HA_service_calls": 0,
+    "install_requests": 0,
+    "restart_requests": 0,
+    "addon_start_or_config_change_requests": 0,
+    "scope": "Collector invocation; separate discovery also used read routes and ingress authentication only"
+  },
+  "production_install_allowed": false,
+  "pending": [
+    "independent maintenance access before stopping Core; existing File editor ingress depends on Core",
+    "verified OS command channel and HA OS Docker adapter",
+    "actual HA runtime UID, original file modes and symlink checks",
+    "free ports in actual HA network namespace",
+    "maintenance window and stopped-owner cold backup",
+    "M4 exclusive identity handover"
+  ],
+  "package_preflight": {
+    "package_version": "1.1.0b3",
+    "package_sha256": "2f8a0d2052daabb9e0d4267e3a2ab8a0b12d46a1d9dda6171b4c982e3fa3789e",
+    "tested_ha": "2026.10.1",
+    "architectures": [
+      "aarch64",
+      "x86_64"
+    ],
+    "local_overlay_config_valid": true,
+    "preserved_files_in_local_overlay": 22,
+    "remote_files_written": 0,
+    "HA_version_matches": true,
+    "architecture_matches": true
+  },
+  "source_base_commit": "3b63169",
+  "tool_sha256": "b2171d372148b5af43b048defe9e1b57ef05b3881057052fddbb341abc25caa6",
+  "checks": {
+    "read_only_route_regressions": 12,
+    "existing_upgrade_regressions": 17,
+    "production_SDK_matches_M2": true,
+    "local_online_copy_private_permissions_verified": true,
+    "local_online_copy_hashes_rechecked": true,
+    "actual_ingress_URL_passes_final_guard": true,
+    "all_actual_downloads_pass_final_guard": true
+  },
+  "backup_readiness": {
+    "production_cold_backup_completed": false,
+    "existing_backups_contain_HA_config": false,
+    "online_copy_is_inspection_only": true,
+    "runtime_KV_read_or_downloaded": false,
+    "runtime_path_confirmed_from_deployed_source": "/config/.storage/hwhomebridge/config",
+    "original_HA_configuration_unchanged_by_requests": true
+  },
+  "SSH_diagnostics": {
+    "both_error_addons_missing_password_and_authorized_keys": true,
+    "listeners_detected_on_port22": false,
+    "addons_modified_or_started": false,
+    "Samba_started": false,
+    "both_configured_for_host_tcp22": true,
+    "port_conflict_observed_in_logs": false
+  },
+  "Jev": {
+    "model": "jev-1.13.0",
+    "scope": "preparation work grouping only; no credentials or original configuration sent",
+    "categories": {
+      "file_editor": "read_only_now",
+      "online_copy": "read_only_now",
+      "ssh": "later_maintenance",
+      "old_backups": "reference_only",
+      "runtime_checks": "later_maintenance",
+      "overlay": "read_only_now"
+    },
+    "Codex_review": "online_copy can be prepared now but remains reference only; never a cold backup"
+  },
+  "boundary": {
+    "source_HA_read_only_entities": 13,
+    "source_states_and_attributes_unchanged": true,
+    "source_full_snapshots_unchanged": false,
+    "local_protected_legacy_files": 29,
+    "local_protected_legacy_files_modified": [],
+    "existing_paired_gateway_same_container_and_start_time": true,
+    "real_device_service_calls": 0,
+    "Mijia_automation_modified": false
+  }
+}

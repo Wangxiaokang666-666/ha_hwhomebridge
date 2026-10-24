@@ -1,0 +1,163 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "HuaweiHome Bridge",
+        "description": "For an existing integration, use Configure on its original entry to adopt the same paired gateway. This page creates one HiLink gateway or restores a verified existing pairing.",
+        "data": {
+          "backend": "Bridge backend"
+        }
+      },
+      "openharmony": {
+        "title": "Isolated OpenHarmony backend",
+        "description": "Enter the isolated directory relative to HA configuration. No REST token is needed. Prepared executable, profiles, entity mappings and independent pairing files are required. This step validates only.",
+        "data": {
+          "openharmony_directory": "Isolated directory"
+        }
+      },
+      "existing_gateway": {
+        "title": "Existing gateway: lifecycle and engine",
+        "description": "Restore one verified existing pairing from a private directory. If the original entry exists, use its Configure page. This does not create a new cloud parent identity.",
+        "data": {
+          "gateway_directory": "Existing gateway directory",
+          "backend": "Engine"
+        }
+      }
+    },
+    "abort": {
+      "single_instance_allowed": "Only a single instance of this integration is allowed",
+      "invalid_backend": "Unknown backend. Choose again.",
+      "already_configured": "This backend gateway is already configured."
+    },
+    "error": {
+      "invalid_openharmony_directory": "Check the isolated directory, permissions, executable/profile hashes, duplicate gateway/directory and ports.",
+      "invalid_gateway_directory": "Check original entry, gateway identity, catalog, permissions and native programs. No new identity is created."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Select Function",
+        "description": "Please select a function",
+        "data": {
+          "action": "Function"
+        }
+      },
+      "show_pin": {
+        "title": "Gateway Binding Setup"
+      },
+      "select_device": {
+        "title": "Device Management",
+        "description": "{device_count} device(s) connected. Check to bridge a device, uncheck to remove it.",
+        "data": {
+          "devices": "Bridged Devices"
+        }
+      },
+      "backend": {
+        "title": "Current bridge instance / enable and disable",
+        "description": "Active: {active_backend}; saved: {selected_backend}.\nWrite policy: {write_policy}.\n\nDisabling OpenHarmony stops only this instance and keeps pairing. Legacy HiLink and other instances keep running. Disabling a resident legacy SDK requires an HA restart. Add a separate entry for another backend type; setup failure never starts another backend.",
+        "data": {
+          "backend": "Bridge backend"
+        }
+      },
+      "openharmony": {
+        "title": "Isolated OpenHarmony backend",
+        "description": "Enter the isolated directory relative to HA configuration. No REST token is needed. Prepared executable, profiles, entity mappings and independent pairing files are required. This step validates only.",
+        "data": {
+          "openharmony_directory": "Isolated directory"
+        }
+      },
+      "gateway_lifecycle": {
+        "title": "Existing gateway: lifecycle and engine",
+        "description": "Active: {active_backend}; selected: {selected_backend}; failed: {failed_backend}.\n\nRetains this entry and paired gateway. Prepare and verify the private directory offline first. Failed activation rolls back to the verified engine of this identity. A resident legacy SDK requires an HA restart. Disable/removal retains pairing.",
+        "data": {
+          "gateway_directory": "Existing gateway directory",
+          "backend": "Engine"
+        }
+      },
+      "managed_devices": {
+        "title": "Device management",
+        "description": "Select HA source devices to bridge ({device_count} candidates).\n\nUnchecking disables bridging and retains paired child cards. It does not turn off physical devices. New devices require role bindings. All devices share this gateway.",
+        "data": {
+          "devices": "Enabled source devices"
+        }
+      },
+      "managed_role_device": {
+        "title": "Roles and capability cards",
+        "description": "Choose a configured device. Original primary light identity and bindings are preserved. Add new devices using Device management first.",
+        "data": {
+          "device": "Device"
+        }
+      },
+      "managed_layout": {
+        "title": "Fan card layout",
+        "description": "The six-speed layout uses two four-key cards for six speeds, natural wind and power, avoiding unsupported speed 7/8 and oscillation controls. Existing paired cards are retained offline after a layout change and can be removed manually in Smart Life.",
+        "data": {
+          "layout": "Fan layout"
+        }
+      },
+      "managed_cards": {
+        "title": "Capability cards",
+        "description": "Choose the required capabilities. The original primary light remains. The full native timer uses a vendor page with additional unmapped controls. Unchecking disables the corresponding capabilities.",
+        "data": {
+          "cards": "Cards"
+        }
+      },
+      "managed_roles": {
+        "title": "Bind HA entities",
+        "description": "Bind roles to distinct entities of the same HA device. The original primary light cannot be rebound. Saving bindings does not operate devices.",
+        "data": {
+          "fan": "Fan",
+          "main": "Primary light",
+          "ambient": "Ambient light",
+          "flex": "Flex switch",
+          "sleep": "Sleep mode",
+          "wake": "Wake mode",
+          "default_on": "Default power-on state",
+          "fan_timer_enable": "Fan timer enable",
+          "fan_timer_duration": "Fan timer duration",
+          "fan_timer_remaining": "Fan timer remaining",
+          "light_timer_enable": "Light timer enable",
+          "light_timer_duration": "Light timer duration",
+          "light_timer_remaining": "Light timer remaining"
+        }
+      },
+      "managed_confirm": {
+        "title": "Confirm device configuration",
+        "description": "{device_count} enabled source devices; {card_count} active or retained child cards.\n\n{notes}\n\nDisabling retains pairing and Smart Life cards. Saving reloads this integration with the current engine selection and gateway identity; it does not operate physical devices.",
+        "data": {
+          "confirm": "Save and apply"
+        }
+      }
+    },
+    "progress": {
+      "wait_for_binding": "Please enter the following PIN code in Huawei Smart Life app to complete binding\n\n### 🔐 PIN Code: **{pin_code}**\n\n⏰ Valid for: **{time_out} minutes**\n\n---\n\n**Binding Steps:**\n\n1.Open Huawei Smart Life app\n\n2.Tap '+' → Add Device\n\n3.Select 'Gateway' → Enter PIN code\n\n4.Input the PIN shown above\n\n5.Wait for binding success\n\n---\n\n**Important Notes:**\n\n-Please complete binding within **{time_out} minutes**\n\n-PIN code expires after timeout, please reconfigure"
+    },
+    "abort": {
+      "pin_expired": "PIN code has expired, please reconfigure",
+      "internal_error": "Internal error, please try again",
+      "integration_not_init": "Integration is starting up, please try again later",
+      "invalid_backend": "Unknown backend. Choose again.",
+      "legacy_only": "This action is available only for the legacy HiLink backend.",
+      "no_managed_roles": "No configurable role bindings. Add a device through Device management first.",
+      "invalid_managed_device": "Invalid device. Reopen configuration.",
+      "managed_source_unavailable": "The source device is missing or disabled. Restore it or disable bridging through Device management.",
+      "managed_update_required": "Prepare the gateway directory with the current native build before enabling device management. Existing configuration and engine are retained."
+    },
+    "error": {
+      "invalid_openharmony_directory": "Check the isolated directory, permissions, executable/profile hashes, duplicate gateway/directory and ports.",
+      "invalid_gateway_directory": "Check original entry, gateway identity, catalog, permissions and native programs. No new identity is created.",
+      "invalid_managed_devices": "Choose devices from the list.",
+      "invalid_managed_cards": "Choose at least one supported card.",
+      "invalid_managed_roles": "Use distinct entities of the same device and preserve the original light. Standard lights require brightness and color temperature; fans must report selected capabilities; effects must be advertised.",
+      "managed_role_missing": "A required entity is missing. Select fewer capability cards or restore the source entities.",
+      "managed_confirm_required": "Confirm before saving.",
+      "invalid_managed_plan": "Not saved. Check roles, installed profiles and original bindings. Reopen configuration if another flow has saved changes."
+    }
+  },
+  "notify": {
+    "restart_title": "Please restart Home Assistant",
+    "restart_message": "HuaweiHome Bridge has been removed. If you want to re-add this integration, please restart Home Assistant first, otherwise the integration will not work properly."
+  },
+  "title": "HuaweiHome Bridge"
+}

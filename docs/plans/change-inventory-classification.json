@@ -1,0 +1,423 @@
+{
+  "purpose": "classify source responsibilities for inventory; no validation decisions",
+  "model": "jev-1.13.0",
+  "files": [
+    {
+      "path": "custom_components/hwhomebridge/__init__.py",
+      "type": "choice",
+      "choice": "lifecycle",
+      "confidence": 0.2,
+      "probabilities": {
+        "framework": 0.22,
+        "lifecycle": 0.4,
+        "transport": 0.0,
+        "other": 0.38
+      },
+      "reviewed_group": "lifecycle"
+    },
+    {
+      "path": "custom_components/hwhomebridge/availability.py",
+      "type": "choice",
+      "choice": "framework",
+      "confidence": 1.0,
+      "probabilities": {
+        "framework": 1.0,
+        "lifecycle": 0.0,
+        "transport": 0.0,
+        "other": 0.0
+      },
+      "reviewed_group": "framework"
+    },
+    {
+      "path": "custom_components/hwhomebridge/backend_entries.py",
+      "type": "choice",
+      "choice": "other",
+      "confidence": 0.71,
+      "probabilities": {
+        "framework": 0.07,
+        "lifecycle": 0.14,
+        "transport": 0.01,
+        "other": 0.78
+      },
+      "reviewed_group": "lifecycle"
+    },
+    {
+      "path": "custom_components/hwhomebridge/capability_registry.py",
+      "type": "choice",
+      "choice": "framework",
+      "confidence": 1.0,
+      "probabilities": {
+        "framework": 1.0,
+        "lifecycle": 0.0,
+        "transport": 0.0,
+        "other": 0.0
+      },
+      "reviewed_group": "framework"
+    },
+    {
+      "path": "custom_components/hwhomebridge/capability_router.py",
+      "type": "choice",
+      "choice": "framework",
+      "confidence": 1.0,
+      "probabilities": {
+        "framework": 1.0,
+        "lifecycle": 0.0,
+        "transport": 0.0,
+        "other": 0.0
+      },
+      "reviewed_group": "framework"
+    },
+    {
+      "path": "custom_components/hwhomebridge/composition.py",
+      "type": "choice",
+      "choice": "framework",
+      "confidence": 1.0,
+      "probabilities": {
+        "framework": 1.0,
+        "lifecycle": 0.0,
+        "transport": 0.0,
+        "other": 0.0
+      },
+      "reviewed_group": "framework"
+    },
+    {
+      "path": "custom_components/hwhomebridge/config_flow.py",
+      "type": "choice",
+      "choice": "lifecycle",
+      "confidence": 0.97,
+      "probabilities": {
+        "framework": 0.01,
+        "lifecycle": 0.98,
+        "transport": 0.0,
+        "other": 0.01
+      },
+      "reviewed_group": "lifecycle"
+    },
+    {
+      "path": "custom_components/hwhomebridge/const.py",
+      "type": "choice",
+      "choice": "other",
+      "confidence": 0.97,
+      "probabilities": {
+        "framework": 0.02,
+        "lifecycle": 0.0,
+        "transport": 0.0,
+        "other": 0.98
+      },
+      "reviewed_group": "lifecycle"
+    },
+    {
+      "path": "custom_components/hwhomebridge/diagnostics.py",
+      "type": "choice",
+      "choice": "other",
+      "confidence": 1.0,
+      "probabilities": {
+        "framework": 0.0,
+        "lifecycle": 0.0,
+        "transport": 0.0,
+        "other": 1.0
+      },
+      "reviewed_group": "lifecycle"
+    },
+    {
+      "path": "custom_components/hwhomebridge/fan_mapping.py",
+      "type": "choice",
+      "choice": "framework",
+      "confidence": 0.97,
+      "probabilities": {
+        "framework": 0.98,
+        "lifecycle": 0.0,
+        "transport": 0.0,
+        "other": 0.02
+      },
+      "reviewed_group": "framework"
+    },
+    {
+      "path": "custom_components/hwhomebridge/gateway_deployment.py",
+      "type": "choice",
+      "choice": "lifecycle",
+      "confidence": 1.0,
+      "probabilities": {
+        "framework": 0.0,
+        "lifecycle": 1.0,
+        "transport": 0.0,
+        "other": 0.0
+      },
+      "reviewed_group": "lifecycle"
+    },
+    {
+      "path": "custom_components/hwhomebridge/gateway_lifecycle.py",
+      "type": "choice",
+      "choice": "lifecycle",
+      "confidence": 1.0,
+      "probabilities": {
+        "framework": 0.0,
+        "lifecycle": 1.0,
+        "transport": 0.0,
+        "other": 0.0
+      },
+      "reviewed_group": "lifecycle"
+    },
+    {
+      "path": "custom_components/hwhomebridge/gateway_router.py",
+      "type": "choice",
+      "choice": "lifecycle",
+      "confidence": 0.12,
+      "probabilities": {
+        "framework": 0.22,
+        "lifecycle": 0.33999999999999997,
+        "transport": 0.26,
+        "other": 0.18
+      },
+      "reviewed_group": "lifecycle"
+    },
+    {
+      "path": "custom_components/hwhomebridge/gateway_worker.py",
+      "type": "choice",
+      "choice": "lifecycle",
+      "confidence": 0.27,
+      "probabilities": {
+        "framework": 0.01,
+        "lifecycle": 0.45,
+        "transport": 0.38,
+        "other": 0.16
+      },
+      "reviewed_group": "lifecycle"
+    },
+    {
+      "path": "custom_components/hwhomebridge/ha_transport.py",
+      "type": "choice",
+      "choice": "transport",
+      "confidence": 0.99,
+      "probabilities": {
+        "framework": 0.01,
+        "lifecycle": 0.0,
+        "transport": 0.99,
+        "other": 0.0
+      },
+      "reviewed_group": "framework"
+    },
+    {
+      "path": "custom_components/hwhomebridge/hwbridge.py",
+      "type": "choice",
+      "choice": "framework",
+      "confidence": 0.31,
+      "probabilities": {
+        "framework": 0.48,
+        "lifecycle": 0.09,
+        "transport": 0.02,
+        "other": 0.41
+      },
+      "reviewed_group": "lifecycle"
+    },
+    {
+      "path": "custom_components/hwhomebridge/identity_store.py",
+      "type": "choice",
+      "choice": "other",
+      "confidence": 0.61,
+      "probabilities": {
+        "framework": 0.14,
+        "lifecycle": 0.15,
+        "transport": 0.0,
+        "other": 0.71
+      },
+      "reviewed_group": "lifecycle"
+    },
+    {
+      "path": "custom_components/hwhomebridge/legacy_callbacks.py",
+      "type": "choice",
+      "choice": "other",
+      "confidence": 0.88,
+      "probabilities": {
+        "framework": 0.07,
+        "lifecycle": 0.0,
+        "transport": 0.02,
+        "other": 0.91
+      },
+      "reviewed_group": "lifecycle"
+    },
+    {
+      "path": "custom_components/hwhomebridge/native_timer.py",
+      "type": "choice",
+      "choice": "framework",
+      "confidence": 1.0,
+      "probabilities": {
+        "framework": 1.0,
+        "lifecycle": 0.0,
+        "transport": 0.0,
+        "other": 0.0
+      },
+      "reviewed_group": "framework"
+    },
+    {
+      "path": "custom_components/hwhomebridge/openharmony/__init__.py",
+      "type": "choice",
+      "choice": "other",
+      "confidence": 0.64,
+      "probabilities": {
+        "framework": 0.04,
+        "lifecycle": 0.22,
+        "transport": 0.01,
+        "other": 0.73
+      },
+      "reviewed_group": "openharmony_adapter"
+    },
+    {
+      "path": "custom_components/hwhomebridge/openharmony/configuration.py",
+      "type": "choice",
+      "choice": "other",
+      "confidence": 0.67,
+      "probabilities": {
+        "framework": 0.01,
+        "lifecycle": 0.24,
+        "transport": 0.0,
+        "other": 0.75
+      },
+      "reviewed_group": "openharmony_adapter"
+    },
+    {
+      "path": "custom_components/hwhomebridge/openharmony/deployment.py",
+      "type": "choice",
+      "choice": "lifecycle",
+      "confidence": 1.0,
+      "probabilities": {
+        "framework": 0.0,
+        "lifecycle": 1.0,
+        "transport": 0.0,
+        "other": 0.0
+      },
+      "reviewed_group": "openharmony_adapter"
+    },
+    {
+      "path": "custom_components/hwhomebridge/openharmony/ha_backend.py",
+      "type": "choice",
+      "choice": "transport",
+      "confidence": 0.31,
+      "probabilities": {
+        "framework": 0.03,
+        "lifecycle": 0.03,
+        "transport": 0.48,
+        "other": 0.46
+      },
+      "reviewed_group": "openharmony_adapter"
+    },
+    {
+      "path": "custom_components/hwhomebridge/openharmony/router.py",
+      "type": "choice",
+      "choice": "transport",
+      "confidence": 0.79,
+      "probabilities": {
+        "framework": 0.06,
+        "lifecycle": 0.01,
+        "transport": 0.84,
+        "other": 0.09
+      },
+      "reviewed_group": "openharmony_adapter"
+    },
+    {
+      "path": "custom_components/hwhomebridge/openharmony/transport.py",
+      "type": "choice",
+      "choice": "transport",
+      "confidence": 1.0,
+      "probabilities": {
+        "framework": 0.0,
+        "lifecycle": 0.0,
+        "transport": 1.0,
+        "other": 0.0
+      },
+      "reviewed_group": "openharmony_adapter"
+    },
+    {
+      "path": "custom_components/hwhomebridge/product_matcher.py",
+      "type": "choice",
+      "choice": "other",
+      "confidence": 0.83,
+      "probabilities": {
+        "framework": 0.13,
+        "lifecycle": 0.0,
+        "transport": 0.0,
+        "other": 0.87
+      },
+      "reviewed_group": "framework"
+    },
+    {
+      "path": "custom_components/hwhomebridge/product_registry.py",
+      "type": "choice",
+      "choice": "other",
+      "confidence": 0.85,
+      "probabilities": {
+        "framework": 0.11,
+        "lifecycle": 0.0,
+        "transport": 0.0,
+        "other": 0.89
+      },
+      "reviewed_group": "framework"
+    },
+    {
+      "path": "custom_components/hwhomebridge/profile_bridge.py",
+      "type": "choice",
+      "choice": "framework",
+      "confidence": 0.67,
+      "probabilities": {
+        "framework": 0.75,
+        "lifecycle": 0.01,
+        "transport": 0.01,
+        "other": 0.23
+      },
+      "reviewed_group": "lifecycle"
+    },
+    {
+      "path": "custom_components/hwhomebridge/role_binding.py",
+      "type": "choice",
+      "choice": "framework",
+      "confidence": 0.57,
+      "probabilities": {
+        "framework": 0.68,
+        "lifecycle": 0.01,
+        "transport": 0.0,
+        "other": 0.31
+      },
+      "reviewed_group": "framework"
+    },
+    {
+      "path": "custom_components/hwhomebridge/service_action.py",
+      "type": "choice",
+      "choice": "other",
+      "confidence": 0.47,
+      "probabilities": {
+        "framework": 0.38,
+        "lifecycle": 0.01,
+        "transport": 0.01,
+        "other": 0.6
+      },
+      "reviewed_group": "framework"
+    },
+    {
+      "path": "custom_components/hwhomebridge/service_router.py",
+      "type": "choice",
+      "choice": "framework",
+      "confidence": 0.77,
+      "probabilities": {
+        "framework": 0.83,
+        "lifecycle": 0.0,
+        "transport": 0.04,
+        "other": 0.13
+      },
+      "reviewed_group": "framework"
+    },
+    {
+      "path": "custom_components/hwhomebridge/validate_config.py",
+      "type": "choice",
+      "choice": "other",
+      "confidence": 0.52,
+      "probabilities": {
+        "framework": 0.01,
+        "lifecycle": 0.35,
+        "transport": 0.0,
+        "other": 0.64
+      },
+      "reviewed_group": "framework"
+    }
+  ],
+  "review": "Codex inspected module responsibilities; filename-only suggestions are retained as provenance, reviewed_group is used for the inventory. No classification asserts runtime acceptance."
+}

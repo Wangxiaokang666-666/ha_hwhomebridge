@@ -1,0 +1,86 @@
+{
+  "date": "2026-10-17",
+  "scope": "explicitly authorized one host SSH public-key append followed by production Docker read-only preflight",
+  "explicit_user_authorization": true,
+  "host_key_append": {
+    "official_installed_Supervisor_API_used": true,
+    "Supervisor_version": "2026.09.3",
+    "endpoint": "/os/ssh/authorized_keys",
+    "POST_requests": 1,
+    "DELETE_requests": 0,
+    "before_authorizations": 2,
+    "after_authorizations": 3,
+    "all_original_authorization_records_preserved": true,
+    "exact_user_approved_public_key_fingerprint_verified": true,
+    "only_specified_public_key_added": true,
+    "private_key_uploaded": false,
+    "private_key_kept_local": true
+  },
+  "host_SSH": {
+    "authenticated_with_dedicated_key": true,
+    "strict_existing_server_key_check": true,
+    "server_key_changed": false,
+    "server_key_out_of_band_verified": false,
+    "actual_host_root_UID": 0,
+    "PID1_systemd": true,
+    "transport_independent_of_Core": true,
+    "production_Core_stopped_tested": false
+  },
+  "production_Docker_preflight": {
+    "passed": true,
+    "actual_local_rootful_Docker": true,
+    "Docker_version": "29.7.2",
+    "HA_OS_version": "18.3",
+    "HA_Core_version": "2026.10.1",
+    "Core_running": true,
+    "Core_UID": 0,
+    "exact_writable_config_mount_verified": true,
+    "ordinary_root_paths_without_symlink_aliases": true,
+    "source_root_and_registry_owners_match_Core_UID": true,
+    "file_modes_read": true,
+    "actual_host_network_namespace_verified": true,
+    "interface_MAC_read_locally_only": true,
+    "kernel_port_tables_read_locally_only": true,
+    "ports_free_for_new_backend_proven": false,
+    "original_restart_policy": "no",
+    "restart_policy_changed": false,
+    "two_host_observations_container_identity_start_time_mount_and_metadata_stable": true,
+    "Core_start_time_unchanged_between_observations": true
+  },
+  "cold_export_prerequisites": {
+    "host_Python_command_available": false,
+    "common_host_Python_paths_found": false,
+    "host_dependencies_installed": false,
+    "offline_host_runtime_verified": false,
+    "production_cold_export_performed": false,
+    "pairing_KV_read": false,
+    "production_identity_verified": false
+  },
+  "production_integrity": {
+    "original_component_files_unchanged": 38,
+    "original_hwhomebridge_entries_unchanged": true,
+    "b5_package_unchanged": true,
+    "HA_deployment_requests": 0,
+    "Core_stop_restart_requests": 0,
+    "HA_service_calls": 0,
+    "light_control_calls": 0,
+    "Mijia_automation_changes": 0,
+    "addon_config_or_start_requests": 0,
+    "component_or_HA_config_write_requests": 0,
+    "host_probe_script_uploaded": false
+  },
+  "code_changes": {
+    "integration_runtime_code_changed": false,
+    "maintenance_tool_code_changed": false,
+    "documentation_and_sanitized_evidence_only": true,
+    "prior_independent_Docker_and_SSH_validation_reused": true,
+    "new_unit_tests_required": false
+  },
+  "remaining_gates": [
+    "independent offline host runtime suitable for HA OS without Python",
+    "separately authorized maintenance window and real stopped-owner cold export",
+    "old study main/ambient binding review and unavailable kitchen entity",
+    "offline original identity conversion; formal parent SN and native catalog verification"
+  ],
+  "production_install_allowed": false
+}
